@@ -1,0 +1,197 @@
+
+        :root {
+            --primary-blue: #1e88e5; /* Bright blue for button and checkmark */
+            --secondary-blue: #002f6a; /* Dark blue for logo text */
+            --background-color: #f5f8ff; /* Light blue/grey background */
+            --card-radius: 1rem;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #eef2ff;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            padding-bottom: 0; /* Remove bottom padding to allow footer full width */
+        }
+
+        .advisor-card {
+            background: white;
+            border-radius: var(--card-radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 1000px;
+            width: 100%;
+            position: relative;
+        }
+
+        /* Close Button Styling */
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            color: #ccc;
+            cursor: pointer;
+            z-index: 20; /* Increased z-index */
+        }
+        .close-btn:hover {
+            color: #888;
+        }
+
+        /* Left Section (Illustration/Dummy Image) */
+        .illustration-side {
+            background-color: var(--background-color);
+            /* Adjust border-radius for mobile (top corners) and desktop (left corners) */
+            border-radius: var(--card-radius) var(--card-radius) 0 0; 
+            
+            /* Make this the relative container for the absolute logo overlay */
+            position: relative; 
+            padding: 40px;
+            
+            /* Styles for the "full screen" image effect (using background image) */
+            background-image: url('/images/conact-us.webp'); /* Updated image path */
+            background-size: contain; 
+            background-position: center;
+            background-repeat: no-repeat;
+            
+            min-height: 400px; /* Ensure sufficient height for the image */
+            display: block; /* Removed flex-related centering styles */
+        }
+
+        /* New class for the absolute logo on desktop */
+        .logo-overlay {
+            position: absolute;
+            top: 40px; /* Matches the container padding */
+            left: 40px; /* Matches the container padding */
+            z-index: 10;
+        }
+        
+        /* Ensures logo text is visible over the background image */
+        .logo-overlay span {
+            color: white !important; 
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+        }
+
+        /* Right Section (Form) */
+        .form-side {
+            padding: 40px;
+        }
+        
+        .logo {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .logo span {
+            color: var(--secondary-blue);
+        }
+
+   
+
+        h2 {
+            font-weight: 700;
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        .form-control, .form-select {
+            border-radius: 0.5rem;
+            padding: 0.65rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        .form-control:focus, .form-select:focus {
+            box-shadow: 0 0 0 0.25rem rgba(30, 136, 229, 0.25);
+            border-color: var(--primary-blue);
+        }
+
+        .form-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        .form-text-small {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        
+        .btn-submit {
+            background-color: var(--primary-blue);
+            border-color: var(--primary-blue);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: #1a71c2;
+            border-color: #1a71c2;
+        }
+
+        /* Responsive adjustments for desktop */
+        @media (min-width: 992px) {
+            .illustration-side {
+                /* Correct border-radius for desktop (left corners) */
+                border-radius: var(--card-radius) 0 0 var(--card-radius);
+            }
+            .form-side {
+                /* Remove bottom radius for desktop */
+                border-radius: 0 var(--card-radius) var(--card-radius) 0;
+            }
+        }
+    
+
+        
+/* Update this block in your Advisor.css file */
+.btn-submit {
+    /* Base Styles */
+    background-color: var(--primary-blue);
+    border-color: var(--primary-blue);
+    color: white; /* Ensure text is white */
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    width: 100%;
+    margin-top: 20px;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Add or ensure this exists for HOVER state override */
+.btn-submit:hover {
+    background-color: #1a71c2; /* Your desired darker color on hover */
+    border-color: #1a71c2;
+    color: white; /* Ensure text remains white */
+    /* Add !important if this still doesn't work, but try without it first */
+}
+
+/* Add this for ACTIVE/CLICKED state override */
+.btn-submit:active, 
+.btn-submit:focus {
+    background-color: #1a71c2 !important; /* Use !important here as Bootstrap often uses it for :focus */
+    border-color: #1a71c2 !important;
+    box-shadow: 0 0 0 0.25rem rgba(30, 136, 229, 0.5); /* Keep the custom shadow */
+}

@@ -1,0 +1,207 @@
+  
+        /* Custom styles for the section */
+        :root {
+            /* Using a common sans-serif stack as 'Inter' is not standard Bootstrap */
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+        }
+        .highlight-text {
+            color: #1e90ff; /* A dark blue for the 'Us' part, consistent with the original design */
+        }
+        .ai-illustration-container {
+            /* Removed min-height so the image can define the height naturally */
+            background-color: #F8FAFC; /* Light gray background for contrast */
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            /* Applying shadow and border similar to original Tailwind version */
+            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+            border: 1px solid #dee2e6;
+        }
+       
+        /* Using a custom font size for the large title */
+        .custom-h1 {
+            font-size: 3.5rem; /* Equivalent to text-5xl/6xl */
+        }
+        @media (min-width: 768px) {
+            .custom-h1 {
+                font-size: 4.5rem;
+            }
+        }
+
+   
+         /* Style for the new Mission section background */
+        .mission-bg {
+            background-color: #F8FAFC;
+        }
+        /* Styles for the individual mission cards */
+        .mission-card {
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            min-height: 190px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .mission-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
+        }
+        .icon-box img {
+            width: 50px; /* Make the GIF slightly larger to fill the space */
+            height: 50px;
+            object-fit: contain;
+        }
+
+
+          /* --- VISION TIMELINE STYLES --- */
+        
+      /* --- VISION TIMELINE STYLES (updated connector + faster speed) --- */
+
+/* Keyframe for the Blinking Border (Pulse) */
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(29,78,216,0.5); }
+  70%  { box-shadow: 0 0 0 10px rgba(29,78,216,0); }
+  100% { box-shadow: 0 0 0 0 rgba(29,78,216,0); }
+}
+
+/* Keyframe for the Moving Dashed Line */
+@keyframes dash-move {
+  to { background-position-x: -20px; } /* keeps perfect loop */
+}
+
+.timeline-step {
+  position: relative;
+  text-align: center;
+}
+
+/* icons stay above the connector */
+.timeline-icon {
+  width: 80px;
+  height: 80px;
+  background-color: white;
+  border: 5px solid #28a745;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;               /* ensure icon is above the line */
+  position: relative;
+  margin-bottom: 0.5rem;
+  animation: pulse 1.4s infinite ease-out; /* slightly faster pulse */
+}
+
+.timeline-icon i {
+  font-size: 32px;
+  color: white;
+  background-color: #28a745;
+  border-radius: 50%;
+  padding: 10px;
+}
+
+.timeline-label {
+  margin-top: 0.5rem;
+  font-weight: 600;
+}
+
+/* ---------- NEW: single connector line stretching across the whole row ---------- */
+/* This draws one moving dashed line behind the icons so all three circles are visually connected */
+.timeline-container {
+  position: relative; /* keep this to contain the pseudo element */
+}
+
+/* Use the container's ::before to draw a single horizontal connector */
+.timeline-container::before {
+  content: "";
+  position: absolute;
+  /* horizontal inset so the line doesn't touch page edges — tweak % if needed */
+  left: 8%;
+  right: 8%;
+  /* vertical position: roughly at the center of your 80px icons (40px) plus top offset inside the row */
+  top: 69px;
+  height: 6px; /* thickness of line */
+  z-index: 5;  /* behind icons but above background */
+  background-color: transparent;
+
+  /* dotted/dashed appearance */
+  background-image: repeating-linear-gradient(
+    90deg,
+    #999 0,
+    #999 10px,
+    transparent 10px,
+    transparent 20px
+  );
+  background-size: 20px 6px;
+  background-position-x: 0;
+
+  /* FAST moving animation (you asked for fast) */
+  animation: dash-move 0.42s linear infinite;
+  border-radius: 3px;
+}
+
+/* hide any per-step connectors you had inside icons (we're using the container one now) */
+.timeline-step .timeline-connector {
+  display: none !important;
+}
+
+/* keep last child unaffected (no extra connector needed) */
+.timeline-step:last-child .timeline-connector { display: none !important; }
+
+/* Mobile: hide the horizontal connector when layout stacks vertically */
+@media (max-width: 767px) {
+  .timeline-container::before { display: none; }
+  .timeline-step { margin-bottom: 2rem; }
+}
+
+@keyframes dash-move-vertical {
+  to { background-position-y: -20px; }
+}
+
+@media (max-width: 767px) {
+  /* keep the horizontal connector hidden when stacked */
+  .timeline-container::before { display: none; }
+
+  .timeline-step {
+    margin-bottom: 2.5rem;
+    position: relative; /* needed for the pseudo-element */
+  }
+  /* draw a vertical dashed line from each icon down toward the next icon */
+  .timeline-step::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    /* place top just below the icon (80px height) + small gap */
+    top: 90px;
+    /* extend down to the bottom of the step so it meets the next icon area */
+    bottom: -4rem;
+    width: 6px;              /* thickness of the vertical line */
+    z-index: 5;              /* behind the icons */
+    border-radius: 3px;
+
+    /* dashed look using repeating-linear-gradient vertically */
+    background-image: repeating-linear-gradient(
+      180deg,
+      #999 0,
+      #999 10px,
+      transparent 10px,
+      transparent 20px
+    );
+    background-size: 6px 20px;
+    background-position-y: 0;
+
+    /* fast vertical motion (you asked for fast) */
+    animation: dash-move-vertical 0.42s linear infinite;
+  }
+
+  /* remove the connector for the last item */
+  .timeline-step:last-child::after { display: none; }
+
+  /* keep icons on top */
+  .timeline-icon { z-index: 20; }
+}

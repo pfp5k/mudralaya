@@ -1,0 +1,645 @@
+:root {
+  --brand: #1e90ff;
+  --brand-dark: #0b61b8;
+  --muted: #6b7785;
+  --hero-bg: #eef6fb;
+  --card: #fff;
+  --soft: #f5f7fa;
+  --deep: #08345b;
+  --footer: #073a63;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: "Inter", system-ui, Segoe UI, Roboto, Helvetica, Arial,
+    sans-serif;
+  color: #24323a;
+  background: linear-gradient(180deg, #ffffff, #f4f8fb);
+  -webkit-font-smoothing: antialiased;
+}
+a {
+  text-decoration: none;
+}
+
+
+
+/* Hero */
+.hero {
+  background: var(--hero-bg);
+  padding: 3.5rem 1rem;
+}
+.hero h1 {
+  font-size: 2.35rem;
+  line-height: 1.5;
+  font-weight: 700;
+}
+.hero .accent {
+  color: var(--brand);
+}
+.lead-muted {
+  color: var(--muted);
+}
+.mock-card {
+  background: linear-gradient(180deg, #fbfdff, #f3f8fb);
+  border-radius: 16px;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 30px rgba(16, 64, 128, 0.06);
+}
+/* .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(30, 144, 255, 0.18);
+  display: inline-block;
+}
+.dot.active {
+  background: var(--brand);
+} */
+
+/* Why Join */
+/* Why Join */
+
+
+.why-section {
+    /* Adjusted padding for more vertical space on the section */
+    padding: 5rem 1rem;
+    background-color: #f8f9fa; /* A very light background to make the cards pop */
+}
+
+.card-feature {
+    /* MIGRATED STYLES from .card-client */
+    background: #C2E2FA; /* Dark background from the example card */
+    border: 4px solid var(--brand-light-border); /* Thick light border */
+    box-shadow: 0 8px 24px rgba(20, 30, 40, 0.1); /* Enhanced shadow */
+    border-radius: 14px;
+    padding: 1.5rem;
+    
+    /* Ensure content is readable against the dark background */
+    color: #fff; 
+    
+    /* Layout control */
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    text-align: center; 
+    
+    /* MIGRATED HOVER EFFECT */
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Added cubic-bezier for smoother transition */
+    cursor: pointer;
+}
+
+.card-feature:hover {
+    transform: translateY(-10px); /* The floating effect! */
+    box-shadow: 0 15px 30px rgba(20, 30, 40, 0.15); /* Slightly stronger shadow on hover */
+}
+
+/* Overriding Bootstrap text colors inside the dark card for readability */
+.card-feature h5 {
+    color: black; /* Make the title white */
+    font-weight: 600;
+}
+.card-feature .text-muted.small {
+    color: black;
+}
+
+
+/* Styling for the icon box to stand out on the dark background */
+.icon-box {
+    width: 60px; 
+    height: 60px;
+    border-radius: 50%; /* Changed to circular for the user-picture look */
+    background: #fff; /* White background for high contrast */
+    border: 3px solid var(--brand-light-border); /* Border matching the card */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    
+    /* The emoji/icon inside will now be readable on the white background */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); 
+}
+
+/* NEW: Style for the inner content wrapper to manage gap */
+.card-content-wrapper {
+    margin-top: 1.25rem;
+}
+
+
+
+
+/* What You'll Do */
+/* .do-section {
+  background: var(--hero-bg);
+  padding: 2.5rem 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+}
+.do-illustr {
+  width: 100%;
+  max-width: 320px;
+}
+.do-features .list-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--brand);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.75rem;
+}
+.do-features .list-item {
+  align-items: center;
+  display: flex;
+  margin: 12px 0;
+} */
+
+.do-section {
+  background: var(--hero-bg);
+  padding: 4.5rem 1rem; /* Increased padding slightly for better spacing */
+  border-top: 1px solid rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+/* Ensure the image is block level and has space */
+.hero-img {
+    /* display: block; */
+    border-radius: 12px; /* Adding some rounded corners to the image */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* A soft shadow (used as base for animation) */
+    width:60%;
+}
+
+/* The rest of the section styles */
+.do-illustr {
+  width: 100%;
+  /* max-width: 320px; */
+}
+.do-features .list-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--brand);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.75rem;
+}
+.do-features .list-item {
+  align-items: center;
+  display: flex;
+  margin: 12px 0;
+}
+
+/*
+ * -------------------------------------------------------------
+ * 3. IMAGE ANIMATION (image_animation.css)
+ * This uses the aggressive scale/glow to ensure visibility.
+ * -------------------------------------------------------------
+ */
+@keyframes breath {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Default soft shadow */
+  }
+  50% {
+    transform: scale(1.05); /* Scales up 5% to make it visible */
+    /* Strong shadow using the brand color for a noticeable pulse */
+    box-shadow: 
+        0 15px 40px rgba(44, 181, 160, 0.4), /* Branded glow effect */
+        0 10px 25px rgba(0, 0, 0, 0.15); /* Darker shadow for depth */
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Return to default soft shadow */
+  }
+}
+
+.animate-breathe {
+  /* Apply the animation: 4 seconds duration, repeats forever */
+  animation: breath 4s ease-in-out infinite;
+  
+  /* Ensure smooth rendering */
+  will-change: transform, box-shadow;
+}
+
+
+/* grow */
+.grow-limits-section {
+            padding-top: 5rem;
+            padding-bottom: 5rem;
+            background-color: #eef6fb; /* Light blue/off-white background matching the image */
+        }
+        @media (min-width: 992px) {
+            .grow-limits-section {
+                padding-top: 8rem;
+                padding-bottom: 8rem;
+            }
+        }
+
+        /* 2. Heading Sizing for the new section's H1 */
+        .grow-heading {
+            /* font-size: 2.5rem; */
+            line-height: 1.2;
+        }
+      
+        
+        /* 3. Styling for "We Empower You" list checkmarks */
+        .grow-icon-check {
+            color: var(--brand);
+            flex-shrink: 0;
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+
+        /* 4. Styling for "Who Can Join" list and callout */
+        .grow-who-list {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+            color: var(--bs-secondary); /* Using muted color */
+        }
+        .grow-who-list li {
+            margin-bottom: 0.5rem;
+            font-size: 1.25rem; /* fs-5 equivalent */
+        }
+
+        .grow-callout {
+            border-left: 4px solid var(--brand);
+            padding-left: 1rem;
+            font-size: 1.25rem; /* fs-5 equivalent */
+            color: var(--bs-dark);
+        }
+
+        /* Utility class used for subtitle max width */
+        .max-w-xl {
+            max-width: 36rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+/* Empowering women strip */
+.women-strip {
+  background: #f8fafc;
+  padding: 1.6rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+}
+.women-strip .btn-cta {
+  background: var(--brand);
+  color: #fff;
+  border-radius: 8px;
+  padding: 0.45rem 0.85rem;
+  border: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* time line */
+
+        /* --- GENERAL & COLOR VARIABLES --- */
+        :root {
+            --primary-color: #008cff; /* Vibrant Blue */
+            --background-light: #ffffff; 
+            --line-color: #cce0ff;
+            --font-family: 'Poppins', sans-serif;
+            --marker-size: 80px; 
+            --marker-offset: 40px; /* How much the active marker moves up */
+            --marker-area-height: 100px; /* Height of the area containing the line and markers */
+        }
+
+        body {
+            background-color: var(--background-light);
+            padding-top: 50px;
+            font-family: var(--font-family);
+            overflow-x: hidden; /* Crucial for preventing horizontal scroll */
+        }
+
+        /* ---------------------------------------------------- */
+        /* --- 1. HORIZONTAL TRACK AND LINE (Desktop/Tablet) --- */
+        /* ---------------------------------------------------- */
+        .timeline-container {
+            position: relative;
+            padding: 0 5%; 
+            min-height: 400px; 
+            /* margin-bottom: 50px; */
+        }
+        
+        .timeline-track {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: var(--marker-area-height);
+            width: 100%;
+        }
+
+        /* The main horizontal line: Perfectly centered vertically */
+        .timeline-track::before {
+            content: '';
+            position: absolute;
+            top: 50%; 
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, #008cff, #cce0ff);
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        /* ---------------------------------------------------- */
+        /* --- 2. TIMELINE ITEM (The Circles) --- */
+        /* ---------------------------------------------------- */
+        .timeline-item {
+            position: relative;
+            z-index: 10;
+            cursor: pointer;
+            text-align: center;
+            flex-grow: 1;
+            display: flex; 
+            justify-content: center;
+        }
+
+        /* The Year Circle */
+        .timeline-marker {
+            width: var(--marker-size);
+            height: var(--marker-size);
+            background-color: #fff;
+            border: 2px solid var(--line-color); 
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            transition: all 0.4s ease-in-out;
+            box-shadow: 0 0 0 0 rgba(0, 140, 255, 0);
+            
+            /* Center marker on the horizontal line */
+            position: absolute;
+            top: 50%; 
+            transform: translateY(-50%); 
+        }
+        
+        /* Inner circle for the bubble effect */
+        .timeline-marker::after {
+            content: '';
+            position: absolute;
+            width: 90%;
+            height: 90%;
+            border: 2px solid rgba(0, 140, 255, 0.3);
+            border-radius: 50%;
+            transition: all 0.4s ease-in-out;
+        }
+
+
+        /* ---------------------------------------------------- */
+        /* --- 3. ACTIVE STATE (The Pop-Up Effect) --- */
+        /* ---------------------------------------------------- */
+        .timeline-item.active .timeline-marker {
+            /* POP UP EFFECT: Move marker upwards */
+            transform: translateY(calc(-50% - var(--marker-offset))); 
+            scale: 1.1;
+            border-color: var(--primary-color);
+            box-shadow: 0 5px 20px rgba(0, 140, 255, 0.4);
+        }
+
+        .timeline-item.active .timeline-marker::after {
+            border-color: var(--primary-color);
+            scale: 1.2;
+        }
+
+
+        /* ---------------------------------------------------- */
+        /* --- 4. CONTENT BOX (Appears Below) --- */
+        /* ---------------------------------------------------- */
+        .timeline-content {
+            position: absolute;
+            top: var(--marker-area-height); 
+            left: 50%;
+            /* Fluid and Max Width for better desktop responsiveness */
+            width: 90%; 
+            max-width: 380px; 
+            
+            transform: translateX(-50%) translateY(20px);
+            padding: 20px;
+            background-color: #f0f7ff;
+            border-radius: 12px;
+            border-left: 5px solid var(--primary-color);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out, visibility 0.4s;
+            z-index: 20;
+        }
+
+        .timeline-item.active .timeline-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Content box pointer/arrow */
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%) rotate(45deg);
+            width: 20px;
+            height: 20px;
+            background-color: #f0f7ff;
+            border-top: 1px solid rgba(0, 140, 255, 0.2);
+            border-right: 1px solid rgba(0, 140, 255, 0.2);
+            z-index: 5;
+        }
+        
+        .content-heading {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .content-list {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+        .content-list li {
+            margin-bottom: 5px;
+            color: #343a40;
+        }
+        
+        /* ---------------------------------------------------- */
+        /* --- ENHANCED MOBILE ADJUSTMENTS (< 768px) --- */
+        /* ---------------------------------------------------- */
+        @media (max-width: 768px) {
+            /* Adjust size for smaller screens */
+            :root {
+                --marker-size: 60px;
+                --marker-area-height: 80px;
+            }
+            
+            .timeline-container {
+                padding: 0;
+                min-height: auto;
+                padding-bottom: 300px; 
+            }
+            
+            .timeline-track {
+                flex-direction: column;
+                height: auto;
+                padding-top: 20px;
+                width: 100%;
+                /* Items will be centered vertically/horizontally */
+                align-items: center; 
+                text-align: center;
+            }
+            .timeline-track::before {
+                display: none; 
+            }
+            
+            .timeline-item {
+                /* Use a centered block item so marker + content are centered */
+                margin: 30px auto; 
+                width: calc(100% - 40px); /* Small side gutters for phones */
+                max-width: 360px; /* Max constraint */
+                flex-grow: 0;
+                display: block; 
+                text-align: center;
+                position: relative;
+            }
+            
+            /* The marker and content are now children of a centered block element */
+            .timeline-marker {
+                position: relative;
+                top: auto;
+                left: 50%;
+                transform: translateX(-50%) scale(1);
+                margin: 0;
+            }
+
+            .timeline-item.active .timeline-marker {
+                /* On mobile active effect is just a scale so it doesn't shift layout */
+                transform: translateX(-50%) scale(1.08); 
+            }
+
+            /* Content box will follow the item's center alignment and be centered */
+            .timeline-content {
+                position: relative; 
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%); 
+                width: 100%; /* Take up the full width of the now-centered item */
+                max-width: 360px; /* Same as item for consistent centering */
+                margin: 10px auto 0 auto; /* Center horizontally */
+                text-align: left; /* keep text content left-aligned for readability */
+                padding: 18px;
+            }
+            
+            /* Ensure the content box triangle still points up and is centered */
+            .timeline-content::before {
+                left: 50%;
+                transform: translateX(-50%) rotate(45deg);
+            }
+
+            /* Keep bullets left aligned but constrained so they don't touch edges */
+            .content-list {
+                padding-left: 18px;
+                box-sizing: border-box;
+                max-width: 100%;
+                margin: 0;
+            }
+        }
+ 
+
+
+
+
+
+
+
+@media (max-width: 575px) {
+  .hero h1 {
+    font-size: 1.65rem;
+  }
+  .do-illustr {
+    max-width: 220px;
+  }
+}
+
+
+/* women section */
+
+
+.image-card-effect {
+    position: relative;
+    max-width: 250px; /* Recommended: Set a max size for better control */
+    width: 100%; 
+    background-color: #f8fafc; /* Helps conceal the pseudo-elements when not glowing */
+    border-radius: 8px; 
+    cursor: pointer;
+    margin: 0 auto; 
+    z-index: 1; /* Give the container a z-index so pseudo-elements respect its stacking context */
+}
+
+.image-card-effect img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px; 
+    /* Ensure the image doesn't cover the entire border area, 
+       or use padding/margin if the background color isn't enough */
+    position: relative; 
+    z-index: 2; /* Image is on top */
+}
+
+.image-card-effect::before {
+    content: '';
+    position: absolute;
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Use this for reliable centering */
+    
+    /* Make the border size explicit, slightly larger than the container */
+    width: calc(100% + 10px); 
+    height: calc(100% + 10px); 
+
+    border-radius: 10px;
+    background: linear-gradient(-45deg, #e81cff 0%, #40c9ff 100% );
+    z-index: -10;
+    pointer-events: none;
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.image-card-effect::after {
+    content: "";
+    z-index: -1;
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(-45deg, #fc00ff 0%, #00dbde 100% );
+    transform: translate3d(0, 0, 0) scale(0.98);
+    filter: blur(15px);
+    border-radius: 8px;
+    transition: all 0.6s ease;
+}
+
+/* Hover effects */
+.image-card-effect:hover::after {
+    filter: blur(25px);
+}
+
+.image-card-effect:hover::before {
+    /* Use the same centering technique */
+    transform: translate(-50%, -50%) rotate(-90deg) scaleX(1.1) scaleY(0.9); 
+}
+
+

@@ -1,0 +1,96 @@
+/* Footer */
+:root {
+    --footer-bg: #003366; 
+    --primary: #007bff; 
+    --link-color: #cfe8ff; 
+}
+
+.site-footer {
+    background: var(--footer-bg); 
+    color: #fff; 
+    padding: 3rem 0;
+}
+
+.site-footer a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.site-footer a:hover {
+    color: #fff;
+}
+
+.site-footer ul {
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.site-footer ul li {
+    margin-bottom: 0.5rem;
+}
+
+.site-footer h6 {
+    font-weight: 600; 
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.social-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%; 
+    background: rgba(255, 255, 255, 0.1); 
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    color: #fff;
+    transition: background 0.3s ease;
+}
+
+.social-icon:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+.input-group .form-control {
+    background-color: rgba(255, 255, 255, 0.1); 
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+.input-group .form-control::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.input-group .form-control:focus {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #fff;
+}
+
+.input-group .btn-primary {
+    background-color: var(--primary); 
+    border-color: var(--primary);
+    color: #fff;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.input-group .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .site-footer {
+        padding: 2rem 0;
+    }
+    
+    .site-footer .col-md-4 {
+        margin-bottom: 2rem;
+    }
+}
+

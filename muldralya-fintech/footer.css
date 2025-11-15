@@ -1,0 +1,87 @@
+/* Footer */
+:root {
+    /* Using a deep blue color for the footer background as seen in the image */
+    --footer-bg: #003366; 
+    /* Primary color for the subscription button, assuming a blue accent */
+    --primary: #007bff; 
+    /* Color for links, a lighter blue/cyan for contrast */
+    --link-color: #cfe8ff; 
+}
+
+.site-footer {
+    /* Use the deep blue background */
+    background: var(--footer-bg); 
+    /* White text color */
+    color: #fff; 
+
+}
+
+/* Style for all links in the footer */
+.site-footer a {
+    color: var(--link-color);
+    text-decoration: none; /* Remove underline */
+}
+
+.site-footer a:hover {
+    color: #fff; /* Lighter color on hover */
+}
+
+/* Style for the list items (Company and Support links) */
+.site-footer ul {
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.site-footer ul li {
+    margin-bottom: 0.5rem;
+}
+
+.site-footer h6 {
+    /* Make headings bold and slightly larger than links */
+    font-weight: 600; 
+    margin-bottom: 1rem;
+    color: #fff; /* Ensure headings are white */
+}
+
+/* Style for the social media icons */
+.social-icon {
+    width: 36px;
+    height: 36px;
+    /* Circular shape for the icons, as seen in the image */
+    border-radius: 50%; 
+    /* Transparent white background */
+    background: rgba(255, 255, 255, 0.1); 
+    /* Center the icon */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    color: #fff; /* White icon color */
+    transition: background 0.3s ease;
+}
+
+.social-icon:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Adjust the styling for the email subscription input and button */
+.input-group .form-control {
+    /* Set the input background to the same dark blue, but slightly lighter/transparent */
+    background-color: rgba(255, 255, 255, 0.1); 
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+.input-group .form-control::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.input-group .btn-primary {
+    /* Use the primary color for the button */
+    background-color: var(--primary); 
+    border-color: var(--primary);
+    color: #fff;
+    /* Make the button flat */
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Become Our Advisor - Mudralaya Fintech</title>
+    <!-- Load Google Font (Inter for a clean, modern look) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Load Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Load Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-blue: #1e88e5; /* Bright blue for button */
+            --secondary-blue: #002f6a; /* Dark blue for logo text */
+            --background-color: #f5f8ff; /* Light blue/grey background */
+            --card-radius: 1rem;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #eef2ff; /* A slightly more pronounced body background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .advisor-card {
+            background: white;
+            border-radius: var(--card-radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 1000px;
+            width: 100%;
+            position: relative;
+        }
+
+        /* Close Button Styling */
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            color: #ccc;
+            cursor: pointer;
+            z-index: 10;
+        }
+        .close-btn:hover {
+            color: #888;
+        }
+
+        /* Left Section (Illustration/Dummy Image) */
+        .illustration-side {
+            background-color: var(--background-color);
+            border-radius: var(--card-radius) 0 0 var(--card-radius);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            text-align: center;
+            min-height: 400px;
+        }
+        
+        .illustration-image {
+            width: 100%;
+            max-width: 350px;
+            height: auto;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Right Section (Form) */
+        .form-side {
+            padding: 40px;
+        }
+        
+        .logo {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--secondary-blue);
+            margin-bottom: 20px;
+        }
+
+        .logo .fa-check-circle {
+            color: var(--primary-blue);
+            font-size: 1.25rem;
+            margin-right: 5px;
+        }
+
+        h2 {
+            font-weight: 700;
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        .form-control, .form-select {
+            border-radius: 0.5rem;
+            padding: 0.65rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        .form-control:focus, .form-select:focus {
+            box-shadow: 0 0 0 0.25rem rgba(30, 136, 229, 0.25); /* Primary blue focus ring */
+            border-color: var(--primary-blue);
+        }
+
+        .form-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        .form-text-small {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        
+        .btn-submit {
+            background-color: var(--primary-blue);
+            border-color: var(--primary-blue);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: #1a71c2;
+            border-color: #1a71c2;
+        }
+
+        /* Responsive adjustments for mobile */
+        @media (max-width: 992px) {
+            .advisor-card {
+                box-shadow: none;
+            }
+            .illustration-side {
+                border-radius: var(--card-radius) var(--card-radius) 0 0;
+            }
+            .form-side {
+                border-radius: 0 0 var(--card-radius) var(--card-radius);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="advisor-card">
+        <!-- Close Button (Font Awesome) -->
+        <i class="fas fa-xmark close-btn" onclick="alert('Form dismissed.');"></i>
+
+        <div class="row g-0">
+            <!-- Left Section: Logo and Illustration -->
+            <div class="col-lg-5 d-none d-lg-flex illustration-side">
+                <div class="logo">
+                    Mudralaya Fintech <i class="fas fa-check-circle"></i>
+                </div>
+                <!-- Dummy Illustration (Placeholder) -->
+                <!-- Note: The actual image cannot be included, using a themed placeholder instead -->
+                <img 
+                    src="/images/conact-us.png" 
+                    alt="Illustration showing people joining a team" 
+                    class="illustration-image"
+                    onerror="this.onerror=null; this.src='https://placehold.co/350x300/e0eaf7/002f6a?text=JOIN+US';"
+                >
+            </div>
+
+            <!-- Right Section: Form -->
+            <div class="col-lg-7 form-side">
+                <div class="d-lg-none logo mb-4">
+                    Mudralaya Fintech <i class="fas fa-check-circle"></i>
+                </div>
+                
+                <h2>Become our Advisor</h2>
+                <p class="subtitle">
+                    It will take a couple of minutes to fill this form so that we can assist you accordingly!
+                </p>
+
+                <form id="advisorForm" novalidate>
+                    
+                    <h5 class="section-title">Your personal data</h5>
+
+                    <!-- Full Name -->
+                    <div class="mb-3">
+                        <label for="fullName" class="form-label">Full Name*</label>
+                        <input type="text" class="form-control" id="fullName" name="fullName" required placeholder="Kunal">
+                        <div class="invalid-feedback">
+                            Please enter your full name.
+                        </div>
+                    </div>
+
+                    <!-- Mobile Number -->
+                    <div class="mb-3">
+                        <label for="mobileNumber" class="form-label">Mobile Number*</label>
+                        <input type="tel" class="form-control" id="mobileNumber" name="mobileNumber" required pattern="[0-9]{10}" placeholder="8899883638">
+                        <div class="invalid-feedback">
+                            Please enter a valid 10-digit mobile number.
+                        </div>
+                    </div>
+
+                    <!-- Email ID -->
+                    <div class="mb-3">
+                        <label for="emailId" class="form-label">Email Id*</label>
+                        <input type="email" class="form-control" id="emailId" name="emailId" required placeholder="kunaldalotra02@gmail.com">
+                        <div class="invalid-feedback">
+                            Please enter a valid email address.
+                        </div>
+                    </div>
+
+                    <!-- Date of Birth -->
+                    <div class="mb-3">
+                        <label for="dateOfBirth" class="form-label">Date of birth*</label>
+                        <div class="input-group">
+                             <!-- Using type=date is best practice, but using type=text with a calendar icon
+                                 to match the visual style of the image. The validation will handle the format. -->
+                            <input type="text" class="form-control" id="dateOfBirth" name="dateOfBirth" required placeholder="DD.MM.YYYY" 
+                                pattern="\d{2}\.\d{2}\.\d{4}">
+                            <span class="input-group-text">
+                                <i class="fa-solid fa-calendar-days"></i>
+                            </span>
+                            <div class="invalid-feedback">
+                                Please enter a valid date in DD.MM.YYYY format (e.g., 12.05.1992).
+                            </div>
+                        </div>
+                        <small class="form-text-small">e.g., 12.05.1992</small>
+                    </div>
+
+                    <!-- Profession -->
+                    <div class="mb-3">
+                        <label for="profession" class="form-label">Profession*</label>
+                        <select class="form-select" id="profession" name="profession" required>
+                            <option value="" disabled selected>Select Profession</option>
+                            <option value="student">Student</option>
+                            <option value="working">Working Professional</option>
+                            <option value="business">Business Owner</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Please select your profession.
+                        </div>
+                    </div>
+
+                    <!-- IRDAI License -->
+                    <div class="mb-3">
+                        <label for="irdaLicense" class="form-label">Do you have IRDAI License*</label>
+                        <select class="form-select" id="irdaLicense" name="irdaLicense" required>
+                            <option value="" disabled selected>Select Option</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Please select whether you have an IRDAI license.
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-submit">Submit Form</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load Bootstrap 5 JS Bundle (Popper and JS) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // --- Form Validation Logic ---
+        document.getElementById('advisorForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Stop default form submission
+            event.stopPropagation();
+
+            const form = this;
+            let isValid = true;
+            
+            // Remove previous validation classes
+            form.querySelectorAll('.form-control, .form-select').forEach(input => {
+                input.classList.remove('is-invalid', 'is-valid');
+            });
+            
+            // 1. Full Name Validation
+            const fullName = document.getElementById('fullName');
+            if (fullName.value.trim() === '') {
+                fullName.classList.add('is-invalid');
+                isValid = false;
+            } else {
+                fullName.classList.add('is-valid');
+            }
+
+            // 2. Mobile Number Validation (10 digits)
+            const mobileNumber = document.getElementById('mobileNumber');
+            const mobileRegex = /^[0-9]{10}$/;
+            if (!mobileRegex.test(mobileNumber.value)) {
+                mobileNumber.classList.add('is-invalid');
+                isValid = false;
+            } else {
+                mobileNumber.classList.add('is-valid');
+            }
+
+            // 3. Email ID Validation
+            const emailId = document.getElementById('emailId');
+            // Simple email regex (can be made more complex if needed)
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailId.value.trim())) {
+                emailId.classList.add('is-invalid');
+                isValid = false;
+            } else {
+                emailId.classList.add('is-valid');
+            }
+
+            // 4. Date of Birth Validation (DD.MM.YYYY format and a valid date)
+            const dateOfBirth = document.getElementById('dateOfBirth');
+            const dateRegex = /^(\d{2})\.(\d{2})\.(\d{4})$/;
+            const match = dateOfBirth.value.match(dateRegex);
+
+            if (!match) {
+                dateOfBirth.classList.add('is-invalid');
+                isValid = false;
+            } else {
+                const day = parseInt(match[1], 10);
+                const month = parseInt(match[2], 10);
+                const year = parseInt(match[3], 10);
+
+                const date = new Date(year, month - 1, day); // month is 0-indexed
+                const today = new Date();
+
+                // Check if date is valid, month/day match what was input, and the person is not in the future
+                if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day || date > today) {
+                    dateOfBirth.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    dateOfBirth.classList.add('is-valid');
+                }
+            }
+
+            // 5. Profession Validation
+            const profession = document.getElementById('profession');
+            if (profession.value === '' || profession.value === 'Select Profession') {
+                profession.classList.add('is-invalid');
+                isValid = false;
+            } else {
+                profession.classList.add('is-valid');
+            }
+
+            // 6. IRDAI License Validation
+            const irdaLicense = document.getElementById('irdaLicense');
+            if (irdaLicense.value === '' || irdaLicense.value === 'Select Option') {
+                irdaLicense.classList.add('is-invalid');
+                isValid = false;
+            } else {
+                irdaLicense.classList.add('is-valid');
+            }
+
+
+            // --- Submission Handling ---
+            if (isValid) {
+                // If all validations pass
+                const formData = new FormData(form);
+                const data = {};
+                for (const [key, value] of formData.entries()) {
+                    data[key] = value;
+                }
+                
+                // You would typically send this data to a server here.
+                console.log('Form data ready for submission:', data);
+                // Clear the form and show success message
+                form.reset();
+                form.querySelectorAll('.form-control, .form-select').forEach(input => {
+                    input.classList.remove('is-valid');
+                });
+                
+                // Custom modal/message box success notification (instead of alert)
+                const successMsg = document.createElement('div');
+                successMsg.className = 'alert alert-success mt-3';
+                successMsg.textContent = 'Success! Your form has been submitted. We will contact you shortly.';
+                form.parentNode.insertBefore(successMsg, form.nextSibling);
+
+                setTimeout(() => {
+                    successMsg.remove();
+                }, 5000);
+
+            } else {
+                console.log('Form submission failed due to validation errors.');
+            }
+        });
+    </script>
+</body>
+</html>

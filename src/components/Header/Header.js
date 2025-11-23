@@ -14,6 +14,7 @@ const Header = () => {
     if (path === '/') setActiveLink('home');
     else if (path === '/about') setActiveLink('about');
     else if (path === '/advisor') setActiveLink('advisor');
+    else if (path === '/contact') setActiveLink('contact');
     else setActiveLink('home');
     
     // Close mobile menu on route change
@@ -78,35 +79,26 @@ const Header = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <a 
-                className={`nav-link mx-2 nav-animate-link ${activeLink === 'services' ? 'active' : ''}`}
-                href="#services"
-                onClick={() => handleLinkClick('services')}
-              >
-                Services
-              </a>
-            </li>
-            <li className="nav-item">
               <Link 
                 className={`nav-link mx-2 nav-animate-link ${activeLink === 'about' ? 'active' : ''}`}
                 to="/about"
                 onClick={() => handleLinkClick('about')}
               >
-                About
+                About Us
               </Link>
             </li>
             <li className="nav-item">
-              <a 
+              <Link 
                 className={`nav-link mx-2 nav-animate-link ${activeLink === 'contact' ? 'active' : ''}`}
-                href="#contact"
+                to="/contact"
                 onClick={() => handleLinkClick('contact')}
               >
-                Contact
-              </a>
+                Contact Us
+              </Link>
             </li>
             <li className="nav-item ms-md-3 mt-2">
-              <Link to="/advisor" className="btn btn-primary rounded-pill btn-cta">
-                Get Started
+              <Link to="/advisor" className="btn btn-signin">
+                Sign In
               </Link>
             </li>
           </ul>

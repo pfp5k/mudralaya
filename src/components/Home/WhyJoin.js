@@ -3,34 +3,34 @@ import React from 'react';
 const WhyJoin = () => {
   const features = [
     {
-      icon: '💼',
-      title: 'Freedom to work your way',
-      description: 'Choose your own hours, work from anywhere, and balance life on your terms.'
+      icon: 'fa-briefcase',
+      title: 'Entrepreneurship for All',
+      description: 'Start earning from home and grow at your pace'
     },
     {
-      icon: '💰',
-      title: 'Unlimited earning potential',
-      description: 'Get paid for every policy you sell and enjoy extra income when your team performs.'
+      icon: 'fa-user',
+      title: 'Women-Focused',
+      description: 'Designed to support women restarting careers or seeking financial independence'
     },
     {
-      icon: '📦',
-      title: 'Offer Every Product',
-      description: 'Represent 250+ insurance plans — from life and health to motor and business coverage.'
+      icon: 'fa-dollar-sign',
+      title: 'Zero-Investment Options',
+      description: 'Begin without spending anything'
     },
     {
-      icon: '🎓',
-      title: 'Guided Learning Path',
-      description: 'No experience? No problem. Get training, certification, and mentorship support.'
+      icon: 'fa-rocket',
+      title: 'Multi-Product Earnings',
+      description: 'Sell credit cards, loans, insurance & more'
     },
     {
-      icon: '🖥️',
-      title: 'Smart digital tools',
-      description: 'Use our all-in-one advisor dashboard to manage clients, leads, and earnings on the go.'
+      icon: 'fa-laptop',
+      title: 'Training & Skill Growth',
+      description: 'Weekly sessions with daily guidance'
     },
     {
-      icon: '🤝',
-      title: 'Build Your Brand',
-      description: 'Create your own identity, gain clients\' trust, and grow as a professional financial advisor.'
+      icon: 'fa-handshake',
+      title: 'Step-by-Step Growth Path',
+      description: 'From Individual → Premium → Franchise'
     }
   ];
 
@@ -38,15 +38,19 @@ const WhyJoin = () => {
     <section className="why-section">
       <div className="container">
         <div className="text-center mb-5">
-          <h2 className="fw-bold">Why Join <span style={{ color: 'var(--brand)' }}>Mudralaya?</span></h2>
-          <div className="text-muted">Work Smart. Earn Big. Live Free.</div>
+          <h2 className="why-join-title">
+            Why Join <span className="why-join-accent">Mudralaya?</span>
+          </h2>
+          <p className="why-join-subtitle">Work Smart. Earn Big. Live Free.</p>
         </div>
 
         <div className="row gy-4">
           {features.map((feature, index) => (
             <div key={index} className="col-12 col-md-6 col-lg-4">
               <div className="card-feature h-100">
-                <div className="icon-box">{feature.icon}</div>
+                <div className="icon-box">
+                  <i className={`fas ${feature.icon}`}></i>
+                </div>
                 <div className="card-content-wrapper">
                   <h5 className="mb-1">{feature.title}</h5>
                   <p className="mb-0 text-muted small">{feature.description}</p>

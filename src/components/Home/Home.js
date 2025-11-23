@@ -1,9 +1,8 @@
 import React from 'react';
 import Hero from './Hero';
 import WhyJoin from './WhyJoin';
-import WhatYouDo from './WhatYouDo';
+import Benefits from './Benefits';
 import Timeline from './Timeline';
-import GrowWithoutLimits from './GrowWithoutLimits';
 import EmpoweringWomen from './EmpoweringWomen';
 import './Home.css';
 
@@ -12,9 +11,8 @@ const Home = () => {
     <div className="home-page">
       <Hero />
       <WhyJoin />
-      <WhatYouDo />
+      <Benefits />
       <Timeline />
-      <GrowWithoutLimits />
       <EmpoweringWomen />
     </div>
   );

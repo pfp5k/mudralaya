@@ -1,0 +1,192 @@
+/* Benefits Section */
+.benefits-section {
+  padding: 5rem 1rem;
+  background: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 50%, #0f1419 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.benefits-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.benefits-subtitle {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 0;
+}
+
+/* Plan Card */
+.plan-card {
+  background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  overflow: visible;
+}
+
+.plan-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.plan-card.zoom-active {
+  transform: scale(1.1) translateY(-12px);
+  z-index: 10;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* Special styling for INDIVIDUAL card (brighter gradient) */
+.plan-card-individual {
+  background: linear-gradient(180deg, #4facfe 0%, #00f2fe 100%) !important;
+}
+
+/* Plan Badge */
+.plan-badge {
+  background-color: #ffffff;
+  color: #333333;
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-align: center;
+  display: inline-block;
+  margin: 0 auto 1.5rem;
+  width: fit-content;
+}
+
+/* Plan Price */
+.plan-price {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Plan Benefits List */
+.plan-benefits {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem 0;
+  flex-grow: 1;
+}
+
+.plan-benefits li {
+  color: #ffffff;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+  padding-left: 1.2rem;
+  position: relative;
+}
+
+.plan-benefits li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #ffffff;
+  font-size: 1.2rem;
+  line-height: 1.4;
+}
+
+/* Plan Button */
+.plan-button {
+  width: 100%;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.plan-button-purple {
+  background-color: #764ba2;
+}
+
+.plan-button-purple:hover {
+  background-color: #5d3a7e;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(118, 75, 162, 0.4);
+}
+
+.plan-button-teal {
+  background-color: #2d8f9f;
+}
+
+.plan-button-teal:hover {
+  background-color: #247a88;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(45, 143, 159, 0.4);
+}
+
+.plan-button-black {
+  background-color: #1a1a1a;
+}
+
+.plan-button-black:hover {
+  background-color: #000000;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .benefits-title {
+    font-size: 2rem;
+  }
+
+  .benefits-subtitle {
+    font-size: 1rem;
+  }
+
+  .plan-card {
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .benefits-section {
+    padding: 3rem 1rem;
+  }
+
+  .benefits-title {
+    font-size: 1.75rem;
+  }
+
+  .plan-price {
+    font-size: 1.75rem;
+  }
+
+  .plan-benefits li {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .benefits-title {
+    font-size: 1.5rem;
+  }
+
+  .plan-card {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .plan-price {
+    font-size: 1.5rem;
+  }
+}
+

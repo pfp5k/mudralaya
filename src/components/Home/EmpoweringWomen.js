@@ -1,38 +1,38 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 const EmpoweringWomen = () => {
   return (
     <section className="women-strip">
       <div className="container py-5">
-        <div className="row align-items-center justify-content-center g-5">
-          <div className="col-12 col-lg-6 text-center text-lg-end">
-            <div className="strip-content ms-lg-auto me-lg-0 mx-auto">
-              <h2 className="mb-3">
-                Empowering <span style={{ color: 'var(--brand)' }}>Women.</span> <br />
-                <span className="text-brand">Building Futures</span>
-              </h2>
-              <p className="text-muted fs-6 mb-4">
-                Join a powerful network of women advisors shaping the future of financial freedom in India
-              </p>
-            </div>
-          </div>
-
+        <div className="row align-items-center g-5">
+          {/* Left Side - Image with Card Effect */}
           <div className="col-12 col-lg-6 text-center text-lg-start">
-            <div className="d-flex flex-column align-items-center align-items-lg-start strip-graphic ms-lg-0 mx-auto">
+            <div className="d-flex justify-content-center justify-content-lg-start">
               <div className="image-card-effect">
                 <img 
-                  src="/images/Empowering_Women.webp" 
-                  alt="Empowering Women" 
-                  className="img-fluid hero-img"
+                  src="/images/women.png" 
+                  alt="Women Empowerment" 
+                  className="img-fluid"
                   onError={(e) => {
-                    e.target.src = 'https://via.placeholder.com/300x300?text=Empowering+Women';
+                    e.target.src = 'https://via.placeholder.com/400x400?text=Women+Empowerment';
                   }}
                 />
               </div>
-              <Link to="/advisor" className="btn-cta text-decoration-none mt-3">
-                Become our Advisor
-              </Link>
+            </div>
+          </div>
+
+          {/* Right Side - Text Quotes */}
+          <div className="col-12 col-lg-6">
+            <div className="women-quotes">
+              <p className="quote-text">
+                "Your financial independence starts here."
+              </p>
+              <p className="quote-text">
+                "Women leading India's financial future."
+              </p>
+              <p className="quote-text">
+                "Start small, grow big with Mudralaya."
+              </p>
             </div>
           </div>
         </div>

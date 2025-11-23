@@ -28,6 +28,26 @@
     box-shadow: 0 8px 15px rgba(29, 144, 255, 0.3) !important;
 }
 
+/* Sign In Button Styling */
+.btn-signin {
+    background-color: #ffffff !important;
+    color: var(--dark-text) !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    border-radius: 8px !important;
+    padding: 8px 24px !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-signin:hover {
+    background-color: #f8f9fa !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+    color: var(--dark-text) !important;
+}
+
 /* --- Header Base Styling (Advanced Look) --- */
 #main-header {
     background-color: #F5F7FA !important; 

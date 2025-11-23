@@ -8,6 +8,7 @@ import './App.css';
 const Home = lazy(() => import('./components/Home/Home'));
 const AboutUs = lazy(() => import('./components/AboutUs/AboutUs'));
 const Advisor = lazy(() => import('./components/Advisor/Advisor'));
+const ContactUs = lazy(() => import('./components/ContactUs/ContactUs'));
 
 // Loading component
 const Loading = () => (
@@ -29,6 +30,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<AboutUs />} />
               <Route path="/advisor" element={<Advisor />} />
+              <Route path="/contact" element={<ContactUs />} />
             </Routes>
           </Suspense>
         </main>

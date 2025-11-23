@@ -24,86 +24,88 @@ a {
   text-decoration: none;
 }
 
-/* Hero */
-.hero {
-  background: var(--hero-bg);
-  padding: 3.5rem 1rem;
-}
-
-.hero h1 {
-  font-size: 2.35rem;
-  line-height: 1.5;
-  font-weight: 700;
-}
-
-.hero .accent {
-  color: var(--brand);
-}
-
+/* Hero - Legacy styles kept for backward compatibility if needed */
 .lead-muted {
   color: var(--muted);
-}
-
-.mock-card {
-  background: linear-gradient(180deg, #fbfdff, #f3f8fb);
-  border-radius: 16px;
-  padding: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 8px 30px rgba(16, 64, 128, 0.06);
 }
 
 /* Why Join */
 .why-section {
   padding: 5rem 1rem;
-  background-color: #f8f9fa;
+  background-color: #ffffff;
+}
+
+/* Why Join Title Styling */
+.why-join-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333333;
+  margin-bottom: 0.5rem;
+}
+
+.why-join-accent {
+  color: #2d8f9f;
+}
+
+.why-join-subtitle {
+  color: #6b7785;
+  font-size: 1.1rem;
+  margin-bottom: 0;
 }
 
 .card-feature {
-  background: #C2E2FA;
-  border: 4px solid var(--brand);
-  box-shadow: 0 8px 24px rgba(20, 30, 40, 0.1);
-  border-radius: 14px;
-  padding: 1.5rem;
-  color: #fff;
+  background: #ffffff;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  color: #333;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   cursor: pointer;
+  height: 100%;
 }
 
 .card-feature:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 30px rgba(20, 30, 40, 0.15);
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
 }
 
 .card-feature h5 {
-  color: black;
+  color: #333333;
   font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
 }
 
 .card-feature .text-muted.small {
-  color: black;
+  color: #6b7785;
+  font-size: 0.9rem;
+  line-height: 1.5;
 }
 
 .icon-box {
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
-  background: #fff;
-  border: 3px solid var(--brand);
+  background: transparent;
+  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.8rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+}
+
+.icon-box i {
+  font-size: 2rem;
+  color: #4a5568;
 }
 
 .card-content-wrapper {
-  margin-top: 1.25rem;
+  margin-top: 0;
 }
 
 /* What You'll Do */
@@ -114,6 +116,7 @@ a {
   border-bottom: 1px solid rgba(0, 0, 0, 0.03);
 }
 
+/* Legacy hero-img style - kept for backward compatibility */
 .hero-img {
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
@@ -208,34 +211,34 @@ a {
 
 /* Empowering Women */
 .women-strip {
-  background: #f8fafc;
-  padding: 1.6rem;
+  background: #ffffff;
+  padding: 5rem 1rem;
   border-top: 1px solid rgba(0, 0, 0, 0.03);
   border-bottom: 1px solid rgba(0, 0, 0, 0.03);
 }
 
-.women-strip .btn-cta {
-  background: var(--brand);
-  color: #fff;
-  border-radius: 8px;
-  padding: 0.45rem 0.85rem;
-  border: none;
-  margin-left: auto;
-  margin-right: auto;
-  transition: all 0.3s ease;
+/* Women Quotes Styling */
+.women-quotes {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem 0;
 }
 
-.women-strip .btn-cta:hover {
-  background: var(--brand-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(30, 144, 255, 0.3);
+.quote-text {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333333;
+  margin: 0;
+  line-height: 1.4;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 .image-card-effect {
   position: relative;
-  max-width: 250px;
+  max-width: 400px;
   width: 100%;
-  background-color: #f8fafc;
+  background-color: transparent;
   border-radius: 8px;
   cursor: pointer;
   margin: 0 auto;
@@ -245,8 +248,8 @@ a {
 .image-card-effect img {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  object-fit: contain;
   border-radius: 8px;
   position: relative;
   z-index: 2;
@@ -289,10 +292,6 @@ a {
 
 /* Responsive */
 @media (max-width: 575px) {
-  .hero h1 {
-    font-size: 1.65rem;
-  }
-  
   .hero-img {
     width: 100%;
   }
@@ -303,12 +302,16 @@ a {
 }
 
 @media (max-width: 768px) {
-  .hero {
-    padding: 2rem 1rem;
-  }
-  
   .why-section {
     padding: 3rem 1rem;
+  }
+
+  .why-join-title {
+    font-size: 2rem;
+  }
+
+  .why-join-subtitle {
+    font-size: 1rem;
   }
   
   .do-section {
@@ -318,6 +321,51 @@ a {
   .grow-limits-section {
     padding-top: 3rem;
     padding-bottom: 3rem;
+  }
+
+  .women-strip {
+    padding: 3rem 1rem;
+  }
+
+  .women-quotes {
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+  }
+
+  .quote-text {
+    font-size: 1.25rem;
+  }
+
+  .image-card-effect {
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 576px) {
+  .why-join-title {
+    font-size: 1.75rem;
+  }
+
+  .card-feature {
+    padding: 1.5rem 1rem;
+  }
+
+  .icon-box {
+    width: 60px;
+    height: 60px;
+  }
+
+  .icon-box i {
+    font-size: 1.5rem;
+  }
+
+  .quote-text {
+    font-size: 1.1rem;
+  }
+
+  .women-quotes {
+    gap: 1.25rem;
+    padding: 1rem 0;
   }
 }
 

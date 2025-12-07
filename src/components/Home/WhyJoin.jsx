@@ -19,8 +19,8 @@ const WhyJoin = () => {
     },
     {
       image: '/images/vector/rocket.png',
-      title: 'Multi-Product Earnings',
-      description: 'Sell credit cards, loans, insurance and more'
+      title: 'Multi-Task Earnings',
+      description: 'Complete tasks from multiple companies & earn instantly'
     },
     {
       image: '/images/vector/laptop.png',
@@ -30,7 +30,7 @@ const WhyJoin = () => {
     {
       image: '/images/vector/handshake.png',
       title: 'Step-by-Step Growth Path',
-      description: 'From Individual to Premium to Franchise'
+      description: 'From Partner → Skilled Partner → Entrepreneur'
     }
   ];
 

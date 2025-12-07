@@ -4,21 +4,25 @@ import './Benefits.css';
 const plans = [
   {
     key: 'free',
-    title: 'FREE',
+    title: 'Partner Program',
     price: '₹ 0',
     benefits: [
+      'Partner (Task-Based Earnings)
+',
       'Start with zero investment',
-      'Earn from multiple financial products',
-      'Weekly training for beginners',
-      'Flexible work - home or field',
+      'Start with zero investment',
+      'Access to daily/weekly/monthly tasks',
+      'Earn by completing tasks from multiple companies',
+      'Flexible work - home or on-field',
       'Unlimited earning potential',
-      'Simple onboarding (18+ & 10th pass)'
+      'Simple onboarding (18+)',
+      'Ideal for students, homemakers & part-time earners'
     ],
     variant: 'free'
   },
   {
     key: 'individual',
-    title: 'INDIVIDUAL',
+    title: 'Full-Time Partner',
     price: '₹15,000-₹27,599',
     benefits: [
       'CRM access & verified leads',

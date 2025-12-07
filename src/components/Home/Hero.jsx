@@ -18,14 +18,15 @@ const Hero = () => {
               
               {/* Main Headline */}
               <h1 className="hero-headline">
-                Zero Investment. Start<br />
-                Your Entrepreneur<br />
-                Journey Today
+                Choose Your Tasks.<br />
+                Earn Your Way.<br />
+                Zero Investment.
               </h1>
               
               {/* Sub-headline */}
               <p className="hero-subheadline">
-                Start Your Journey To Earn, Lead, And Grow Through India's Most Empowering Multi-Product Financial Platform
+                
+Get daily, weekly & monthly tasks from multiple companies—select what suits you and start earning instantly.
               </p>
               
               {/* CTA Buttons */}
@@ -34,7 +35,7 @@ const Hero = () => {
                   Explore Plans
                 </Link>
                 <Link to="/advisor" className="btn btn-advisor">
-                  Talk to our Advisor
+                  Start Earning
                 </Link>
               </div>
             </div>

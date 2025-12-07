@@ -3,34 +3,34 @@ import React from 'react';
 const WhyJoin = () => {
   const features = [
     {
-      icon: 'fa-briefcase',
+      image: '/images/vector/entrepreneurship.png',
       title: 'Entrepreneurship for All',
       description: 'Start earning from home and grow at your pace'
     },
     {
-      icon: 'fa-user',
+      image: '/images/vector/women.png',
       title: 'Women-Focused',
       description: 'Designed to support women restarting careers or seeking financial independence'
     },
     {
-      icon: 'fa-dollar-sign',
+      image: '/images/vector/dollar.png',
       title: 'Zero-Investment Options',
       description: 'Begin without spending anything'
     },
     {
-      icon: 'fa-rocket',
+      image: '/images/vector/rocket.png',
       title: 'Multi-Product Earnings',
-      description: 'Sell credit cards, loans, insurance & more'
+      description: 'Sell credit cards, loans, insurance and more'
     },
     {
-      icon: 'fa-laptop',
-      title: 'Training & Skill Growth',
+      image: '/images/vector/laptop.png',
+      title: 'Training and Skill Growth',
       description: 'Weekly sessions with daily guidance'
     },
     {
-      icon: 'fa-handshake',
+      image: '/images/vector/handshake.png',
       title: 'Step-by-Step Growth Path',
-      description: 'From Individual → Premium → Franchise'
+      description: 'From Individual to Premium to Franchise'
     }
   ];
 
@@ -49,7 +49,7 @@ const WhyJoin = () => {
             <div key={index} className="col-12 col-md-6 col-lg-4">
               <div className="card-feature h-100">
                 <div className="icon-box">
-                  <i className={`fas ${feature.icon}`}></i>
+                  <img src={feature.image} alt={feature.title} />
                 </div>
                 <div className="card-content-wrapper">
                   <h5 className="mb-1">{feature.title}</h5>

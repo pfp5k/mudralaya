@@ -76,8 +76,8 @@ a {
 
 .card-feature h5 {
   color: #333333;
-  font-weight: 600;
-  font-size: 1.1rem;
+  font-weight: 700;
+  font-size: 1.25rem;
   margin-bottom: 0.75rem;
 }
 
@@ -99,9 +99,8 @@ a {
   margin-bottom: 1rem;
 }
 
-.icon-box i {
-  font-size: 2rem;
-  color: #4a5568;
+.icon-box img {
+  width: 60px;
 }
 
 .card-content-wrapper {

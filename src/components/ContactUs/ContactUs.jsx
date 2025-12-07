@@ -308,7 +308,7 @@ const ContactUs = () => {
                     value={formData.phoneNumber}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    placeholder="+91 XXXXX XXXXX"
+                    placeholder="Enter your number"
                     maxLength={14}
                     required
                   />
@@ -383,13 +383,13 @@ const ContactUs = () => {
                         className="form-check-input"
                         type="radio"
                         name="subject"
-                        id="general"
-                        value="General Inquiry"
-                        checked={formData.subject === 'General Inquiry'}
+                        id="partner"
+                        value="Partner"
+                        checked={formData.subject === 'Partner'}
                         onChange={handleChange}
                       />
-                      <label className="form-check-label" htmlFor="general">
-                        General Inquiry
+                      <label className="form-check-label" htmlFor="partner">
+                        Partner
                       </label>
                     </div>
                     <div className="form-check">
@@ -397,13 +397,13 @@ const ContactUs = () => {
                         className="form-check-input"
                         type="radio"
                         name="subject"
-                        id="company"
-                        value="Company Inquiry"
-                        checked={formData.subject === 'Company Inquiry'}
+                        id="business"
+                        value="Business Owner"
+                        checked={formData.subject === 'Business Owner'}
                         onChange={handleChange}
                       />
-                      <label className="form-check-label" htmlFor="company">
-                        Company Inquiry
+                      <label className="form-check-label" htmlFor="business">
+                        Business Owner
                       </label>
                     </div>
                     <div className="form-check">
@@ -411,27 +411,13 @@ const ContactUs = () => {
                         className="form-check-input"
                         type="radio"
                         name="subject"
-                        id="plan"
-                        value="Plan Inquiry"
-                        checked={formData.subject === 'Plan Inquiry'}
+                        id="startup"
+                        value="Want to Build a Startup"
+                        checked={formData.subject === 'Want to Build a Startup'}
                         onChange={handleChange}
                       />
-                      <label className="form-check-label" htmlFor="plan">
-                        Plan Inquiry
-                      </label>
-                    </div>
-                    <div className="form-check">
-                      <input
-                        className="form-check-input"
-                        type="radio"
-                        name="subject"
-                        id="others"
-                        value="Others"
-                        checked={formData.subject === 'Others'}
-                        onChange={handleChange}
-                      />
-                      <label className="form-check-label" htmlFor="others">
-                        Others
+                      <label className="form-check-label" htmlFor="startup">
+                        Want to Build a Startup
                       </label>
                     </div>
                   </div>

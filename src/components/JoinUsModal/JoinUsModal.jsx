@@ -7,9 +7,7 @@ const JoinUsModal = ({ isOpen, onClose }) => {
         mobileNumber: '',
         emailId: '',
         dateOfBirth: '',
-        profession: '',
-        hasIRDAILicense: '',
-        plan: ''
+        profession: ''
     });
 
     const handleChange = (e) => {
@@ -52,7 +50,7 @@ const JoinUsModal = ({ isOpen, onClose }) => {
                         <i className="fas fa-times"></i>
                     </button>
 
-                    <h2 className="modal-title">Become our Advisor</h2>
+                    <h2 className="modal-title">Become a Partner</h2>
                     <p className="modal-subtitle">
                         It will take a couple of minutes,<br />
                         to fill this form so that we can assist you accordingly!
@@ -126,37 +124,6 @@ const JoinUsModal = ({ isOpen, onClose }) => {
                                 <option value="house-wife">House Wife</option>
                                 <option value="business-man">Business Man</option>
                                 <option value="other">Other</option>
-                            </select>
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="hasIRDAILicense">Do you have IRDAI License*</label>
-                            <select
-                                id="hasIRDAILicense"
-                                name="hasIRDAILicense"
-                                value={formData.hasIRDAILicense}
-                                onChange={handleChange}
-                                required
-                            >
-                                <option value="">Select</option>
-                                <option value="yes">Yes</option>
-                                <option value="no">No</option>
-                            </select>
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="plan">Plan*</label>
-                            <select
-                                id="plan"
-                                name="plan"
-                                value={formData.plan}
-                                onChange={handleChange}
-                                required
-                            >
-                                <option value="">Select plan</option>
-                                <option value="individual">Individual</option>
-                                <option value="team">Team</option>
-                                <option value="enterprise">Enterprise</option>
                             </select>
                         </div>
 

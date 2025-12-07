@@ -4,13 +4,16 @@ import './Benefits.css';
 const plans = [
   {
     key: 'free',
-    title: 'Partner Program',
+    title: 'PARTNER',
+    subtitle: 'Task-Based Earnings',
     price: '₹ 0',
+    priceLabel: 'Free to Join',
+    description: 'For people who want to earn by completing daily, weekly & monthly tasks.',
     benefits: [
       'Start with zero investment',
-      'Access to daily/weekly/monthly tasks',
+      'Access to daily / weekly / monthly tasks',
       'Earn by completing tasks from multiple companies',
-      'Flexible work - home or on-field',
+      'Flexible work — home or on-field',
       'Unlimited earning potential',
       'Simple onboarding (18+)',
       'Ideal for students, homemakers & part-time earners'
@@ -19,43 +22,55 @@ const plans = [
   },
   {
     key: 'individual',
-    title: 'Full-Time Partner',
+    title: 'FULL-TIME PARTNER',
+    subtitle: 'Professional Growth',
     price: '₹15,000-₹27,599',
+    description: 'For individuals who want to work full-time & earn a stable income',
     benefits: [
-      'CRM access & verified leads',
-      'Dedicated Relationship Manager',
-      'Weekly training + daily feedback',
-      'Digital presence setup',
-      'Option for laptop, branding, website',
-      'Minimum salary (KRA-based)'
+      'Maximum task opportunities from top brands & companies',
+      'Weekly training sessions',
+      'Dedicated Relationship Manager for guidance',
+      'Daily review & performance improvement',
+      'Fix salary support up to ₹50,000 (performance-based)',
+      'Strong digital presence setup',
+      'Priority access to high-paying tasks',
+      'Fast-track growth to Skilled Partner → Entrepreneur'
     ],
     variant: 'individual'
   },
   {
-    key: 'free-franchise',
-    title: 'FREE FRANCHISE',
+    key: 'business',
+    title: 'BUSINESS SOLUTIONS',
+    subtitle: 'For Business Owners',
     price: '₹ 0',
+    description: 'For companies who want complete business tasks executed through Mudralaya',
     benefits: [
-      'Full CRM access (free)',
-      'Salary support for team (KRA-based)',
-      'Hiring support for calling staff',
-      'Weekly leadership training',
-      'Daily call feedback',
-      'Add-on: 2 laptops (₹15,000 total)'
+      'We understand your business concept & goals',
+      'Create customized tasks based on your industry',
+      'Training videos for each task for perfect execution',
+      'Assign tasks to verified & skilled partner network',
+      'Lead generation, promotion & marketing support',
+      'Surveys, customer feedback & outreach',
+      'Tech, marketing, sales & service support included',
+      'Dedicated business manager for coordination'
     ],
     variant: 'franchise'
   },
   {
-    key: 'paid-franchise',
-    title: 'PAID FRANCHISE',
+    key: 'startup',
+    title: 'STARTUP LAUNCH',
+    subtitle: 'For Aspiring Entrepreneurs',
     price: '₹ Customise',
+    description: 'For individuals who want to build and launch their own startup',
     benefits: [
-      'Fully customizable pricing & tools',
-      'CRM seats for full team',
-      'Verified data packs',
-      'Full office + team setup guidance',
-      'RM support + performance coaching',
-      'Branding, website & hiring support'
+      'We understand your idea, vision & long-term goals',
+      'Create a complete business model for your concept',
+      'Market research & competitor analysis',
+      'Branding, tech development & website/app setup',
+      'Ideation, validation, strategy & planning',
+      'Product development & marketing setup',
+      'Go-to-market execution support',
+      'Dedicated startup mentor for step-by-step guidance'
     ],
     variant: 'paid'
   }
@@ -80,9 +95,8 @@ const Benefits = () => {
                   <div className="plan-badge">{plan.title}</div>
                 )}
                 <div
-                  className={`plan-price ${
-                    plan.variant === 'individual' ? 'price-pill has-label' : ''
-                  }`}
+                  className={`plan-price ${plan.variant === 'individual' ? 'price-pill has-label' : ''
+                    }`}
                 >
                   {plan.variant === 'individual' && (
                     <div className="price-label">{plan.title}</div>

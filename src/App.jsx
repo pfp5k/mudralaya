@@ -1,14 +1,14 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
+import Header from './components/Header/Header.jsx';
+import Footer from './components/Footer/Footer.jsx';
 import './App.css';
 
 // Lazy load components for code splitting
-const Home = lazy(() => import('./components/Home/Home'));
-const AboutUs = lazy(() => import('./components/AboutUs/AboutUs'));
-const Advisor = lazy(() => import('./components/Advisor/Advisor'));
-const ContactUs = lazy(() => import('./components/ContactUs/ContactUs'));
+const Home = lazy(() => import('./components/Home/Home.jsx'));
+const AboutUs = lazy(() => import('./components/AboutUs/AboutUs.jsx'));
+const Advisor = lazy(() => import('./components/Advisor/Advisor.jsx'));
+const ContactUs = lazy(() => import('./components/ContactUs/ContactUs.jsx'));
 
 // Loading component
 const Loading = () => (

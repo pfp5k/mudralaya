@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import EmpoweringWomen from '../Home/EmpoweringWomen.jsx';
 import './AboutUs.css';
+import '../Home/Home.css';
 
 const AboutUs = () => {
   return (
@@ -16,7 +18,7 @@ const AboutUs = () => {
                 <h1 className="about-us-hero-title">
                   About <span className="about-us-hero-title-highlight">Us</span>
                 </h1>
-                
+
                 {/* Subtitle */}
                 <h2 className="about-us-hero-subtitle">
                   Empowering Financial Simplicity Through AI.
@@ -45,14 +47,35 @@ const AboutUs = () => {
             {/* Right Section - About Us Image */}
             <div className="col-12 col-lg-6 about-us-hero-right">
               <div className="about-us-hero-image-wrapper">
-                <img 
-                  src="/images/about-us.png" 
-                  alt="About Us" 
+                <img
+                  src="/images/about-us.png"
+                  alt="About Us"
                   className="about-us-hero-image"
                   onError={(e) => {
                     e.target.src = '/images/about-us.png';
                   }}
                 />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Mission Section */}
+      <section className="our-mission-section">
+        <div className="container-xl px-4 px-lg-5">
+          <div className="row">
+            <div className="col-12 text-center">
+              <h2 className="our-mission-title">
+                Our <span className="our-mission-title-highlight">Mission</span>
+              </h2>
+              <p className="our-mission-text">
+                To create 1 lakh financial entrepreneurs across India through simple earning models, structured training, and multi-product financial opportunities
+              </p>
+
+              {/* Mission Content Box */}
+              <div className="our-mission-content-box">
+                {/* Placeholder for future content like video, image, or statistics */}
               </div>
             </div>
           </div>
@@ -79,9 +102,9 @@ const AboutUs = () => {
             {/* Left Side - Illustration */}
             <div className="col-12 col-lg-6">
               <div className="what-we-do-illustration">
-                <img 
-                  src="/images/what-we-do.png" 
-                  alt="What We Do Illustration" 
+                <img
+                  src="/images/what-we-do.png"
+                  alt="What We Do Illustration"
                   className="img-fluid"
                   onError={(e) => {
                     e.target.src = '/images/what-we-do.png';
@@ -133,6 +156,8 @@ const AboutUs = () => {
           </div>
         </div>
       </section>
+
+
 
       {/* Our Vision Section */}
       <section className="our-vision-section">
@@ -217,9 +242,14 @@ const AboutUs = () => {
           </div>
         </div>
       </section>
+
+     
+      {/* Empowering Women Section from Home Page */}
+      <EmpoweringWomen />
     </div>
   );
 };
 
 export default AboutUs;
+
 

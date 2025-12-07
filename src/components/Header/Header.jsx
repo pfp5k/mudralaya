@@ -13,10 +13,9 @@ const Header = () => {
     const path = location.pathname;
     if (path === '/') setActiveLink('home');
     else if (path === '/about') setActiveLink('about');
-    else if (path === '/advisor') setActiveLink('advisor');
     else if (path === '/contact') setActiveLink('contact');
     else setActiveLink('home');
-    
+
     // Close mobile menu on route change
     setIsNavOpen(false);
   }, [location]);
@@ -40,37 +39,37 @@ const Header = () => {
   };
 
   return (
-    <nav 
-      id="main-header" 
+    <nav
+      id="main-header"
       className={`navbar navbar-expand-md navbar-light fixed-top px-4 py-2 ${scrolled ? 'scrolled' : ''}`}
     >
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
-          <img 
-            src="/images/mudralya_logo.webp" 
-            className="header-logo" 
+          <img
+            src="/images/mudralya_logo.webp"
+            className="header-logo"
             alt="Mudralya Logo"
             onError={(e) => {
               e.target.src = 'https://via.placeholder.com/150x60?text=Mudralaya';
             }}
           />
         </Link>
-        
-        <button 
+
+        <button
           className={`navbar-toggler border-0 shadow-none ${isNavOpen ? '' : 'collapsed'}`}
-          type="button" 
+          type="button"
           onClick={() => setIsNavOpen(!isNavOpen)}
-          aria-controls="navbarNav" 
+          aria-controls="navbarNav"
           aria-expanded={isNavOpen}
           aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        
+
         <div className={`collapse navbar-collapse justify-content-end ${isNavOpen ? 'show' : ''}`} id="navbarNav">
           <ul className="navbar-nav align-items-center">
             <li className="nav-item">
-              <Link 
+              <Link
                 className={`nav-link mx-2 nav-animate-link ${activeLink === 'home' ? 'active' : ''}`}
                 to="/"
                 onClick={() => handleLinkClick('home')}
@@ -79,7 +78,7 @@ const Header = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link 
+              <Link
                 className={`nav-link mx-2 nav-animate-link ${activeLink === 'about' ? 'active' : ''}`}
                 to="/about"
                 onClick={() => handleLinkClick('about')}
@@ -88,7 +87,7 @@ const Header = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link 
+              <Link
                 className={`nav-link mx-2 nav-animate-link ${activeLink === 'contact' ? 'active' : ''}`}
                 to="/contact"
                 onClick={() => handleLinkClick('contact')}
@@ -97,8 +96,8 @@ const Header = () => {
               </Link>
             </li>
             <li className="nav-item ms-md-3 mt-2">
-              <Link to="/advisor" className="btn btn-signin">
-                Sign In
+              <Link to="/advisor" className="btn btn-join-us">
+                Join us
               </Link>
             </li>
           </ul>

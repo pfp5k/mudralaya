@@ -19,19 +19,18 @@ const Footer = () => {
         <div className="row gy-4">
           <div className="col-lg-4 col-md-4 m-0 mb-3">
             <div className="mb-3">
-              <img 
-                src="/images/mudralya_logo.webp" 
-                alt="Mudralaya Fintech Logo" 
+              <img
+                src="/images/mudralya_logo.webp"
+                alt="Mudralaya Fintech Logo"
                 style={{ height: '80px', width: 'auto', filter: 'brightness(0) invert(1)' }}
                 onError={(e) => {
                   e.target.src = 'https://via.placeholder.com/150x80?text=Mudralaya';
                 }}
               />
-              <div style={{ fontWeight: 700, fontSize: '1.5rem' }}>Mudralaya Fintech</div>
             </div>
 
             <div className="small text-white-50">
-              Copyright © 2020 Nexcent ltd.
+              Copyright © 2020 Mudralaya ltd.
             </div>
             <div className="small text-white-50">
               All rights reserved
@@ -41,8 +40,8 @@ const Footer = () => {
               <a href="#" className="social-icon" aria-label="Instagram">
                 <i className="fab fa-instagram"></i>
               </a>
-              <a href="#" className="social-icon" aria-label="Telegram">
-                <i className="fab fa-telegram-plane"></i>
+              <a href="#" className="social-icon" aria-label="LinkedIn">
+                <i className="fab fa-linkedin-in"></i>
               </a>
               <a href="#" className="social-icon" aria-label="Twitter">
                 <i className="fab fa-twitter"></i>
@@ -60,13 +59,13 @@ const Footer = () => {
                 <ul className="list-unstyled small">
                   <li><Link to="/">Home</Link></li>
                   <li><Link to="/about">About us</Link></li>
-                  <li><Link to="/contact">Contact us</Link></li>
+                  <li><Link to="/contact">Contact</Link></li>
                 </ul>
               </div>
               <div className="col-6">
                 <h6>Support</h6>
                 <ul className="list-unstyled small">
-                  <li><a href="#help">Help center</a></li>
+                  <li><a href="#help">Get started</a></li>
                   <li><a href="#terms">Terms of service</a></li>
                   <li><a href="#legal">Legal</a></li>
                   <li><a href="#privacy">Privacy policy</a></li>
@@ -81,10 +80,10 @@ const Footer = () => {
               <h6>Stay up to date</h6>
               <form className="d-flex" onSubmit={handleSubmit}>
                 <div className="input-group">
-                  <input 
-                    type="email" 
-                    className="form-control" 
-                    placeholder="Your email address" 
+                  <input
+                    type="email"
+                    className="form-control"
+                    placeholder="Your email address"
                     aria-label="Your email address"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}

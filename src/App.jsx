@@ -7,7 +7,6 @@ import './App.css';
 // Lazy load components for code splitting
 const Home = lazy(() => import('./components/Home/Home.jsx'));
 const AboutUs = lazy(() => import('./components/AboutUs/AboutUs.jsx'));
-const Advisor = lazy(() => import('./components/Advisor/Advisor.jsx'));
 const ContactUs = lazy(() => import('./components/ContactUs/ContactUs.jsx'));
 
 // Loading component
@@ -29,7 +28,6 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<AboutUs />} />
-              <Route path="/advisor" element={<Advisor />} />
               <Route path="/contact" element={<ContactUs />} />
             </Routes>
           </Suspense>

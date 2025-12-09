@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './JoinUsModal.css';
+import { request } from '../../api/client';
 
 const JoinUsModal = ({ isOpen, onClose }) => {
     const [formData, setFormData] = useState({
@@ -9,6 +10,8 @@ const JoinUsModal = ({ isOpen, onClose }) => {
         dateOfBirth: '',
         profession: ''
     });
+    const [submitting, setSubmitting] = useState(false);
+    const [submitError, setSubmitError] = useState('');
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -18,11 +21,38 @@ const JoinUsModal = ({ isOpen, onClose }) => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Join Us Form Data:', formData);
-        alert('Thank you for your interest! We will contact you soon.');
-        onClose();
+        setSubmitError('');
+
+        setSubmitting(true);
+        try {
+            await request('/api/join', {
+                method: 'POST',
+                data: formData
+            });
+            alert('Thank you for your interest! We will contact you soon.');
+            onClose();
+            setFormData({
+                fullName: '',
+                mobileNumber: '',
+                emailId: '',
+                dateOfBirth: '',
+                profession: ''
+            });
+        } catch (err) {
+            if (err.data?.errors) {
+                const fieldErrors = Object.values(err.data.errors)
+                  .flat()
+                  .filter(Boolean)
+                  .join(', ');
+                setSubmitError(fieldErrors || err.message);
+            } else {
+                setSubmitError(err.message || 'Failed to submit. Please try again.');
+            }
+        } finally {
+            setSubmitting(false);
+        }
     };
 
     if (!isOpen) return null;
@@ -55,6 +85,11 @@ const JoinUsModal = ({ isOpen, onClose }) => {
                         It will take a couple of minutes,<br />
                         to fill this form so that we can assist you accordingly!
                     </p>
+                    {submitError && (
+                        <div className="alert alert-danger py-2">
+                            {submitError}
+                        </div>
+                    )}
 
                     <div className="form-section-title">Your personal data</div>
 
@@ -127,8 +162,8 @@ const JoinUsModal = ({ isOpen, onClose }) => {
                             </select>
                         </div>
 
-                        <button type="submit" className="btn-proceed">
-                            Submit Form
+                        <button type="submit" className="btn-proceed" disabled={submitting}>
+                            {submitting ? 'Submitting...' : 'Submit Form'}
                         </button>
                     </form>
                 </div>

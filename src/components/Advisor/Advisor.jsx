@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Advisor.css';
+import { request } from '../../api/client';
 
 const Advisor = () => {
   const navigate = useNavigate();
@@ -14,6 +15,8 @@ const Advisor = () => {
   });
   const [errors, setErrors] = useState({});
   const [showSuccess, setShowSuccess] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -83,14 +86,22 @@ const Advisor = () => {
     return isValid;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitError('');
     
-    if (validateForm()) {
-      // Form is valid, submit data
-      console.log('Form data ready for submission:', formData);
-      
-      // Reset form
+    if (!validateForm()) {
+      setSubmitError('Please fix the errors above.');
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      await request('/api/advisor', {
+        method: 'POST',
+        data: formData
+      });
+
       setFormData({
         fullName: '',
         mobileNumber: '',
@@ -104,6 +115,17 @@ const Advisor = () => {
       setTimeout(() => {
         setShowSuccess(false);
       }, 5000);
+    } catch (err) {
+      if (err.data?.errors) {
+        const fieldErrors = {};
+        Object.entries(err.data.errors).forEach(([field, messages]) => {
+          fieldErrors[field] = messages?.[0] || 'Invalid value';
+        });
+        setErrors((prev) => ({ ...prev, ...fieldErrors }));
+      }
+      setSubmitError(err.message || 'Failed to submit. Please try again.');
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -151,6 +173,11 @@ const Advisor = () => {
             {showSuccess && (
               <div className="alert alert-success mt-3">
                 Success! Your form has been submitted. We will contact you shortly.
+              </div>
+            )}
+            {submitError && (
+              <div className="alert alert-danger mt-3">
+                {submitError}
               </div>
             )}
 
@@ -266,7 +293,9 @@ const Advisor = () => {
                 )}
               </div>
 
-              <button type="submit" className="btn btn-submit">Submit Form</button>
+              <button type="submit" className="btn btn-submit" disabled={submitting}>
+                {submitting ? 'Submitting...' : 'Submit Form'}
+              </button>
             </form>
           </div>
         </div>

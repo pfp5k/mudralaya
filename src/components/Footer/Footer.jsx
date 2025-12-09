@@ -1,16 +1,27 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Footer.css';
+import { request } from '../../api/client';
 
 const Footer = () => {
   const [email, setEmail] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle email subscription
-    console.log('Email subscription:', email);
-    setEmail('');
-    alert('Thank you for subscribing!');
+    setSubmitting(true);
+    try {
+      await request('/api/newsletter', {
+        method: 'POST',
+        data: { email }
+      });
+      setEmail('');
+      alert('Thank you for subscribing!');
+    } catch (err) {
+      alert(err.message || 'Failed to subscribe. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -86,8 +97,12 @@ const Footer = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                   />
-                  <button className="btn btn-primary" type="submit" aria-label="Subscribe">
-                    <i className="fas fa-paper-plane"></i>
+                  <button className="btn btn-primary" type="submit" aria-label="Subscribe" disabled={submitting}>
+                    {submitting ? (
+                      <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    ) : (
+                      <i className="fas fa-paper-plane"></i>
+                    )}
                   </button>
                 </div>
               </form>

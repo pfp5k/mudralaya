@@ -8,6 +8,7 @@ const Header = () => {
   const [activeLink, setActiveLink] = useState('home');
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isJoinUsModalOpen, setIsJoinUsModalOpen] = useState(false);
+  const showDashboardLink = import.meta.env.VITE_SHOW_DASHBOARD_LINK === 'true';
   const location = useLocation();
 
   useEffect(() => {
@@ -16,6 +17,7 @@ const Header = () => {
     if (path === '/') setActiveLink('home');
     else if (path === '/about') setActiveLink('about');
     else if (path === '/contact') setActiveLink('contact');
+    else if (path === '/dashboard') setActiveLink('dashboard');
     else setActiveLink('home');
 
     // Close mobile menu on route change
@@ -103,6 +105,17 @@ const Header = () => {
                   Contact Us
                 </Link>
               </li>
+              {showDashboardLink && (
+                <li className="nav-item">
+                  <Link
+                    className={`nav-link mx-2 nav-animate-link ${activeLink === 'dashboard' ? 'active' : ''}`}
+                    to="/dashboard"
+                    onClick={() => handleLinkClick('dashboard')}
+                  >
+                    Dashboard
+                  </Link>
+                </li>
+              )}
               <li className="nav-item ms-md-3 mt-2">
                 <button
                   className="btn btn-join-us"

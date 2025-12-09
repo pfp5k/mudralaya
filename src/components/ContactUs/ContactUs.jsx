@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import './ContactUs.css';
+import { request } from '../../api/client';
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
     fullName: '',
-    phoneNumber: '+91 98849 88434',
+    phoneNumber: '',
     email: '',
     occupation: '',
     qualification: '',
@@ -14,6 +15,8 @@ const ContactUs = () => {
 
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
+  const [submitting, setSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState('');
 
   // Validation functions
   const validateFullName = (name) => {
@@ -33,14 +36,10 @@ const ContactUs = () => {
   };
 
   const validatePhoneNumber = (phone) => {
-    if (!phone.trim()) {
-      return 'Phone number is required';
-    }
-    // Remove spaces and special characters for validation
-    const cleanPhone = phone.replace(/[\s\-\(\)]/g, '');
-    // Check if it starts with +91 and has 10 digits after
-    if (!/^\+91[6-9]\d{9}$/.test(cleanPhone)) {
-      return 'Please enter a valid Indian phone number (+91 followed by 10 digits)';
+    const digits = phone.replace(/\D/g, '');
+    if (!digits) return 'Phone number is required';
+    if (!/^[6-9]\d{9}$/.test(digits)) {
+      return 'Enter a valid 10-digit Indian mobile number starting with 6-9';
     }
     return '';
   };
@@ -78,27 +77,8 @@ const ContactUs = () => {
     // Phone number formatting
     let formattedValue = value;
     if (name === 'phoneNumber') {
-      // Remove all non-digit characters except +
-      let digits = value.replace(/[^\d+]/g, '');
-      // Ensure it starts with +91
-      if (!digits.startsWith('+91')) {
-        digits = '+91' + digits.replace(/^\+91/, '');
-      }
-      // Limit to +91 + 10 digits
-      if (digits.length > 13) {
-        digits = digits.substring(0, 13);
-      }
-      // Format: +91 XXXXX XXXXX
-      if (digits.length > 3) {
-        const phoneDigits = digits.substring(3);
-        if (phoneDigits.length <= 5) {
-          formattedValue = '+91 ' + phoneDigits;
-        } else {
-          formattedValue = '+91 ' + phoneDigits.substring(0, 5) + ' ' + phoneDigits.substring(5, 10);
-        }
-      } else {
-        formattedValue = digits;
-      }
+      const digitsOnly = value.replace(/\D/g, '').slice(0, 10);
+      formattedValue = digitsOnly;
     }
 
     // Full name - only letters and spaces
@@ -192,16 +172,29 @@ const ContactUs = () => {
     return !Object.values(newErrors).some(error => error !== '');
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitMessage('');
 
-    if (validateForm()) {
-      console.log('Form submitted:', formData);
-      alert('Thank you! We will reach you soon.');
-      // Reset form
+    if (!validateForm()) {
+      setSubmitMessage('Please fix the errors in the form before submitting.');
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      await request('/api/contact', {
+        method: 'POST',
+        data: {
+          ...formData,
+          phoneNumber: `+91${formData.phoneNumber}`
+        }
+      });
+
+      setSubmitMessage('Thank you! We will reach you soon.');
       setFormData({
         fullName: '',
-        phoneNumber: '+91 98849 88434',
+        phoneNumber: '',
         email: '',
         occupation: '',
         qualification: '',
@@ -210,8 +203,17 @@ const ContactUs = () => {
       });
       setErrors({});
       setTouched({});
-    } else {
-      alert('Please fix the errors in the form before submitting.');
+    } catch (err) {
+      if (err.data?.errors) {
+        const fieldErrors = {};
+        Object.entries(err.data.errors).forEach(([field, messages]) => {
+          fieldErrors[field] = messages?.[0] || 'Invalid value';
+        });
+        setErrors(fieldErrors);
+      }
+      setSubmitMessage(err.message || 'Something went wrong. Please try again.');
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -304,14 +306,14 @@ const ContactUs = () => {
                     type="tel"
                     className={`form-control ${errors.phoneNumber ? 'is-invalid' : ''}`}
                     id="phoneNumber"
-                    name="phoneNumber"
-                    value={formData.phoneNumber}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    placeholder="Enter your number"
-                    maxLength={14}
-                    required
-                  />
+                  name="phoneNumber"
+                  value={formData.phoneNumber}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder="10-digit mobile number"
+                  maxLength={10}
+                  required
+                />
                   {errors.phoneNumber && <div className="error-message">{errors.phoneNumber}</div>}
                 </div>
 
@@ -443,10 +445,11 @@ const ContactUs = () => {
                 </div>
 
                 <div className="col-12">
-                  <button type="submit" className="btn btn-submit">
-                    Submit
+                  <button type="submit" className="btn btn-submit" disabled={submitting}>
+                    {submitting ? 'Submitting...' : 'Submit'}
                   </button>
                   <p className="submit-message">Submit the form and we will get back soon</p>
+                  {submitMessage && <p className="submit-message">{submitMessage}</p>}
                 </div>
               </div>
             </form>

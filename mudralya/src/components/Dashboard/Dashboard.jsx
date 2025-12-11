@@ -202,6 +202,7 @@ const Dashboard = () => {
                   placeholder="Username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
+                  autoComplete="username"
                   required
                 />
               </div>
@@ -212,6 +213,7 @@ const Dashboard = () => {
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  autoComplete="current-password"
                   required
                 />
               </div>

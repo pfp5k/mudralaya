@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/3393e501-3d22-4642-8910-33cec82aa523/resourceGroups/myapp-rg/providers/Microsoft.Web/sites/mudralaya-app",
+    "appService.deploySubpath": "backend"
+}

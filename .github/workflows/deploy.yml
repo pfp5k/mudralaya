@@ -1,0 +1,49 @@
+name: Deploy to Azure App Service
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: "20"
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install frontend deps
+        working-directory: mudralya
+        run: npm ci
+
+      - name: Build frontend
+        working-directory: mudralya
+        env:
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
+          VITE_SHOW_DASHBOARD_LINK: ${{ secrets.VITE_SHOW_DASHBOARD_LINK || 'false' }}
+          VITE_DASHBOARD_USER: ${{ secrets.VITE_DASHBOARD_USER || '' }}
+        run: npm run build
+
+      - name: Copy frontend build into backend/public
+        run: |
+          rm -rf backend/public
+          mkdir -p backend/public
+          cp -r mudralya/build/* backend/public/
+
+      - name: Install backend deps
+        working-directory: backend
+        run: npm ci --omit=dev
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: mudralaya-app
+          slot-name: production
+          package: backend
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}

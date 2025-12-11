@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
@@ -16,11 +17,16 @@ const app = express();
 
 const corsOptions = {
   origin: (origin, callback) => {
-    if (!origin || config.corsOrigins.length === 0) {
+    const allowedOrigins = [...config.corsOrigins];
+    if (process.env.WEBSITE_HOSTNAME) {
+      allowedOrigins.push(`https://${process.env.WEBSITE_HOSTNAME}`);
+    }
+
+    if (!origin || allowedOrigins.length === 0) {
       return callback(null, true);
     }
 
-    if (config.corsOrigins.includes(origin)) {
+    if (allowedOrigins.includes(origin)) {
       return callback(null, true);
     }
 
@@ -30,6 +36,7 @@ const corsOptions = {
 };
 
 app.use(morgan(config.logLevel));
+app.use(express.static(path.join(__dirname, '../public')));
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -43,8 +50,7 @@ app.use(cookieParser());
 //   });
 // });
 
-const path = require('path');
-app.use(express.static(path.join(__dirname, '../public')));
+
 
 app.use('/health', healthRouter);
 app.use('/api/contact', contactRouter);

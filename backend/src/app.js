@@ -35,13 +35,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.get('/', (_req, res) => {
-  res.json({
-    status: 'ok',
-    name: config.appName,
-    version: '1.0.0'
-  });
-});
+// app.get('/', (_req, res) => {
+//   res.json({
+//     status: 'ok',
+//     name: config.appName,
+//     version: '1.0.0'
+//   });
+// });
 
 const path = require('path');
 app.use(express.static(path.join(__dirname, '../public')));

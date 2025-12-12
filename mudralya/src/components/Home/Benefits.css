@@ -60,36 +60,58 @@
 }
 
 .benefits-grid-surface {
-    background: linear-gradient(
-160deg, #84ffff -11%, #651fff 30%, #311b92 80%, #ff4081 166%);
-    border-radius: 30px;
-    padding: 1.15rem 0.25rem;
+  background: linear-gradient(160deg, #84ffff -11%, #651fff 30%, #311b92 80%, #ff4081 166%);
+  border-radius: 30px;
+  padding: 1.15rem 0.25rem;
 }
 
 section.benefits-section .col-12.col-md-6.col-lg-3 {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 /* Plan Card */
 .plan-card .plan-card {
   border-radius: 26px;
 }
- .plan-card {
+
+.plan-card {
   /* border-radius: 26px; */
   padding: 2.2rem 1.8rem 1.8rem;
   color: #ffffff;
   min-height: 100%;
- display: flex;
+  display: flex;
   justify-content: space-between;
   flex-direction: column;
   gap: 0.8rem;
   text-align: left;
   /* box-shadow: 0 18px 48px rgba(0, 0, 0, 0.45); */
-  /* border: 1px solid rgba(255, 255, 255, 0.1); */
+  border: 2px solid transparent;
+  /* Prepare for border transition */
   position: relative;
   overflow: hidden;
-  /* transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease; */
+  cursor: pointer;
+  /* Interaction cue */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.plan-card.active {
+  background: #000000;
+  border: 1px solid rgba(74, 255, 238, 0.35);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.65);
+  transform: scale(1.03);
+  z-index: 10;
+  border-radius: 20px;
+}
+
+.plan-card.active .plan-button {
+  background: linear-gradient(90deg, #5cf3ff 0%, #6dffd8 100%);
+  color: #0b0f17;
+  box-shadow: 0 12px 28px rgba(96, 255, 232, 0.35);
+}
+
+.plan-card.active .plan-benefits li::before {
+  color: #67fff0;
 }
 
 
@@ -100,14 +122,12 @@ section.benefits-section .col-12.col-md-6.col-lg-3 {
 
 
 .plan-card.individual {
-    background: #000000;
-    border: 1px solid rgba(74, 255, 238, 0.35);
-    box-shadow: 0 18px 60px rgba(0, 0, 0, 0.65);
-    border-radius: 20px;
+  /* background, border, box-shadow removed to be handled by .active */
+  border-radius: 20px;
 }
 
 
-.plan-card.individual > * {
+.plan-card.individual>* {
   position: relative;
   z-index: 1;
 }
@@ -193,7 +213,7 @@ section.benefits-section .col-12.col-md-6.col-lg-3 {
 }
 
 .plan-card.individual .price-value {
-    font-size: 1.50rem;
+  font-size: 1.50rem;
 }
 
 /* Plan Benefits List */

@@ -77,6 +77,8 @@ const plans = [
 ];
 
 const Benefits = () => {
+  const [selectedPlan, setSelectedPlan] = React.useState('individual');
+
   return (
     <section className="benefits-section">
       <div className="container benefits-container">
@@ -90,7 +92,10 @@ const Benefits = () => {
         <div className="row g-4 benefits-grid benefits-grid-surface">
           {plans.map((plan) => (
             <div key={plan.key} className="col-12 col-md-6 col-lg-3">
-              <div className={`plan-card ${plan.variant}`}>
+              <div
+                className={`plan-card ${plan.variant} ${selectedPlan === plan.key ? 'active' : ''}`}
+                onClick={() => setSelectedPlan(plan.key)}
+              >
                 {plan.variant !== 'individual' && (
                   <div className="plan-badge">{plan.title}</div>
                 )}

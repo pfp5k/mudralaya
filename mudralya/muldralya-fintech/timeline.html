@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="googlebot" content="noindex, nofollow" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Become Our Advisor - Mudralaya Fintech</title>
     <!-- Load Google Font (Inter for a clean, modern look) -->
@@ -10,12 +13,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Load Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    
+
     <style>
         :root {
-            --primary-blue: #1e88e5; /* Bright blue for button and checkmark */
-            --secondary-blue: #002f6a; /* Dark blue for logo text */
-            --background-color: #f5f8ff; /* Light blue/grey background */
+            --primary-blue: #1e88e5;
+            /* Bright blue for button and checkmark */
+            --secondary-blue: #002f6a;
+            /* Dark blue for logo text */
+            --background-color: #f5f8ff;
+            /* Light blue/grey background */
             --card-radius: 1rem;
         }
 
@@ -46,8 +52,10 @@
             font-size: 1.5rem;
             color: #ccc;
             cursor: pointer;
-            z-index: 20; /* Increased z-index */
+            z-index: 20;
+            /* Increased z-index */
         }
+
         .close-btn:hover {
             color: #888;
         }
@@ -56,41 +64,46 @@
         .illustration-side {
             background-color: var(--background-color);
             /* Adjust border-radius for mobile (top corners) and desktop (left corners) */
-            border-radius: var(--card-radius) var(--card-radius) 0 0; 
-            
+            border-radius: var(--card-radius) var(--card-radius) 0 0;
+
             /* Make this the relative container for the absolute logo overlay */
-            position: relative; 
+            position: relative;
             padding: 40px;
-            
+
             /* Styles for the "full screen" image effect (using background image) */
-            background-image: url('/images/conact-us.webp'); /* Updated image path */
-            background-size: contain; 
+            background-image: url('/images/conact-us.webp');
+            /* Updated image path */
+            background-size: contain;
             background-position: center;
             background-repeat: no-repeat;
-            
-            min-height: 400px; /* Ensure sufficient height for the image */
-            display: block; /* Removed flex-related centering styles */
+
+            min-height: 400px;
+            /* Ensure sufficient height for the image */
+            display: block;
+            /* Removed flex-related centering styles */
         }
 
         /* New class for the absolute logo on desktop */
         .logo-overlay {
             position: absolute;
-            top: 40px; /* Matches the container padding */
-            left: 40px; /* Matches the container padding */
+            top: 40px;
+            /* Matches the container padding */
+            left: 40px;
+            /* Matches the container padding */
             z-index: 10;
         }
-        
+
         /* Ensures logo text is visible over the background image */
         .logo-overlay span {
-            color: white !important; 
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            color: white !important;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
         }
 
         /* Right Section (Form) */
         .form-side {
             padding: 40px;
         }
-        
+
         .logo {
             font-size: 1.1rem;
             font-weight: 700;
@@ -100,7 +113,7 @@
             color: var(--secondary-blue);
         }
 
-   
+
 
         h2 {
             font-weight: 700;
@@ -124,13 +137,15 @@
             padding-bottom: 5px;
         }
 
-        .form-control, .form-select {
+        .form-control,
+        .form-select {
             border-radius: 0.5rem;
             padding: 0.65rem 1rem;
             font-size: 0.9rem;
         }
 
-        .form-control:focus, .form-select:focus {
+        .form-control:focus,
+        .form-select:focus {
             box-shadow: 0 0 0 0.25rem rgba(30, 136, 229, 0.25);
             border-color: var(--primary-blue);
         }
@@ -140,12 +155,12 @@
             font-weight: 600;
             color: #495057;
         }
-        
+
         .form-text-small {
             font-size: 0.8rem;
             color: #6c757d;
         }
-        
+
         .btn-submit {
             background-color: var(--primary-blue);
             border-color: var(--primary-blue);
@@ -169,6 +184,7 @@
                 /* Correct border-radius for desktop (left corners) */
                 border-radius: var(--card-radius) 0 0 var(--card-radius);
             }
+
             .form-side {
                 /* Remove bottom radius for desktop */
                 border-radius: 0 var(--card-radius) var(--card-radius) 0;
@@ -176,6 +192,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <div class="advisor-card">
@@ -185,36 +202,38 @@
         <div class="row g-0">
             <!-- Left Section: Logo and Illustration (Image is now background for "full screen" effect) -->
             <div class="col-12 col-lg-5 illustration-side">
-                
+
                 <!-- Logo with Image and Text (DESKTOP VIEW as ABSOLUTE OVERLAY) -->
                 <div class="logo-overlay  d-lg-flex logo align-items-center">
-                    <img src="/images/mudralya_logo.webp" alt="Mudralaya Fintech Logo" class="me-2 rounded-circle" style="width: 30px; height: 30px;">
-                    <span>Mudralaya Fintech</span> 
+                    <img src="/images/mudralya_logo.webp" alt="Mudralaya Fintech Logo" class="me-2 rounded-circle"
+                        style="width: 30px; height: 30px;">
+                    <span>Mudralaya Fintech</span>
                 </div>
-                
+
                 <!-- The original image tag is removed as the image is now the background -->
 
             </div>
 
             <!-- Right Section: Form -->
             <div class="col-lg-7 form-side">
-                
-               
-                
-                
+
+
+
+
                 <h2>Become our Advisor</h2>
                 <p class="subtitle">
                     It will take a couple of minutes to fill this form so that we can assist you accordingly!
                 </p>
 
                 <form id="advisorForm" novalidate>
-                    
+
                     <h5 class="section-title">Your personal data</h5>
 
                     <!-- Full Name -->
                     <div class="mb-3">
                         <label for="fullName" class="form-label">Full Name*</label>
-                        <input type="text" class="form-control" id="fullName" name="fullName" required placeholder="Kunal">
+                        <input type="text" class="form-control" id="fullName" name="fullName" required
+                            placeholder="Kunal">
                         <div class="invalid-feedback">
                             Please enter your full name.
                         </div>
@@ -223,7 +242,8 @@
                     <!-- Mobile Number -->
                     <div class="mb-3">
                         <label for="mobileNumber" class="form-label">Mobile Number*</label>
-                        <input type="tel" class="form-control" id="mobileNumber" name="mobileNumber" required pattern="[0-9]{10}" placeholder="8899883638">
+                        <input type="tel" class="form-control" id="mobileNumber" name="mobileNumber" required
+                            pattern="[0-9]{10}" placeholder="8899883638">
                         <div class="invalid-feedback">
                             Please enter a valid 10-digit mobile number.
                         </div>
@@ -232,7 +252,8 @@
                     <!-- Email ID -->
                     <div class="mb-3">
                         <label for="emailId" class="form-label">Email Id*</label>
-                        <input type="email" class="form-control" id="emailId" name="emailId" required placeholder="kunaldalotra02@gmail.com">
+                        <input type="email" class="form-control" id="emailId" name="emailId" required
+                            placeholder="kunaldalotra02@gmail.com">
                         <div class="invalid-feedback">
                             Please enter a valid email address.
                         </div>
@@ -255,7 +276,7 @@
                             <option value="" disabled selected>Select Profession</option>
                             <option value="student">Student</option>
                             <option value="working">Working Professional</option>
-                             <option value="house wife">House Wife</option>
+                            <option value="house wife">House Wife</option>
                             <option value="business">Business Owner</option>
                             <option value="other">Other</option>
                         </select>
@@ -283,11 +304,12 @@
         </div>
     </div>
 
-    
+
 
     <!-- Load Bootstrap 5 JS Bundle (Popper and JS) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-   
+
 </body>
+
 </html>

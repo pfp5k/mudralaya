@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="googlebot" content="noindex, nofollow" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Become Our Advisor - Mudralaya Fintech</title>
     <!-- Load Google Font (Inter for a clean, modern look) -->
@@ -10,18 +13,22 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Load Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    
+
     <style>
         :root {
-            --primary-blue: #1e88e5; /* Bright blue for button */
-            --secondary-blue: #002f6a; /* Dark blue for logo text */
-            --background-color: #f5f8ff; /* Light blue/grey background */
+            --primary-blue: #1e88e5;
+            /* Bright blue for button */
+            --secondary-blue: #002f6a;
+            /* Dark blue for logo text */
+            --background-color: #f5f8ff;
+            /* Light blue/grey background */
             --card-radius: 1rem;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #eef2ff; /* A slightly more pronounced body background */
+            background-color: #eef2ff;
+            /* A slightly more pronounced body background */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -48,6 +55,7 @@
             cursor: pointer;
             z-index: 10;
         }
+
         .close-btn:hover {
             color: #888;
         }
@@ -64,7 +72,7 @@
             text-align: center;
             min-height: 400px;
         }
-        
+
         .illustration-image {
             width: 100%;
             max-width: 350px;
@@ -77,7 +85,7 @@
         .form-side {
             padding: 40px;
         }
-        
+
         .logo {
             font-size: 1.1rem;
             font-weight: 700;
@@ -113,14 +121,17 @@
             padding-bottom: 5px;
         }
 
-        .form-control, .form-select {
+        .form-control,
+        .form-select {
             border-radius: 0.5rem;
             padding: 0.65rem 1rem;
             font-size: 0.9rem;
         }
 
-        .form-control:focus, .form-select:focus {
-            box-shadow: 0 0 0 0.25rem rgba(30, 136, 229, 0.25); /* Primary blue focus ring */
+        .form-control:focus,
+        .form-select:focus {
+            box-shadow: 0 0 0 0.25rem rgba(30, 136, 229, 0.25);
+            /* Primary blue focus ring */
             border-color: var(--primary-blue);
         }
 
@@ -129,12 +140,12 @@
             font-weight: 600;
             color: #495057;
         }
-        
+
         .form-text-small {
             font-size: 0.8rem;
             color: #6c757d;
         }
-        
+
         .btn-submit {
             background-color: var(--primary-blue);
             border-color: var(--primary-blue);
@@ -157,15 +168,18 @@
             .advisor-card {
                 box-shadow: none;
             }
+
             .illustration-side {
                 border-radius: var(--card-radius) var(--card-radius) 0 0;
             }
+
             .form-side {
                 border-radius: 0 0 var(--card-radius) var(--card-radius);
             }
         }
     </style>
 </head>
+
 <body>
 
     <div class="advisor-card">
@@ -180,12 +194,9 @@
                 </div>
                 <!-- Dummy Illustration (Placeholder) -->
                 <!-- Note: The actual image cannot be included, using a themed placeholder instead -->
-                <img 
-                    src="/images/conact-us.png" 
-                    alt="Illustration showing people joining a team" 
+                <img src="/images/conact-us.png" alt="Illustration showing people joining a team"
                     class="illustration-image"
-                    onerror="this.onerror=null; this.src='https://placehold.co/350x300/e0eaf7/002f6a?text=JOIN+US';"
-                >
+                    onerror="this.onerror=null; this.src='https://placehold.co/350x300/e0eaf7/002f6a?text=JOIN+US';">
             </div>
 
             <!-- Right Section: Form -->
@@ -193,20 +204,21 @@
                 <div class="d-lg-none logo mb-4">
                     Mudralaya Fintech <i class="fas fa-check-circle"></i>
                 </div>
-                
+
                 <h2>Become our Advisor</h2>
                 <p class="subtitle">
                     It will take a couple of minutes to fill this form so that we can assist you accordingly!
                 </p>
 
                 <form id="advisorForm" novalidate>
-                    
+
                     <h5 class="section-title">Your personal data</h5>
 
                     <!-- Full Name -->
                     <div class="mb-3">
                         <label for="fullName" class="form-label">Full Name*</label>
-                        <input type="text" class="form-control" id="fullName" name="fullName" required placeholder="Kunal">
+                        <input type="text" class="form-control" id="fullName" name="fullName" required
+                            placeholder="Kunal">
                         <div class="invalid-feedback">
                             Please enter your full name.
                         </div>
@@ -215,7 +227,8 @@
                     <!-- Mobile Number -->
                     <div class="mb-3">
                         <label for="mobileNumber" class="form-label">Mobile Number*</label>
-                        <input type="tel" class="form-control" id="mobileNumber" name="mobileNumber" required pattern="[0-9]{10}" placeholder="8899883638">
+                        <input type="tel" class="form-control" id="mobileNumber" name="mobileNumber" required
+                            pattern="[0-9]{10}" placeholder="8899883638">
                         <div class="invalid-feedback">
                             Please enter a valid 10-digit mobile number.
                         </div>
@@ -224,7 +237,8 @@
                     <!-- Email ID -->
                     <div class="mb-3">
                         <label for="emailId" class="form-label">Email Id*</label>
-                        <input type="email" class="form-control" id="emailId" name="emailId" required placeholder="kunaldalotra02@gmail.com">
+                        <input type="email" class="form-control" id="emailId" name="emailId" required
+                            placeholder="kunaldalotra02@gmail.com">
                         <div class="invalid-feedback">
                             Please enter a valid email address.
                         </div>
@@ -234,10 +248,10 @@
                     <div class="mb-3">
                         <label for="dateOfBirth" class="form-label">Date of birth*</label>
                         <div class="input-group">
-                             <!-- Using type=date is best practice, but using type=text with a calendar icon
+                            <!-- Using type=date is best practice, but using type=text with a calendar icon
                                  to match the visual style of the image. The validation will handle the format. -->
-                            <input type="text" class="form-control" id="dateOfBirth" name="dateOfBirth" required placeholder="DD.MM.YYYY" 
-                                pattern="\d{2}\.\d{2}\.\d{4}">
+                            <input type="text" class="form-control" id="dateOfBirth" name="dateOfBirth" required
+                                placeholder="DD.MM.YYYY" pattern="\d{2}\.\d{2}\.\d{4}">
                             <span class="input-group-text">
                                 <i class="fa-solid fa-calendar-days"></i>
                             </span>
@@ -293,12 +307,12 @@
 
             const form = this;
             let isValid = true;
-            
+
             // Remove previous validation classes
             form.querySelectorAll('.form-control, .form-select').forEach(input => {
                 input.classList.remove('is-invalid', 'is-valid');
             });
-            
+
             // 1. Full Name Validation
             const fullName = document.getElementById('fullName');
             if (fullName.value.trim() === '') {
@@ -381,7 +395,7 @@
                 for (const [key, value] of formData.entries()) {
                     data[key] = value;
                 }
-                
+
                 // You would typically send this data to a server here.
                 console.log('Form data ready for submission:', data);
                 // Clear the form and show success message
@@ -389,7 +403,7 @@
                 form.querySelectorAll('.form-control, .form-select').forEach(input => {
                     input.classList.remove('is-valid');
                 });
-                
+
                 // Custom modal/message box success notification (instead of alert)
                 const successMsg = document.createElement('div');
                 successMsg.className = 'alert alert-success mt-3';
@@ -406,4 +420,5 @@
         });
     </script>
 </body>
+
 </html>

@@ -35,6 +35,13 @@ const corsOptions = {
   credentials: true
 };
 
+app.use((req, res, next) => {
+  if (req.hostname === 'mudralya-app.azurewebsites.net') {
+    return res.redirect(301, `https://mudralya.com${req.url}`);
+  }
+  next();
+});
+
 app.use(morgan(config.logLevel));
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(cors(corsOptions));

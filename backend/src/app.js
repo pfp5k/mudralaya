@@ -37,9 +37,8 @@ const corsOptions = {
 };
 
 app.use((req, res, next) => {
-  // Redirect any azurewebsites.net traffic to custom domain
-  if (req.hostname.endsWith('azurewebsites.net')) {
-    return res.redirect(301, `https://mudralya.com${req.originalUrl}`);
+  if (req.hostname === 'mudralya-app.azurewebsites.net') {
+    return res.redirect(301, `https://mudralya.com${req.url}`);
   }
   next();
 });

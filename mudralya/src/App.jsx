@@ -2,6 +2,8 @@ import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header/Header.jsx';
 import Footer from './components/Footer/Footer.jsx';
+import JoinUsModal from './components/JoinUsModal/JoinUsModal.jsx';
+import { ModalProvider, useModal } from './context/ModalContext.jsx';
 import './App.css';
 
 // Lazy load components for code splitting
@@ -21,26 +23,41 @@ const Loading = () => (
   </div>
 );
 
+const AppContent = () => {
+  const { isJoinUsModalOpen, closeJoinUsModal, selectedPlan } = useModal();
+
+  return (
+    <div className="App">
+      <Header />
+      <main style={{ paddingTop: '80px' }}>
+        <Suspense fallback={<Loading />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/plans" element={<Plans />} />
+            <Route path="/about" element={<AboutUs />} />
+            <Route path="/contact" element={<ContactUs />} />
+            <Route path="/advisor" element={<Advisor />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Routes>
+        </Suspense>
+      </main>
+      <Footer />
+      <JoinUsModal
+        isOpen={isJoinUsModalOpen}
+        onClose={closeJoinUsModal}
+        initialPlan={selectedPlan}
+      />
+    </div>
+  );
+};
+
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Header />
-        <main style={{ paddingTop: '80px' }}>
-          <Suspense fallback={<Loading />}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/plans" element={<Plans />} />
-              <Route path="/about" element={<AboutUs />} />
-              <Route path="/contact" element={<ContactUs />} />
-              <Route path="/advisor" element={<Advisor />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-            </Routes>
-          </Suspense>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+    <ModalProvider>
+      <Router>
+        <AppContent />
+      </Router>
+    </ModalProvider>
   );
 }
 

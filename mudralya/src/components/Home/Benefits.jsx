@@ -1,5 +1,6 @@
 import React from 'react';
 import './Benefits.css';
+import { useModal } from '../../context/ModalContext';
 
 const plans = [
   {
@@ -39,7 +40,7 @@ const plans = [
     variant: 'individual'
   },
   {
-    key: 'business',
+    key: 'business-solution',
     title: 'BUSINESS SOLUTIONS',
     subtitle: 'For Business Owners',
     price: '₹ 0',
@@ -57,7 +58,7 @@ const plans = [
     variant: 'franchise'
   },
   {
-    key: 'startup',
+    key: 'startup-launch-lab',
     title: 'STARTUP LAUNCH',
     subtitle: 'For Aspiring Entrepreneurs',
     price: '₹ Customise',
@@ -78,6 +79,7 @@ const plans = [
 
 const Benefits = () => {
   const [selectedPlan, setSelectedPlan] = React.useState('individual');
+  const { openJoinUsModal } = useModal();
 
   return (
     <section className="benefits-section">
@@ -114,7 +116,13 @@ const Benefits = () => {
                   ))}
                 </ul>
                 <div className="plan-divider" />
-                <button className={`plan-button ${plan.variant}-btn`}>
+                <button
+                  className={`plan-button ${plan.variant}-btn`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    openJoinUsModal(plan.key);
+                  }}
+                >
                   CHOOSE PLAN
                 </button>
               </div>

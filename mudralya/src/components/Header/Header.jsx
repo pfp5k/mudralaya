@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './Header.css';
-import JoinUsModal from '../JoinUsModal/JoinUsModal.jsx';
+import { useModal } from '../../context/ModalContext';
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [activeLink, setActiveLink] = useState('home');
   const [isNavOpen, setIsNavOpen] = useState(false);
-  const [isJoinUsModalOpen, setIsJoinUsModalOpen] = useState(false);
+  const { openJoinUsModal } = useModal();
   const showDashboardLink = import.meta.env.VITE_SHOW_DASHBOARD_LINK === 'true';
   const location = useLocation();
 
@@ -42,8 +42,8 @@ const Header = () => {
     setIsNavOpen(false); // Close mobile menu when link is clicked
   };
 
-  const openJoinUsModal = () => {
-    setIsJoinUsModalOpen(true);
+  const handleJoinUsClick = () => {
+    openJoinUsModal();
     setIsNavOpen(false);
   };
 
@@ -58,7 +58,7 @@ const Header = () => {
             <img
               src="/images/mudralya_logo.webp"
               className="header-logo"
-              alt="Mudralya Logo"
+              alt="Mudralaya Logo"
               onError={(e) => {
                 e.target.src = 'https://via.placeholder.com/150x60?text=Mudralaya';
               }}
@@ -119,7 +119,7 @@ const Header = () => {
               <li className="nav-item ms-md-3 mt-2">
                 <button
                   className="btn btn-join-us"
-                  onClick={openJoinUsModal}
+                  onClick={handleJoinUsClick}
                 >
                   Join us
                 </button>
@@ -128,11 +128,6 @@ const Header = () => {
           </div>
         </div>
       </nav>
-
-      <JoinUsModal
-        isOpen={isJoinUsModalOpen}
-        onClose={() => setIsJoinUsModalOpen(false)}
-      />
     </>
   );
 };

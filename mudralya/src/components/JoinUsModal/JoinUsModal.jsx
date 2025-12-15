@@ -4,7 +4,7 @@ import { request } from '../../api/client';
 import JoinUsSuccess from './JoinUsSuccess';
 import SuccessPopup from '../SuccessPopup/SuccessPopup';
 
-const JoinUsModal = ({ isOpen, onClose }) => {
+const JoinUsModal = ({ isOpen, onClose, initialPlan = '' }) => {
     const [formData, setFormData] = useState({
         fullName: '',
         mobileNumber: '',
@@ -13,6 +13,17 @@ const JoinUsModal = ({ isOpen, onClose }) => {
         profession: '',
         plan: ''
     });
+
+    // Update plan when initialPlan changes or modal opens
+    React.useEffect(() => {
+        if (isOpen && initialPlan) {
+            setFormData(prev => ({
+                ...prev,
+                plan: initialPlan
+            }));
+        }
+    }, [isOpen, initialPlan]);
+
     const [submitting, setSubmitting] = useState(false);
     const [submitError, setSubmitError] = useState('');
     const [submitted, setSubmitted] = useState(false);
@@ -84,8 +95,8 @@ const JoinUsModal = ({ isOpen, onClose }) => {
             handler: function (response) {
                 // Payment success handler
                 console.log(response.razorpay_payment_id);
-                // After successful payment, we can show the final success popup and close
-                handleClose(true);
+                // On payment success, we just close the modal without the "Registered" popup (as user didn't discard)
+                resetAndClose();
             },
             prefill: {
                 name: formData.fullName,
@@ -175,7 +186,7 @@ const JoinUsModal = ({ isOpen, onClose }) => {
 
                 {/* Right Side - Form */}
                 <div className="modal-right">
-                    <button className="modal-close" onClick={handleClose}>
+                    <button className="modal-close" onClick={() => handleClose(false)}>
                         <i className="fas fa-times"></i>
                     </button>
 

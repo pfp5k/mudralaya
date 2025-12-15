@@ -1,8 +1,54 @@
 const { Router } = require('express');
 const { z } = require('zod');
 const { persistDocument } = require('../utils/persistence');
+const { getDb } = require('../config/db');
+const { ObjectId } = require('mongodb');
 
 const router = Router();
+
+// Schema for payment update
+const paymentUpdateSchema = z.object({
+  id: z.string().min(1, 'ID is required'),
+  razorpay_payment_id: z.string().min(1, 'Payment ID is required'),
+  payment_status: z.string().default('Paid')
+});
+
+router.post('/payment-status', async (req, res, next) => {
+  try {
+    const result = paymentUpdateSchema.safeParse(req.body);
+
+    if (!result.success) {
+      return res.status(400).json({
+        errors: result.error.flatten().fieldErrors
+      });
+    }
+
+    const { id, razorpay_payment_id, payment_status } = result.data;
+
+    // Update the document
+    const updateResult = await getDb().collection('join_requests').updateOne(
+      { _id: new ObjectId(id) },
+      {
+        $set: {
+          razorpay_payment_id,
+          payment_status,
+          updatedAt: new Date()
+        }
+      }
+    );
+
+    if (updateResult.matchedCount === 0) {
+      return res.status(404).json({ error: 'Join request not found' });
+    }
+
+    return res.json({
+      message: 'Payment status updated successfully',
+      success: true
+    });
+  } catch (err) {
+    return next(err);
+  }
+});
 
 const joinSchema = z.object({
   fullName: z
@@ -44,7 +90,9 @@ router.post('/', async (req, res, next) => {
 
     const payload = {
       ...result.data,
-      form: 'join-us'
+      form: 'join-us',
+      payment_status: 'Pending',
+      razorpay_payment_id: null
     };
 
     const persisted = await persistDocument('join_requests', payload);

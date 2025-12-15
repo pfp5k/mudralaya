@@ -143,6 +143,8 @@ const Dashboard = () => {
         { key: 'mobileNumber', label: 'Mobile' },
         { key: 'emailId', label: 'Email' },
         { key: 'profession', label: 'Profession' },
+        { key: 'payment_status', label: 'Status' },
+        { key: 'razorpay_payment_id', label: 'Payment ID' },
         { key: 'dateOfBirth', label: 'DOB' },
         { key: 'createdAt', label: 'Created', format: formatDate }
       ],

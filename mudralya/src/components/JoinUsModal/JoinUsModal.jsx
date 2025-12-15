@@ -27,6 +27,7 @@ const JoinUsModal = ({ isOpen, onClose, initialPlan = '' }) => {
     const [submitting, setSubmitting] = useState(false);
     const [submitError, setSubmitError] = useState('');
     const [submitted, setSubmitted] = useState(false);
+    const [submissionId, setSubmissionId] = useState(null);
     const [showFinalSuccessPopup, setShowFinalSuccessPopup] = useState(false);
 
     const handleChange = (e) => {
@@ -83,18 +84,48 @@ const JoinUsModal = ({ isOpen, onClose, initialPlan = '' }) => {
             return;
         }
 
+        // 1. Create Order on Backend
+        let orderData;
+        try {
+            orderData = await request('/api/payment/order', {
+                method: 'POST',
+                data: {
+                    amount: 99, // Amount in INR
+                    currency: 'INR'
+                }
+            });
+        } catch (err) {
+            console.error('Failed to create order', err);
+            alert('Failed to initiate payment. Please try again.');
+            return;
+        }
+
         // Create options for Razorpay Checkout
         // NOTE: Replace 'YOUR_RAZORPAY_KEY_ID' with your actual key
         const options = {
-            key: 'rzp_test_Rr4pA3QSvG4gpv',
-            amount: 9900, // Amount is in currency subunits. Default currency is INR. Hence, 9900 refers to 99 INR
-            currency: 'INR',
+            key: 'rzp_live_RrXv8R9u9kWb3c',
+            amount: orderData.amount, // Amount from backend order
+            currency: orderData.currency,
             name: 'Mudralaya',
             description: 'Partner Membership Fee',
             image: '/images/mudralya_logo.webp', // Optional: logo
+            order_id: orderData.id, // Order ID from backend
             handler: function (response) {
-                // Payment success handler
-                console.log(response.razorpay_payment_id);
+                // Payment success handler - Verify on backend
+                try {
+                    request('/api/payment/verify', {
+                        method: 'POST',
+                        data: {
+                            submissionId: submissionId,
+                            razorpay_payment_id: response.razorpay_payment_id,
+                            razorpay_order_id: response.razorpay_order_id,
+                            razorpay_signature: response.razorpay_signature
+                        }
+                    });
+                } catch (error) {
+                    console.error('Failed to verify payment', error);
+                }
+
                 // On payment success, we just close the modal without the "Registered" popup (as user didn't discard)
                 resetAndClose();
             },
@@ -121,10 +152,13 @@ const JoinUsModal = ({ isOpen, onClose, initialPlan = '' }) => {
 
         setSubmitting(true);
         try {
-            await request('/api/join', {
+            const response = await request('/api/join', {
                 method: 'POST',
                 data: formData
             });
+            if (response.id) {
+                setSubmissionId(response.id);
+            }
             // Show success screen instead of alert
             setSubmitted(true);
         } catch (err) {
@@ -210,7 +244,7 @@ const JoinUsModal = ({ isOpen, onClose, initialPlan = '' }) => {
                                 type="text"
                                 id="fullName"
                                 name="fullName"
-                                placeholder="Kunal"
+                                placeholder="Enter your full name"
                                 value={formData.fullName}
                                 onChange={handleChange}
                                 required
@@ -223,7 +257,7 @@ const JoinUsModal = ({ isOpen, onClose, initialPlan = '' }) => {
                                 type="tel"
                                 id="mobileNumber"
                                 name="mobileNumber"
-                                placeholder="8899883638"
+                                placeholder="Enter mobile number"
                                 value={formData.mobileNumber}
                                 onChange={handleChange}
                                 required
@@ -236,7 +270,7 @@ const JoinUsModal = ({ isOpen, onClose, initialPlan = '' }) => {
                                 type="email"
                                 id="emailId"
                                 name="emailId"
-                                placeholder="kunaldalotra02@gmail.com"
+                                placeholder="Enter email address"
                                 value={formData.emailId}
                                 onChange={handleChange}
                             />

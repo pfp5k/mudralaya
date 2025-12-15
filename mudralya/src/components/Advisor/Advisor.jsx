@@ -89,7 +89,7 @@ const Advisor = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitError('');
-    
+
     if (!validateForm()) {
       setSubmitError('Please fix the errors above.');
       return;
@@ -110,7 +110,7 @@ const Advisor = () => {
         profession: '',
         irdaLicense: ''
       });
-      
+
       setShowSuccess(true);
       setTimeout(() => {
         setShowSuccess(false);
@@ -136,8 +136,8 @@ const Advisor = () => {
   return (
     <div className="advisor-page">
       <div className="advisor-card">
-        <i 
-          className="fas fa-xmark close-btn" 
+        <i
+          className="fas fa-xmark close-btn"
           onClick={handleClose}
           role="button"
           tabIndex={0}
@@ -147,14 +147,14 @@ const Advisor = () => {
             }
           }}
         ></i>
-        
+
         <div className="row g-0">
           <div className="col-12 col-lg-5 illustration-side">
             <div className="logo-overlay d-lg-flex logo align-items-center">
-              <img 
-                src="/images/mudralya_logo.webp" 
-                alt="Mudralaya Fintech Logo" 
-                className="me-2 rounded-circle" 
+              <img
+                src="/images/mudralya_logo.webp"
+                alt="Mudralaya Fintech Logo"
+                className="me-2 rounded-circle"
                 style={{ width: '30px', height: '30px' }}
                 onError={(e) => {
                   e.target.src = 'https://via.placeholder.com/30x30?text=M';
@@ -186,13 +186,13 @@ const Advisor = () => {
 
               <div className="mb-3">
                 <label htmlFor="fullName" className="form-label">Full Name*</label>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   className={`form-control ${errors.fullName ? 'is-invalid' : formData.fullName ? 'is-valid' : ''}`}
-                  id="fullName" 
-                  name="fullName" 
-                  required 
-                  placeholder="Kunal"
+                  id="fullName"
+                  name="fullName"
+                  required
+                  placeholder="Enter your full name"
                   value={formData.fullName}
                   onChange={handleChange}
                 />
@@ -203,14 +203,14 @@ const Advisor = () => {
 
               <div className="mb-3">
                 <label htmlFor="mobileNumber" className="form-label">Mobile Number*</label>
-                <input 
-                  type="tel" 
+                <input
+                  type="tel"
                   className={`form-control ${errors.mobileNumber ? 'is-invalid' : formData.mobileNumber && /^[0-9]{10}$/.test(formData.mobileNumber) ? 'is-valid' : ''}`}
-                  id="mobileNumber" 
-                  name="mobileNumber" 
-                  required 
-                  pattern="[0-9]{10}" 
-                  placeholder="8899883638"
+                  id="mobileNumber"
+                  name="mobileNumber"
+                  required
+                  pattern="[0-9]{10}"
+                  placeholder="Enter mobile number"
                   value={formData.mobileNumber}
                   onChange={handleChange}
                 />
@@ -221,13 +221,13 @@ const Advisor = () => {
 
               <div className="mb-3">
                 <label htmlFor="emailId" className="form-label">Email Id*</label>
-                <input 
-                  type="email" 
+                <input
+                  type="email"
                   className={`form-control ${errors.emailId ? 'is-invalid' : formData.emailId && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.emailId) ? 'is-valid' : ''}`}
-                  id="emailId" 
-                  name="emailId" 
-                  required 
-                  placeholder="kunaldalotra02@gmail.com"
+                  id="emailId"
+                  name="emailId"
+                  required
+                  placeholder="Enter email address"
                   value={formData.emailId}
                   onChange={handleChange}
                 />
@@ -238,11 +238,11 @@ const Advisor = () => {
 
               <div className="mb-3">
                 <label htmlFor="dateOfBirth" className="form-label">Date of birth*</label>
-                <input 
-                  type="date" 
+                <input
+                  type="date"
                   className={`form-control ${errors.dateOfBirth ? 'is-invalid' : formData.dateOfBirth ? 'is-valid' : ''}`}
-                  id="dateOfBirth" 
-                  name="dateOfBirth" 
+                  id="dateOfBirth"
+                  name="dateOfBirth"
                   required
                   value={formData.dateOfBirth}
                   onChange={handleChange}
@@ -254,10 +254,10 @@ const Advisor = () => {
 
               <div className="mb-3">
                 <label htmlFor="profession" className="form-label">Profession*</label>
-                <select 
+                <select
                   className={`form-select ${errors.profession ? 'is-invalid' : formData.profession ? 'is-valid' : ''}`}
-                  id="profession" 
-                  name="profession" 
+                  id="profession"
+                  name="profession"
                   required
                   value={formData.profession}
                   onChange={handleChange}
@@ -276,10 +276,10 @@ const Advisor = () => {
 
               <div className="mb-3">
                 <label htmlFor="irdaLicense" className="form-label">Do you have IRDAI License*</label>
-                <select 
+                <select
                   className={`form-select ${errors.irdaLicense ? 'is-invalid' : formData.irdaLicense ? 'is-valid' : ''}`}
-                  id="irdaLicense" 
-                  name="irdaLicense" 
+                  id="irdaLicense"
+                  name="irdaLicense"
                   required
                   value={formData.irdaLicense}
                   onChange={handleChange}

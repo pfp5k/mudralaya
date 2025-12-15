@@ -251,7 +251,7 @@ const ContactUs = () => {
                 </div>
                 <div className="contact-item">
                   <i className="fas fa-envelope contact-icon"></i>
-                  <span>mudralayafintech@gmail.com</span>
+                  <span>contact@mudralaya.com</span>
                 </div>
                 <div className="contact-item">
                   <i className="fas fa-map-marker-alt contact-icon"></i>
@@ -306,14 +306,14 @@ const ContactUs = () => {
                     type="tel"
                     className={`form-control ${errors.phoneNumber ? 'is-invalid' : ''}`}
                     id="phoneNumber"
-                  name="phoneNumber"
-                  value={formData.phoneNumber}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  placeholder="10-digit mobile number"
-                  maxLength={10}
-                  required
-                />
+                    name="phoneNumber"
+                    value={formData.phoneNumber}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    placeholder="10-digit mobile number"
+                    maxLength={10}
+                    required
+                  />
                   {errors.phoneNumber && <div className="error-message">{errors.phoneNumber}</div>}
                 </div>
 

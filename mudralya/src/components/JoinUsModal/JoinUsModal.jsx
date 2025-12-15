@@ -3,6 +3,7 @@ import './JoinUsModal.css';
 import { request } from '../../api/client';
 import JoinUsSuccess from './JoinUsSuccess';
 import SuccessPopup from '../SuccessPopup/SuccessPopup';
+import MembershipCard from '../MembershipCard/MembershipCard';
 
 const JoinUsModal = ({ isOpen, onClose, initialPlan = '' }) => {
     const [formData, setFormData] = useState({
@@ -29,6 +30,7 @@ const JoinUsModal = ({ isOpen, onClose, initialPlan = '' }) => {
     const [submitted, setSubmitted] = useState(false);
     const [submissionId, setSubmissionId] = useState(null);
     const [showFinalSuccessPopup, setShowFinalSuccessPopup] = useState(false);
+    const [showMembership, setShowMembership] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -127,7 +129,8 @@ const JoinUsModal = ({ isOpen, onClose, initialPlan = '' }) => {
                 }
 
                 // On payment success, we just close the modal without the "Registered" popup (as user didn't discard)
-                resetAndClose();
+                // resetAndClose(); // OLD: Closed modal
+                setShowMembership(true); // NEW: Show membership card
             },
             prefill: {
                 name: formData.fullName,
@@ -188,7 +191,7 @@ const JoinUsModal = ({ isOpen, onClose, initialPlan = '' }) => {
 
     if (!isOpen) return null;
 
-    if (submitted) {
+    if (submitted && !showMembership) {
         return (
             <div className="modal-overlay" onClick={() => handleClose(true)}>
                 <div className="join-us-modal success-mode" onClick={(e) => e.stopPropagation()}>
@@ -198,6 +201,17 @@ const JoinUsModal = ({ isOpen, onClose, initialPlan = '' }) => {
                     />
                 </div>
             </div>
+        );
+    }
+
+    if (showMembership) {
+        return (
+            <MembershipCard
+                name={formData.fullName}
+                plan={formData.plan}
+                memberId={submissionId ? submissionId.slice(-6).toUpperCase() : 'NEW'}
+                onClose={resetAndClose}
+            />
         );
     }
 

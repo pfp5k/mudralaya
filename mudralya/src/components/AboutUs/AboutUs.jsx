@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import EmpoweringWomen from '../Home/EmpoweringWomen.jsx';
+import MemberBenefits from '../Home/MemberBenefits.jsx';
 import './AboutUs.css';
 import '../Home/Home.css';
 
@@ -243,7 +244,10 @@ const AboutUs = () => {
         </div>
       </section>
 
-     
+
+      {/* Member Benefits Section */}
+      <MemberBenefits />
+
       {/* Empowering Women Section from Home Page */}
       <EmpoweringWomen />
     </div>

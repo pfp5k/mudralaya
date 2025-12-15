@@ -30,15 +30,17 @@ const Footer = () => {
         <div className="row gy-4">
           <div className="col-lg-4 col-md-4 m-0 mb-3">
             <div className="mb-3">
-              <div className="footer-logo-box">
-                <span className="footer-logo-text">Mudralaya</span>
-                <span className="footer-logo-text-small">Fintech</span>
-                <span className="footer-logo-check"><i className="fas fa-check-circle"></i></span>
-              </div>
+              <Link to="/" className="d-inline-block footer-logo-container">
+                <img
+                  src="/images/mudralya_logo.webp"
+                  alt="Mudralya Fintech"
+                  className="footer-logo-img"
+                />
+              </Link>
             </div>
 
             <div className="small text-white-50">
-              Copyright © 2020 Nexcent ltd.
+              Copyright © 2025 Mudralaya Fintech
             </div>
             <div className="small text-white-50">
               All rights reserved
@@ -58,7 +60,7 @@ const Footer = () => {
                 <i className="fab fa-youtube"></i>
               </a>
             </div>
-          </div>
+          </div >
 
           <div className="col-lg-4 col-md-4">
             <div className="row">
@@ -108,9 +110,9 @@ const Footer = () => {
               </form>
             </div>
           </div>
-        </div>
-      </div>
-    </footer>
+        </div >
+      </div >
+    </footer >
   );
 };
 

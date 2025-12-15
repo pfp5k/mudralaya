@@ -5,11 +5,11 @@ import { useModal } from '../../context/ModalContext';
 const plans = [
   {
     key: 'free',
-    title: 'PARTNER',
-    subtitle: 'Task-Based Earnings',
+    title: 'FREE',
+    subtitle: '',
     price: '₹ 0',
-    priceLabel: 'Free to Join',
-    description: 'For people who want to earn by completing daily, weekly & monthly tasks.',
+    priceLabel: '',
+    description: '',
     benefits: [
       'Start with zero investment',
       'Access to daily / weekly / monthly tasks',
@@ -23,10 +23,10 @@ const plans = [
   },
   {
     key: 'individual',
-    title: 'FULL-TIME PARTNER',
-    subtitle: 'Professional Growth',
-    price: '₹15,000-₹27,599',
-    description: 'For individuals who want to work full-time & earn a stable income',
+    title: 'INDIVIDUAL',
+    subtitle: '',
+    price: '₹15,000–₹27,599',
+    description: '',
     benefits: [
       'Maximum task opportunities from top brands & companies',
       'Weekly training sessions',
@@ -41,37 +41,33 @@ const plans = [
   },
   {
     key: 'business-solution',
-    title: 'BUSINESS SOLUTIONS',
-    subtitle: 'For Business Owners',
+    title: 'BUSINESS SOLUTION',
+    subtitle: '',
     price: '₹ 0',
-    description: 'For companies who want complete business tasks executed through Mudralaya',
+    description: '',
     benefits: [
-      'We understand your business concept & goals',
-      'Create customized tasks based on your industry',
-      'Training videos for each task for perfect execution',
-      'Assign tasks to verified & skilled partner network',
-      'Lead generation, promotion & marketing support',
-      'Surveys, customer feedback & outreach',
-      'Tech, marketing, sales & service support included',
-      'Dedicated business manager for coordination'
+      'We understand your goals and create custom tasks.',
+      'Industry-specific tasks for leads, marketing, and outreach.',
+      'Training videos for easy execution.',
+      'Verified partners for surveys and follow-ups.',
+      'Tech, sales, and service support included.',
+      'Affordable, scalable solutions for every business.'
     ],
     variant: 'franchise'
   },
   {
     key: 'startup-launch-lab',
-    title: 'STARTUP LAUNCH',
-    subtitle: 'For Aspiring Entrepreneurs',
+    title: 'STARTUP LAUNCH LAB',
+    subtitle: '',
     price: '₹ Customise',
-    description: 'For individuals who want to build and launch their own startup',
+    description: '',
     benefits: [
-      'We understand your idea, vision & long-term goals',
-      'Create a complete business model for your concept',
-      'Market research & competitor analysis',
-      'Branding, tech development & website/app setup',
-      'Ideation, validation, strategy & planning',
-      'Product development & marketing setup',
-      'Go-to-market execution support',
-      'Dedicated startup mentor for step-by-step guidance'
+      'Understand your idea and build a tailored business model.',
+      'Market research and competitor analysis included.',
+      'Branding, tech development, and website/app setup.',
+      'Support across ideation, strategy, product, and marketing.',
+      'Go-to-market execution with dedicated startup mentor.',
+      'End-to-end guidance from idea to launch.'
     ],
     variant: 'paid'
   }

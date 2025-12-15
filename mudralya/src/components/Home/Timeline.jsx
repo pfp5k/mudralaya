@@ -8,23 +8,23 @@ const Timeline = () => {
   const timelineItems = [
     {
       step: '1',
-      description: 'Register for free'
+      description: 'Fill basic details'
     },
     {
       step: '2',
-      description: 'Complete your profile'
+      description: 'Complete eligibility check'
     },
     {
       step: '3',
-      description: 'Choose your category'
+      description: 'Review plan & add-ons'
     },
     {
       step: '4',
-      description: 'Get tasks from top companies'
+      description: 'Pay (if required) / Submit'
     },
     {
       step: '5',
-      description: 'Complete & earn instantly'
+      description: 'Start training'
     }
   ];
 

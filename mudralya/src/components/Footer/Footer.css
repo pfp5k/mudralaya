@@ -11,32 +11,19 @@
   padding: 3rem 0;
 }
 
-/* Footer Logo Box */
-.footer-logo-box {
+/* Footer Logo Box - Adjusted for Image */
+.footer-logo-container {
   background-color: #ffffff;
+  padding: 0px;
   border-radius: 8px;
-  padding: 10px 16px;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
+  display: inline-block;
 }
 
-.footer-logo-text {
-  color: #003366;
-  font-weight: 700;
-  font-size: 1.1rem;
-}
-
-.footer-logo-text-small {
-  color: #003366;
-  font-weight: 600;
-  font-size: 0.9rem;
-}
-
-.footer-logo-check {
-  color: #00a0dc;
-  font-size: 1rem;
-  margin-left: 2px;
+.footer-logo-img {
+  height: 100px;
+  /* Bigger size */
+  width: auto;
+  display: block;
 }
 
 .site-footer a {

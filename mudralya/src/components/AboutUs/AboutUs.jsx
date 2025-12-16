@@ -1,11 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useModal } from '../../context/ModalContext';
 import EmpoweringWomen from '../Home/EmpoweringWomen.jsx';
 import MemberBenefits from '../Home/MemberBenefits.jsx';
 import './AboutUs.css';
 import '../Home/Home.css';
 
 const AboutUs = () => {
+  const { openJoinUsModal } = useModal();
+
   return (
     <div className="about-us-page">
       {/* Hero Section */}
@@ -35,11 +38,16 @@ const AboutUs = () => {
 
                 {/* CTA Buttons */}
                 <div className="about-us-hero-buttons">
-                  <Link to="/plans" className="btn btn-about-explore">
-                    Explore Plans
-                  </Link>
+                  
+                  <button
+                    className="btn btn-about-explore"
+                    onClick={() => openJoinUsModal()}
+                    type="button"
+                  >
+                    Become Our Partner
+                  </button>
                   <Link to="/advisor" className="btn btn-about-advisor">
-                    Talk to our Advisor
+                    Explore Plans
                   </Link>
                 </div>
               </div>

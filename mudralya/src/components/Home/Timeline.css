@@ -8,7 +8,8 @@
 }
 
 .timeline-section {
-  padding: 5rem 1rem;
+  /* reduced vertical padding to remove extra whitespace below the timeline */
+  padding: 2.5rem 1rem;
   background-color: #ffffff;
 }
 
@@ -33,8 +34,9 @@
 .timeline-container {
   position: relative;
   padding: 0 5%;
-  min-height: 200px;
-  margin: 3rem 0;
+  /* reduce min-height and vertical margin to tighten spacing */
+  min-height: 120px;
+  margin: 1.25rem 0;
 }
 
 .timeline-track {
@@ -49,7 +51,8 @@
 .timeline-track::before {
   content: '';
   position: absolute;
-  top: 55px;
+  /* slightly raised line so markers sit closer to the content and reduce empty space */
+  top: 45px;
   left: 10%;
   right: 10%;
   height: 2px;

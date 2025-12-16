@@ -74,12 +74,12 @@ const Timeline = () => {
           </div>
         </div>
 
-        <div className="text-center mt-5 mb-5">
+        {/* <div className="text-center mt-5 mb-5">
           <p className="timeline-cta-text">Join today and start earning!</p>
           <Link to="/advisor" className="btn btn-timeline-cta mt-3">
             Talk to our Advisor
           </Link>
-        </div>
+        </div> */}
       </div>
     </section>
   );

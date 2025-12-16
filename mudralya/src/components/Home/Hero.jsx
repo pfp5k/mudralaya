@@ -5,6 +5,7 @@ import './Hero.css';
 
 const Hero = () => {
   const { openJoinUsModal } = useModal();
+  // navigate to contact page when user wants to talk to advisor
 
   return (
     <section className="hero-section">
@@ -34,16 +35,20 @@ const Hero = () => {
 
               {/* CTA Buttons */}
               <div className="hero-buttons">
-                <Link to="/plans" className="btn btn-explore">
-                  Explore Plans
-                </Link>
                 <button
-                  className="btn btn-advisor"
+                  className="btn btn-explore"
                   onClick={() => openJoinUsModal()}
-                  style={{ border: 'none' }} // Ensure no default border if reusing class
+                  style={{ border: 'none', display: 'inline-block' }}
                 >
-                  Start Earning
+                  Become Our Partner
                 </button>
+                <Link
+                  to="/contact"
+                  className="btn btn-advisor"
+                  style={{ border: 'none', display: 'inline-block', textDecoration: 'none' }}
+                >
+                  Talk to our Advisor
+                </Link>
               </div>
             </div>
           </div>

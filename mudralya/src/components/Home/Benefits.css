@@ -281,6 +281,41 @@ section.benefits-section .col-12.col-md-6.col-lg-3 {
   transform: translateY(0);
 }
 
+/* Layout fixes: make plan cards equal-height and align content */
+section.benefits-section .row.g-4 {
+  align-items: stretch;
+}
+
+section.benefits-section .col-12.col-md-6.col-lg-3 {
+  display: flex;
+}
+
+.plan-card {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Let benefits area grow so CTA stays pinned to bottom */
+.plan-benefits {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.laptop-checkbox-container {
+  margin-top: 0.5rem;
+}
+
+.plan-divider {
+  margin-top: 0.75rem;
+}
+
+.plan-button {
+  margin-top: 0.8rem;
+}
+
 .free-btn {
   background: transparent;
   border: 2px solid #ffffff;

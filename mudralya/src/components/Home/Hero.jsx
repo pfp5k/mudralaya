@@ -38,15 +38,10 @@ const Hero = () => {
                 <button
                   className="btn btn-explore"
                   onClick={() => openJoinUsModal()}
-                  style={{ border: 'none', display: 'inline-block' }}
                 >
                   Become Our Partner
                 </button>
-                <Link
-                  to="/contact"
-                  className="btn btn-advisor"
-                  style={{ border: 'none', display: 'inline-block', textDecoration: 'none' }}
-                >
+                <Link to="/contact" className="btn btn-advisor">
                   Talk to our Advisor
                 </Link>
               </div>

@@ -31,6 +31,7 @@ const JoinUsModal = ({ isOpen, onClose, initialPlan = '' }) => {
     const [submissionId, setSubmissionId] = useState(null);
     const [showFinalSuccessPopup, setShowFinalSuccessPopup] = useState(false);
     const [showMembership, setShowMembership] = useState(false);
+    const [paymentBusy, setPaymentBusy] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -43,6 +44,9 @@ const JoinUsModal = ({ isOpen, onClose, initialPlan = '' }) => {
     const resetAndClose = () => {
         setSubmitted(false);
         setShowFinalSuccessPopup(false);
+        setShowMembership(false);
+        setSubmissionId(null);
+        setPaymentBusy(false);
         setFormData({
             fullName: '',
             mobileNumber: '',
@@ -79,10 +83,19 @@ const JoinUsModal = ({ isOpen, onClose, initialPlan = '' }) => {
     };
 
     const handlePayment = async () => {
+        if (!submissionId) {
+            alert('Please submit your details first, then proceed for payment.');
+            return;
+        }
+
+        if (paymentBusy) return;
+        setPaymentBusy(true);
+
         const res = await loadRazorpayScript();
 
         if (!res) {
             alert('Razorpay SDK failed to load. Are you online?');
+            setPaymentBusy(false);
             return;
         }
 
@@ -93,29 +106,36 @@ const JoinUsModal = ({ isOpen, onClose, initialPlan = '' }) => {
                 method: 'POST',
                 data: {
                     amount: 99, // Amount in INR
-                    currency: 'INR'
+                    currency: 'INR',
+                    receipt: `join_${submissionId}`,
+                    submissionId
                 }
             });
         } catch (err) {
             console.error('Failed to create order', err);
             alert('Failed to initiate payment. Please try again.');
+            setPaymentBusy(false);
+            return;
+        }
+
+        if (!orderData?.keyId) {
+            alert('Payment configuration error: Missing Razorpay key. Please try again later.');
+            setPaymentBusy(false);
             return;
         }
 
         // Create options for Razorpay Checkout
-        // NOTE: Replace 'YOUR_RAZORPAY_KEY_ID' with your actual key
         const options = {
-            key: 'rzp_live_RrXv8R9u9kWb3c',
+            key: orderData.keyId,
             amount: orderData.amount, // Amount from backend order
             currency: orderData.currency,
             name: 'Mudralaya',
             description: 'Partner Membership Fee',
             image: '/images/mudralya_logo.webp', // Optional: logo
             order_id: orderData.id, // Order ID from backend
-            handler: function (response) {
-                // Payment success handler - Verify on backend
+            handler: async function (response) {
                 try {
-                    request('/api/payment/verify', {
+                    await request('/api/payment/verify', {
                         method: 'POST',
                         data: {
                             submissionId: submissionId,
@@ -124,13 +144,19 @@ const JoinUsModal = ({ isOpen, onClose, initialPlan = '' }) => {
                             razorpay_signature: response.razorpay_signature
                         }
                     });
+
+                    setShowMembership(true); // Show membership card only after successful verification
                 } catch (error) {
                     console.error('Failed to verify payment', error);
+                    alert(
+                        `Payment verification failed. If your amount was deducted, please contact support with Payment ID: ${response.razorpay_payment_id}`
+                    );
+                    setPaymentBusy(false);
+                    return;
                 }
-
-                // On payment success, we just close the modal without the "Registered" popup (as user didn't discard)
-                // resetAndClose(); // OLD: Closed modal
-                setShowMembership(true); // NEW: Show membership card
+            },
+            modal: {
+                ondismiss: () => setPaymentBusy(false)
             },
             prefill: {
                 name: formData.fullName,

@@ -120,6 +120,11 @@ const Benefits = () => {
                   )}
                   {/* Display the correct price */}
                   <div className="price-value">{getPlanPrice(plan)}</div>
+                  <div className="price-value">
+                    {plan.variant === 'individual'
+                      ? (hasLaptop ? '₹ 5,000' : '₹ 25,000')
+                      : plan.price}
+                  </div>
                 </div>
 
                 <ul className="plan-benefits">

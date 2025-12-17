@@ -40,6 +40,35 @@ jobs:
         working-directory: backend
         run: npm ci --omit=dev
 
+      - name: Generate backend runtime env (.env)
+        shell: bash
+        run: |
+          set -euo pipefail
+          ENV_FILE="backend/.env"
+          rm -f "$ENV_FILE"
+          touch "$ENV_FILE"
+
+          add() {
+            local name="$1"
+            local value="$2"
+            if [ -n "$value" ]; then
+              printf '%s=%s\n' "$name" "$value" >> "$ENV_FILE"
+            fi
+          }
+
+          # Backend runtime configuration (recommended: set these as GitHub Secrets)
+          add "CORS_ORIGIN" "${{ secrets.CORS_ORIGIN }}"
+          add "LOG_LEVEL" "${{ secrets.LOG_LEVEL }}"
+          add "MONGO_URI" "${{ secrets.MONGO_URI }}"
+          add "MONGO_DB_NAME" "${{ secrets.MONGO_DB_NAME }}"
+          add "DASHBOARD_API_KEY" "${{ secrets.DASHBOARD_API_KEY }}"
+          add "DASHBOARD_ADMIN_USER" "${{ secrets.DASHBOARD_ADMIN_USER }}"
+          add "DASHBOARD_ADMIN_PASS" "${{ secrets.DASHBOARD_ADMIN_PASS }}"
+          add "RAZORPAY_KEY_ID" "${{ secrets.RAZORPAY_KEY_ID }}"
+          add "RAZORPAY_KEY_SECRET" "${{ secrets.RAZORPAY_KEY_SECRET }}"
+
+          echo "Generated backend/.env with $(wc -l < "$ENV_FILE") entries."
+
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:

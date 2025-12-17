@@ -120,11 +120,6 @@ const Benefits = () => {
                   )}
                   {/* Display the correct price */}
                   <div className="price-value">{getPlanPrice(plan)}</div>
-                  <div className="price-value">
-                    {plan.variant === 'individual'
-                      ? (hasLaptop ? '₹ 5,000' : '₹ 25,000')
-                      : plan.price}
-                  </div>
                 </div>
 
                 <ul className="plan-benefits">
@@ -136,14 +131,15 @@ const Benefits = () => {
                 
                 {/* 3. Checkbox placed at the end of the benefits list, before the divider */}
                 {plan.key === 'individual' && (
-                  <div className="laptop-checkbox-container">
+                  <div
+                    className="laptop-checkbox-container"
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     <label>
                       <input
                         type="checkbox"
                         checked={hasLaptop}
                         onChange={(e) => {
-                          // Crucial: Stop click from propagating to the parent card's onClick
-                          e.stopPropagation(); 
                           setHasLaptop(e.target.checked);
                         }}
                       />

@@ -20,6 +20,7 @@ const Dashboard = () => {
   const defaultUsername = import.meta.env.VITE_DASHBOARD_USER || '';
   const [authToken, setAuthToken] = useState('');
   const [loading, setLoading] = useState(false);
+  const [syncingPayments, setSyncingPayments] = useState(false);
   const [data, setData] = useState(null);
   const [error, setError] = useState('');
   const [activeTab, setActiveTab] = useState('overview');
@@ -84,6 +85,26 @@ const Dashboard = () => {
     setAuthToken('');
     localStorage.removeItem('isAdminLoggedIn');
     setData(null);
+  };
+
+  const handleSyncPayments = async () => {
+    if (syncingPayments) return;
+    setSyncingPayments(true);
+    try {
+      const res = await request('/api/payment/sync', {
+        method: 'POST',
+        includeCredentials: true,
+        data: { limit: 200 }
+      });
+
+      await fetchDashboard('active');
+      alert(`Payment sync complete: ${res.updated || 0} updated (scanned ${res.scanned || 0}). Errors: ${(res.errors || []).length}`);
+    } catch (err) {
+      console.error(err);
+      alert(err.data?.error || err.message || 'Payment sync failed');
+    } finally {
+      setSyncingPayments(false);
+    }
   };
 
   // Columns Definition
@@ -219,12 +240,23 @@ const Dashboard = () => {
       )}
 
       {activeTab === 'join' && (
-        <DataTable
-          title="Join Partnership Requests"
-          columns={joinColumns}
-          data={data?.joinRequests || []}
-          onDelete={(id) => handleDelete('join', id)}
-        />
+        <>
+          <div className="d-flex justify-content-end mb-3">
+            <button
+              className="btn btn-outline-primary btn-sm"
+              onClick={handleSyncPayments}
+              disabled={syncingPayments}
+            >
+              {syncingPayments ? 'Syncing Payments...' : 'Sync Razorpay Payments'}
+            </button>
+          </div>
+          <DataTable
+            title="Join Partnership Requests"
+            columns={joinColumns}
+            data={data?.joinRequests || []}
+            onDelete={(id) => handleDelete('join', id)}
+          />
+        </>
       )}
 
       {activeTab === 'contacts' && (

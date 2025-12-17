@@ -1,14 +1,19 @@
 /* Benefits Section */
 .benefits-section {
   padding: 5rem 1rem 4rem;
-  background: radial-gradient(circle at 20% 20%, #1f2547 0%, #0c0e1f 50%, #050711 100%);
+  background: radial-gradient(
+    circle at 20% 20%,
+    #1f2547 0%,
+    #0c0e1f 50%,
+    #050711 100%
+  );
   position: relative;
   overflow: hidden;
 }
 
 .benefits-section::before,
 .benefits-section::after {
-  content: '';
+  content: "";
   position: absolute;
   filter: blur(8px);
   opacity: 0.5;
@@ -18,7 +23,11 @@
 .benefits-section::before {
   width: 420px;
   height: 420px;
-  background: radial-gradient(circle, rgba(96, 132, 255, 0.18) 0%, transparent 60%);
+  background: radial-gradient(
+    circle,
+    rgba(96, 132, 255, 0.18) 0%,
+    transparent 60%
+  );
   top: -120px;
   left: -80px;
 }
@@ -26,7 +35,11 @@
 .benefits-section::after {
   width: 380px;
   height: 380px;
-  background: radial-gradient(circle, rgba(191, 74, 240, 0.2) 0%, transparent 60%);
+  background: radial-gradient(
+    circle,
+    rgba(191, 74, 240, 0.2) 0%,
+    transparent 60%
+  );
   bottom: -120px;
   right: -60px;
 }
@@ -60,7 +73,13 @@
 }
 
 .benefits-grid-surface {
-  background: linear-gradient(160deg, #84ffff -11%, #651fff 30%, #311b92 80%, #ff4081 166%);
+  background: linear-gradient(
+    160deg,
+    #84ffff -11%,
+    #651fff 30%,
+    #311b92 80%,
+    #ff4081 166%
+  );
   border-radius: 30px;
   padding: 1.15rem 0.25rem;
 }
@@ -92,7 +111,8 @@ section.benefits-section .col-12.col-md-6.col-lg-3 {
   overflow: hidden;
   cursor: pointer;
   /* Interaction cue */
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease,
+    background-color 0.3s ease;
 }
 
 .plan-card.active {
@@ -114,20 +134,12 @@ section.benefits-section .col-12.col-md-6.col-lg-3 {
   color: #67fff0;
 }
 
-
-
-
-
-
-
-
 .plan-card.individual {
   /* background, border, box-shadow removed to be handled by .active */
   border-radius: 20px;
 }
 
-
-.plan-card.individual>* {
+.plan-card.individual > * {
   position: relative;
   z-index: 1;
 }
@@ -187,7 +199,8 @@ section.benefits-section .col-12.col-md-6.col-lg-3 {
   align-items: center;
   justify-content: center;
   min-width: 82%;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 10px 25px rgba(0, 0, 0, 0.35);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 10px 25px rgba(0, 0, 0, 0.35);
 }
 
 .price-pill.has-label {
@@ -213,7 +226,7 @@ section.benefits-section .col-12.col-md-6.col-lg-3 {
 }
 
 .plan-card.individual .price-value {
-  font-size: 1.50rem;
+  font-size: 1.5rem;
 }
 
 /* Plan Benefits List */
@@ -235,7 +248,7 @@ section.benefits-section .col-12.col-md-6.col-lg-3 {
 }
 
 .plan-benefits li::before {
-  content: '\2022';
+  content: "\2022";
   position: absolute;
   left: 0;
   top: 0;
@@ -256,7 +269,11 @@ section.benefits-section .col-12.col-md-6.col-lg-3 {
 }
 
 .plan-card.individual .plan-divider {
-  background: linear-gradient(90deg, rgba(127, 255, 246, 0.85), rgba(255, 255, 255, 0.2));
+  background: linear-gradient(
+    90deg,
+    rgba(127, 255, 246, 0.85),
+    rgba(255, 255, 255, 0.2)
+  );
 }
 
 /* Plan Button */
@@ -270,7 +287,8 @@ section.benefits-section .col-12.col-md-6.col-lg-3 {
   letter-spacing: 0.6px;
   text-transform: uppercase;
   cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, color 0.25s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease,
+    color 0.25s ease;
 }
 
 .plan-button:hover {
@@ -311,6 +329,71 @@ section.benefits-section .col-12.col-md-6.col-lg-3 {
 .franchise-btn:hover,
 .paid-btn:hover {
   background: #000000;
+}
+
+.laptop-checkbox-container {
+  margin: 1rem 0 0.5rem;
+  padding-left: 0.5rem;
+}
+
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-left: 35px;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #fff;
+  user-select: none;
+}
+
+.custom-checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 22px;
+  width: 22px;
+  background-color: transparent;
+  border: 2px solid #fff;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.custom-checkbox:hover input ~ .checkmark {
+  border-color: #6dffd8;
+}
+
+.custom-checkbox input:checked ~ .checkmark {
+  background-color: #fff;
+  border-color: #fff;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.custom-checkbox input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.custom-checkbox .checkmark:after {
+  left: 7px;
+  top: 3px;
+  width: 5px;
+  height: 10px;
+  border: solid #000;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
 }
 
 /* Responsive Design */

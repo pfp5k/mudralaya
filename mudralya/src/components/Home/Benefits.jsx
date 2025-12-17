@@ -75,6 +75,7 @@ const plans = [
 
 const Benefits = () => {
   const [selectedPlan, setSelectedPlan] = React.useState('individual');
+  const [hasLaptop, setHasLaptop] = React.useState(false);
   const { openJoinUsModal } = useModal();
 
   return (
@@ -104,13 +105,32 @@ const Benefits = () => {
                   {plan.variant === 'individual' && (
                     <div className="price-label">{plan.title}</div>
                   )}
-                  <div className="price-value">{plan.price}</div>
+                  <div className="price-value">
+                    {plan.variant === 'individual'
+                      ? (hasLaptop ? '₹ 5,000' : '₹ 25,000')
+                      : plan.price}
+                  </div>
                 </div>
                 <ul className="plan-benefits">
                   {plan.benefits.map((benefit, idx) => (
                     <li key={idx}>{benefit}</li>
                   ))}
                 </ul>
+
+                {plan.variant === 'individual' && (
+                  <div className="laptop-checkbox-container" onClick={(e) => e.stopPropagation()}>
+                    <label className="custom-checkbox">
+                      <input
+                        type="checkbox"
+                        checked={hasLaptop}
+                        onChange={(e) => setHasLaptop(e.target.checked)}
+                      />
+                      <span className="checkmark"></span>
+                      I have my own Laptop
+                    </label>
+                  </div>
+                )}
+
                 <div className="plan-divider" />
                 <button
                   className={`plan-button ${plan.variant}-btn`}

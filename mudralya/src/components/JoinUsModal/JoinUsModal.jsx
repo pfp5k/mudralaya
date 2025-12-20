@@ -110,16 +110,28 @@ const JoinUsModal = ({ isOpen, onClose, initialPlan = '' }) => {
         // Determine amount: override -> context -> default
         let amountToPay = 99; // Default backup
 
-        if (safeAmount) {
+        console.log('Payment Debug:', {
+            safeAmount,
+            plan: formData.plan,
+            finalPrice: modalData?.finalPrice,
+            initialPlan
+        });
+
+        if (safeAmount && safeAmount > 0) {
             amountToPay = safeAmount;
-        } else if (formData.plan === 'individual' && modalData?.finalPrice) {
-            // Parse "₹5,000" -> 5000
-            const extracted = String(modalData.finalPrice).replace(/[^0-9]/g, '');
+        } else if (formData.plan === 'individual') {
+            // Only try to parse if it's the Individual plan
+            const extracted = String(modalData?.finalPrice || '').replace(/[^0-9]/g, '');
             const parsed = extracted ? Number(extracted) : 0;
             if (parsed > 0) amountToPay = parsed;
         } else {
-            // For other plans (Free, Business) that go through "JoinUsSuccess", 
-            // the fee is 99 regardless of initialPrice being 0.
+            // Standard fee for others
+            amountToPay = 99;
+        }
+
+        // Final safety check
+        if (!amountToPay || amountToPay < 1) {
+            console.warn('Invalid amount detected, resetting to 99');
             amountToPay = 99;
         }
 

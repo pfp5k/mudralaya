@@ -3,10 +3,16 @@
     flex-direction: column;
     padding: 30px;
     width: 100%;
-    height: 100%;
+    flex: 1;
+    /* Take available space */
+    min-height: 0;
+    /* Allow shrinking for scroll */
     overflow-y: auto;
     background: #ffffff;
     position: relative;
+    /* Custom scrollbar for better look */
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e0 #f1f5f9;
 }
 
 .success-close {

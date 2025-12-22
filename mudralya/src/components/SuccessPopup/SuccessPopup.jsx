@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import './SuccessPopup.css';
 
 const SuccessPopup = ({ message, onClose }) => {
-    // Auto close after 3 seconds
+
     useEffect(() => {
         const timer = setTimeout(() => {
             onClose();
@@ -28,3 +28,7 @@ const SuccessPopup = ({ message, onClose }) => {
 };
 
 export default SuccessPopup;
+
+
+
+

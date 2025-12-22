@@ -26,6 +26,12 @@
   animation: modalSlideIn 0.3s ease-out;
 }
 
+.join-us-modal.success-mode {
+  flex-direction: column;
+  max-width: 800px;
+  /* Slightly narrower for single column looking good */
+}
+
 @keyframes modalSlideIn {
   from {
     opacity: 0;

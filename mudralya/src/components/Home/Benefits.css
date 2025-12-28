@@ -1,12 +1,10 @@
 /* Benefits Section */
 .benefits-section {
   padding: 5rem 1rem 4rem;
-  background: radial-gradient(
-    circle at 20% 20%,
-    #1f2547 0%,
-    #0c0e1f 50%,
-    #050711 100%
-  );
+  background: radial-gradient(circle at 20% 20%,
+      #1f2547 0%,
+      #0c0e1f 50%,
+      #050711 100%);
   position: relative;
   overflow: hidden;
 }
@@ -23,11 +21,9 @@
 .benefits-section::before {
   width: 420px;
   height: 420px;
-  background: radial-gradient(
-    circle,
-    rgba(96, 132, 255, 0.18) 0%,
-    transparent 60%
-  );
+  background: radial-gradient(circle,
+      rgba(96, 132, 255, 0.18) 0%,
+      transparent 60%);
   top: -120px;
   left: -80px;
 }
@@ -35,11 +31,9 @@
 .benefits-section::after {
   width: 380px;
   height: 380px;
-  background: radial-gradient(
-    circle,
-    rgba(191, 74, 240, 0.2) 0%,
-    transparent 60%
-  );
+  background: radial-gradient(circle,
+      rgba(191, 74, 240, 0.2) 0%,
+      transparent 60%);
   bottom: -120px;
   right: -60px;
 }
@@ -73,13 +67,11 @@
 }
 
 .benefits-grid-surface {
-  background: linear-gradient(
-    160deg,
-    #84ffff -11%,
-    #651fff 30%,
-    #311b92 80%,
-    #ff4081 166%
-  );
+  background: linear-gradient(160deg,
+      #84ffff -11%,
+      #651fff 30%,
+      #311b92 80%,
+      #ff4081 166%);
   border-radius: 30px;
   padding: 1.15rem 0.25rem;
 }
@@ -139,7 +131,7 @@ section.benefits-section .col-12.col-md-6.col-lg-3 {
   border-radius: 20px;
 }
 
-.plan-card.individual > * {
+.plan-card.individual>* {
   position: relative;
   z-index: 1;
 }
@@ -245,6 +237,7 @@ section.benefits-section .col-12.col-md-6.col-lg-3 {
   font-size: 0.86rem;
   color: #e8edff;
   line-height: 1.5;
+  text-align: justify;
 }
 
 .plan-benefits li::before {
@@ -269,11 +262,9 @@ section.benefits-section .col-12.col-md-6.col-lg-3 {
 }
 
 .plan-card.individual .plan-divider {
-  background: linear-gradient(
-    90deg,
-    rgba(127, 255, 246, 0.85),
-    rgba(255, 255, 255, 0.2)
-  );
+  background: linear-gradient(90deg,
+      rgba(127, 255, 246, 0.85),
+      rgba(255, 255, 255, 0.2));
 }
 
 /* Plan Button */
@@ -402,11 +393,11 @@ section.benefits-section .col-12.col-md-6.col-lg-3 {
   transition: all 0.2s ease;
 }
 
-.custom-checkbox:hover input ~ .checkmark {
+.custom-checkbox:hover input~.checkmark {
   border-color: #6dffd8;
 }
 
-.custom-checkbox input:checked ~ .checkmark {
+.custom-checkbox input:checked~.checkmark {
   background-color: #fff;
   border-color: #fff;
 }
@@ -417,7 +408,7 @@ section.benefits-section .col-12.col-md-6.col-lg-3 {
   display: none;
 }
 
-.custom-checkbox input:checked ~ .checkmark:after {
+.custom-checkbox input:checked~.checkmark:after {
   display: block;
 }
 

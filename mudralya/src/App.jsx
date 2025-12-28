@@ -6,6 +6,8 @@ import JoinUsModal from './components/JoinUsModal/JoinUsModal.jsx';
 import { ModalProvider, useModal } from './context/ModalContext.jsx';
 import './App.css';
 
+import ScrollToTop from './components/Common/ScrollToTop.jsx';
+
 // Lazy load components for code splitting
 const Home = lazy(() => import('./components/Home/Home.jsx'));
 const AboutUs = lazy(() => import('./components/AboutUs/AboutUs.jsx'));
@@ -29,6 +31,7 @@ const AppContent = () => {
 
   return (
     <div className="App">
+      <ScrollToTop />
       <Header />
       <main style={{ paddingTop: '80px' }}>
         <Suspense fallback={<Loading />}>

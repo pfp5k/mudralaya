@@ -38,7 +38,7 @@ const AboutUs = () => {
 
                 {/* CTA Buttons */}
                 <div className="about-us-hero-buttons">
-                  
+
                   <button
                     className="btn btn-about-explore"
                     onClick={() => openJoinUsModal()}
@@ -84,7 +84,14 @@ const AboutUs = () => {
 
               {/* Mission Content Box */}
               <div className="our-mission-content-box">
-                {/* Placeholder for future content like video, image, or statistics */}
+                <video
+                  className="mission-video"
+                  controls
+                  playsInline
+                >
+                  <source src="/video/video%20mudralaya.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
               </div>
             </div>
           </div>
@@ -171,14 +178,29 @@ const AboutUs = () => {
       {/* Our Vision Section */}
       <section className="our-vision-section">
         <div className="container-xl px-4 px-lg-5">
-          <div className="row">
-            <div className="col-12 text-center">
+          <div className="row align-items-center">
+            {/* Left Side - Content */}
+            <div className="col-12 col-lg-6 mb-4 mb-lg-0 text-start">
               <h2 className="our-vision-title">
                 Our <span className="our-vision-title-highlight">Vision</span>
               </h2>
               <p className="our-vision-text">
                 To build a nationwide network of entrepreneurs, micro-franchises, and financial leaders who uplift communities and shape the future of India's financial ecosystem
               </p>
+            </div>
+
+            {/* Right Side - Illustration */}
+            <div className="col-12 col-lg-6">
+              <div className="our-vision-illustration">
+                <img
+                  src="/images/vision.png"
+                  alt="Our Vision Illustration"
+                  className="img-fluid rounded-4 shadow-sm"
+                  onError={(e) => {
+                    e.target.src = '/images/vision.png';
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>

@@ -16,6 +16,7 @@ const Header = () => {
     const path = location.pathname;
     if (path === '/') setActiveLink('home');
     else if (path === '/about') setActiveLink('about');
+    else if (path === '/career') setActiveLink('career');
     else if (path === '/contact') setActiveLink('contact');
     else if (path === '/dashboard') setActiveLink('dashboard');
     else setActiveLink('home');
@@ -94,6 +95,15 @@ const Header = () => {
                   onClick={() => handleLinkClick('about')}
                 >
                   About Us
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  className={`nav-link mx-2 nav-animate-link ${activeLink === 'career' ? 'active' : ''}`}
+                  to="/career"
+                  onClick={() => handleLinkClick('career')}
+                >
+                  Career
                 </Link>
               </li>
               <li className="nav-item">

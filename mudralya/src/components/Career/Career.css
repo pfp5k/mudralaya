@@ -44,7 +44,7 @@
     color: #ffffff;
     font-weight: 700;
     padding: 14px 40px;
-    border-radius: 8px;
+    border-radius: 44px;
     border: none;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(45, 143, 159, 0.3);
@@ -56,12 +56,12 @@
 }
 
 .btn-vacancies {
-    background-color: transparent;
+    background-color: #4ade80;
     color: #ffffff;
     font-weight: 700;
     padding: 14px 40px;
-    border-radius: 8px;
-    border: 2px solid #ffffff;
+    border-radius: 44px;
+
     transition: all 0.3s ease;
 }
 

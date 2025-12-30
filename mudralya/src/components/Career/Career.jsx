@@ -1,11 +1,34 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Users, Lightbulb, Handshake, GraduationCap, Code, Palette, BarChart, Video, Smartphone, Box, Settings } from 'lucide-react';
+import {
+    Users,
+    Target,
+    Zap,
+    Heart,
+    BarChart,
+    Search,
+    MapPin,
+    Code,
+    ShieldCheck,
+    Rocket,
+    Trophy,
+    CheckCircle2,
+    Lightbulb,
+    Handshake,
+    GraduationCap,
+    Palette,
+    Video,
+    Smartphone,
+    Box,
+    Settings
+} from 'lucide-react';
+import { useModal } from '../../context/ModalContext';
 import './Career.css';
 
 const Career = () => {
     const navigate = useNavigate();
+    const { openJoinUsModal } = useModal();
 
     const fadeInUp = {
         initial: { opacity: 0, y: 30 },
@@ -51,8 +74,9 @@ const Career = () => {
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
                                     className="btn btn-vacancies"
+                                    onClick={() => openJoinUsModal()}
                                 >
-                                    Vacancies
+                                    Become our Partner
                                 </motion.button>
                             </div>
                         </motion.div>

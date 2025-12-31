@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Advisor.css';
 import { request } from '../../api/client';
+import { supabase } from '../../supabaseClient';
 
 const Advisor = () => {
   const navigate = useNavigate();
@@ -97,10 +98,11 @@ const Advisor = () => {
 
     setSubmitting(true);
     try {
-      await request('/api/advisor', {
-        method: 'POST',
-        data: formData
+      const { data, error } = await supabase.functions.invoke('forms-api', {
+        body: { action: 'submit-advisor-application', data: formData }
       });
+
+      if (error) throw error;
 
       setFormData({
         fullName: '',

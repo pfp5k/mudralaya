@@ -1,58 +1,48 @@
-import React, { useState } from 'react';
-import { FaUsers, FaCopy, FaSearch, FaFilter, FaSort, FaGem, FaBuilding } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { FaUsers, FaCopy, FaSearch, FaFilter, FaSort, FaGem, FaBuilding, FaRocket, FaEdit } from 'react-icons/fa';
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';
+import { supabase } from '../supabaseClient';
 import './Task.css';
 
-const TASKS = [
-    {
-        id: 1,
-        title: "Maximize Download for Mudralaya Mobile Application",
-        sub: "Weekly Task",
-        reward: "₹ 600",
-        isCompleted: false,
-        icon: <FaUsers />,
-        iconColor: "icon-red-gradient"
-    },
-    {
-        id: 2,
-        title: "HDFC One Account Opening",
-        sub: "Daily Task",
-        tag: "Payment Processed",
-        isCompleted: true,
-        reward: "Completed",
-        icon: <FaBuilding />, // Using FaBuilding as HDFC placeholder
-        iconColor: "icon-hdfc" // Special Red Square
-    },
-    {
-        id: 3,
-        title: "Maximize Download for Mudralaya Mobile Application",
-        sub: "Weekly Task",
-        progressText: "in progress...",
-        reward: "MF250E",
-        isCopy: true,
-        isCompleted: false,
-        icon: <FaUsers />, // Reusing users icon 
-        iconColor: "icon-red-gradient" // Actually screenshot shows red/pink too
-    },
-    {
-        id: 4,
-        title: "Survey Form for Mobile application",
-        sub: "Weekly Task",
-        reward: "2 / 25",
-        isCompleted: false,
-        icon: <FaUsers />,
-        iconColor: "icon-red-gradient", // Screenshot shows red/pink
-        expanded: true
-    }
-];
-
 const Task = () => {
+    const [tasks, setTasks] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState('All Task');
-    const [expandedTaskId, setExpandedTaskId] = useState(4);
+    const [expandedTaskId, setExpandedTaskId] = useState(null);
+
+    useEffect(() => {
+        const fetchTasks = async () => {
+            try {
+                const { data, error } = await supabase.functions.invoke('dashboard-api', {
+                    body: { action: 'get-tasks' }
+                });
+                if (error) throw error;
+                setTasks(data || []);
+            } catch (err) {
+                console.error("Error fetching tasks:", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchTasks();
+    }, []);
 
     const toggleExpand = (id) => {
         setExpandedTaskId(expandedTaskId === id ? null : id);
     };
+
+    const getIcon = (type) => {
+        switch (type) {
+            case 'group': return <FaUsers />;
+            case 'rocket': return <FaRocket />;
+            case 'feedback': return <FaEdit />;
+            case 'building': return <FaBuilding />;
+            default: return <FaUsers />;
+        }
+    };
+
+    if (loading) return <div className="loading">Loading Tasks...</div>;
 
     return (
         <div className="task-page">
@@ -80,26 +70,23 @@ const Task = () => {
             </div>
 
             <div className="task-list">
-                {TASKS.map((task) => (
+                {tasks.map((task) => (
                     <div className="task-card" key={task.id}>
                         <div className="task-card-header">
                             <div className="task-left">
-                                <div className={`task-icon-wrapper ${task.iconColor || 'icon-blue-gradient'}`}>
-                                    {task.icon}
+                                <div className={`task-icon-wrapper icon-red-gradient`}>
+                                    {getIcon(task.icon_type)}
                                 </div>
                                 <div className="task-info">
                                     <h3>{task.title}</h3>
                                     <div className="task-meta">
-                                        <span>{task.sub}</span>
+                                        <span>{task.category}</span>
                                     </div>
                                 </div>
                             </div>
                             <div className="task-right">
-                                {task.tag && <span className="status-processed">{task.tag}</span>}
-                                {task.progressText && <span className="status-progress-text">{task.progressText}</span>}
-
-                                <button className={`reward-btn ${task.isCompleted ? 'completed' : ''} ${task.isCopy ? 'copy-btn' : ''}`}>
-                                    {task.reward} {task.isCopy && <FaCopy />}
+                                <button className={`reward-btn`}>
+                                    ₹ {task.reward_free}
                                 </button>
                                 <button className="toggle-btn" onClick={() => toggleExpand(task.id)}>
                                     {expandedTaskId === task.id ? <MdKeyboardArrowUp /> : <MdKeyboardArrowDown />}
@@ -114,23 +101,34 @@ const Task = () => {
                                     <div className="reward-pricing">
                                         <div className="price-item">
                                             <div className="badge-members"><FaGem /> Members</div>
-                                            <div className="price-value text-blue">₹ 800</div>
+                                            <div className="price-value text-blue">₹ {task.reward_member}</div>
                                         </div>
                                         <div className="price-item">
                                             <div className="label-free">Free</div>
-                                            <div className="price-value text-green">₹ 600</div>
+                                            <div className="price-value text-green">₹ {task.reward_free}</div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div className="expanded-section">
                                     <h4>Terms and Condition</h4>
-                                    <ol className="terms-list">
-                                        <li>A total of 25 survey forms must be completed.</li>
-                                        <li>All responses must be real and genuine; fake or assumed data is not allowed.</li>
-                                        <li>No duplicate or repeated responses are permitted; each form must be filled by a different individual.</li>
-                                    </ol>
+                                    <ul className="terms-list">
+                                        <li>Must be completed before expiry.</li>
+                                        <li>Genuine submissions only.</li>
+                                        <li>Payment processed after verification.</li>
+                                    </ul>
                                 </div>
+                                <button className="btn-take-task" style={{
+                                    width: '100%',
+                                    padding: '12px',
+                                    marginTop: '15px',
+                                    borderRadius: '8px',
+                                    border: 'none',
+                                    background: 'var(--primary-color)',
+                                    color: 'white',
+                                    fontWeight: '600',
+                                    cursor: 'pointer'
+                                }}>Take Task</button>
                             </div>
                         )}
                     </div>
@@ -141,3 +139,4 @@ const Task = () => {
 };
 
 export default Task;
+

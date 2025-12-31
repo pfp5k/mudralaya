@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './JoinUsModal.css';
 import { useModal } from '../../context/ModalContext';
 import { request } from '../../api/client';
+import { supabase } from '../../supabaseClient';
 import JoinUsSuccess from './JoinUsSuccess';
 import SuccessPopup from '../SuccessPopup/SuccessPopup';
 import MembershipCard from '../MembershipCard/MembershipCard';
@@ -138,18 +139,22 @@ const JoinUsModal = ({ isOpen, onClose, initialPlan = '' }) => {
         // 1. Create Order on Backend
         let orderData;
         try {
-            orderData = await request('/api/payment/order', {
-                method: 'POST',
-                data: {
-                    amount: amountToPay,
-                    currency: 'INR',
-                    receipt: `join_${activeSubmissionId}`,
-                    submissionId: activeSubmissionId
+            const { data: res, error } = await supabase.functions.invoke('razorpay-api', {
+                body: {
+                    action: 'create-order',
+                    data: {
+                        amount: amountToPay,
+                        currency: 'INR',
+                        receipt: `join_${activeSubmissionId}`
+                    }
                 }
             });
+
+            if (error) throw error;
+            orderData = res;
         } catch (err) {
             console.error('Failed to create order', err);
-            alert('Failed to initiate payment. Please try again.');
+            alert('Failed to initiate payment: ' + (err.message || 'Please try again.'));
             setPaymentBusy(false);
             return;
         }
@@ -171,15 +176,19 @@ const JoinUsModal = ({ isOpen, onClose, initialPlan = '' }) => {
             order_id: orderData.id, // Order ID from backend
             handler: async function (response) {
                 try {
-                    await request('/api/payment/verify', {
-                        method: 'POST',
-                        data: {
-                            submissionId: activeSubmissionId,
-                            razorpay_payment_id: response.razorpay_payment_id,
-                            razorpay_order_id: response.razorpay_order_id,
-                            razorpay_signature: response.razorpay_signature
+                    const { error: verifyError } = await supabase.functions.invoke('razorpay-api', {
+                        body: {
+                            action: 'verify-payment',
+                            data: {
+                                submissionId: activeSubmissionId,
+                                razorpay_payment_id: response.razorpay_payment_id,
+                                razorpay_order_id: response.razorpay_order_id,
+                                razorpay_signature: response.razorpay_signature
+                            }
                         }
                     });
+
+                    if (verifyError) throw verifyError;
 
                     // For individual plan, we might want to close or show success
                     // The original flow shows MembershipCard
@@ -187,7 +196,7 @@ const JoinUsModal = ({ isOpen, onClose, initialPlan = '' }) => {
                 } catch (error) {
                     console.error('Failed to verify payment', error);
                     alert(
-                        `Payment verification failed. If your amount was deducted, please contact support with Payment ID: ${response.razorpay_payment_id}`
+                        `Payment verification failed: ${error.message}. If your amount was deducted, please contact support with Payment ID: ${response.razorpay_payment_id}`
                     );
                     setPaymentBusy(false);
                     return;
@@ -233,13 +242,14 @@ const JoinUsModal = ({ isOpen, onClose, initialPlan = '' }) => {
             }
             payload.amount = calculatedAmount;
 
-            const response = await request('/api/join', {
-                method: 'POST',
-                data: payload
+            const { data: response, error } = await supabase.functions.invoke('forms-api', {
+                body: { action: 'submit-join-request', data: payload }
             });
 
+            if (error) throw error;
+
             let newSubmissionId = null;
-            if (response.id) {
+            if (response && response.id) {
                 setSubmissionId(response.id);
                 newSubmissionId = response.id;
             }

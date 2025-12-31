@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { request } from '../../api/client';
+import { supabase } from '../../supabaseClient';
 
 const TaskManager = () => {
     const [tasks, setTasks] = useState([]);
@@ -28,9 +28,16 @@ const TaskManager = () => {
 
     const fetchTasks = async () => {
         setLoading(true);
+        const adminToken = localStorage.getItem('adminToken');
+        if (!adminToken) return;
+
         try {
-            const res = await request('/api/admin/tasks', { includeCredentials: true });
-            setTasks(res);
+            const { data: res, error } = await supabase.functions.invoke('admin-api', {
+                body: { action: 'get-tasks' },
+                headers: { 'x-admin-password': adminToken }
+            });
+            if (error) throw error;
+            setTasks(res || []);
         } catch (err) {
             console.error('Failed to fetch tasks', err);
         } finally {
@@ -40,33 +47,37 @@ const TaskManager = () => {
 
     const handleCreateTask = async (e) => {
         e.preventDefault();
+        const adminToken = localStorage.getItem('adminToken');
         try {
-            await request('/api/admin/tasks', {
-                method: 'POST',
-                data: newTask,
-                includeCredentials: true
+            const { error } = await supabase.functions.invoke('admin-api', {
+                body: { action: 'create-task', data: newTask },
+                headers: { 'x-admin-password': adminToken }
             });
+            if (error) throw error;
+
             alert('Task Created Successfully');
             setShowCreateForm(false);
             setNewTask({ title: '', description: '', reward: '', type: 'Daily Task', link: '', action_required: 'signup' });
             fetchTasks();
         } catch (err) {
-            alert('Failed to create task');
+            alert('Failed to create task: ' + err.message);
         }
     };
 
     const handleAssignTask = async (e) => {
         e.preventDefault();
+        const adminToken = localStorage.getItem('adminToken');
         try {
-            await request('/api/admin/tasks/assign', {
-                method: 'POST',
-                data: assignData,
-                includeCredentials: true
+            const { error } = await supabase.functions.invoke('admin-api', {
+                body: { action: 'assign-task', data: assignData },
+                headers: { 'x-admin-password': adminToken }
             });
+            if (error) throw error;
+
             alert('Task Assigned Successfully');
             setAssignData({ taskId: '', userIdentifier: '' });
         } catch (err) {
-            alert(err.data?.error || 'Failed to assign task');
+            alert(err.message || 'Failed to assign task');
         }
     };
 
@@ -158,14 +169,14 @@ const TaskManager = () => {
                                         <tr><td colSpan="4" className="text-center py-3">No tasks found</td></tr>
                                     ) : (
                                         tasks.map(task => (
-                                            <tr key={task._id}>
+                                            <tr key={task.id || task._id}>
                                                 <td>{task.title}</td>
-                                                <td className="text-success fw-bold">₹{task.reward}</td>
-                                                <td><span className="badge bg-secondary">{task.type}</span></td>
+                                                <td className="text-success fw-bold">₹{task.reward_free || task.reward}</td>
+                                                <td><span className="badge bg-secondary">{task.category || task.type}</span></td>
                                                 <td>
                                                     <button
                                                         className="btn btn-outline-primary btn-sm"
-                                                        onClick={() => setAssignData({ ...assignData, taskId: task._id })}
+                                                        onClick={() => setAssignData({ ...assignData, taskId: task.id || task._id })}
                                                     >
                                                         Assign
                                                     </button>

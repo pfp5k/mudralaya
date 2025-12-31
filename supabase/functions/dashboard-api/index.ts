@@ -1,0 +1,69 @@
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2"
+import { corsHeaders } from "../_shared/cors.ts"
+
+serve(async (req: Request): Promise<Response> => {
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders })
+  }
+
+  try {
+    const authHeader = req.headers.get('Authorization')
+    const supabaseClient = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
+      { global: { headers: { Authorization: authHeader! } } }
+    )
+
+    const { data: { user }, error: authError } = await supabaseClient.auth.getUser()
+    if (authError || !user) throw new Error('Unauthorized')
+
+    const { action } = await req.json().catch(() => ({}))
+    const url = new URL(req.url)
+    const queryAction = url.searchParams.get('action') || action
+
+    let result = {}
+
+    switch (queryAction) {
+      case 'get-dashboard-summary':
+        // Get tasks, transactions, and user profile summary
+        const { data: tasks } = await supabaseClient.from('tasks').select('*').limit(5)
+        const { data: transactions } = await supabaseClient.from('transactions').select('*').eq('user_id', user.id).order('created_at', { ascending: false }).limit(5)
+        
+        // Use the custom RPC for stats
+        const { data: stats } = await supabaseClient.rpc('get_user_wallet_stats', { user_id_param: user.id }).single()
+
+        result = { tasks, transactions, stats: stats || { approved: 0, pending: 0, total: 0, payout: 0, today: 0, monthly: 0 } }
+        break;
+
+      case 'get-tasks':
+        const { data: allTasks } = await supabaseClient.from('tasks').select('*')
+        result = allTasks
+        break;
+
+      case 'get-wallet':
+        const { data: walletTx } = await supabaseClient.from('transactions').select('*').eq('user_id', user.id).order('created_at', { ascending: false })
+        result = walletTx
+        break;
+
+      case 'get-plans':
+        const { data: plans } = await supabaseClient.from('plans').select('*')
+        result = plans
+        break;
+
+      default:
+        throw new Error('Invalid action')
+    }
+
+    return new Response(JSON.stringify(result), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 200,
+    })
+
+  } catch (error: any) {
+    return new Response(JSON.stringify({ error: error.message }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 400,
+    })
+  }
+})

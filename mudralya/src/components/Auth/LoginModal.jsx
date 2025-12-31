@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './LoginModal.css';
 import { useModal } from '../../context/ModalContext';
-import { request } from '../../api/client';
+import { supabase } from '../../supabaseClient';
 
 const LoginModal = ({ isOpen, onClose }) => {
     const { login } = useModal();
@@ -27,10 +27,11 @@ const LoginModal = ({ isOpen, onClose }) => {
         setLoading(true);
 
         try {
-            await request('/api/auth/send-otp', {
-                method: 'POST',
-                data: { mobileNumber }
+            const { error: otpError } = await supabase.auth.signInWithOtp({
+                phone: `+91${mobileNumber}`,
             });
+            if (otpError) throw otpError;
+
             setStep(2);
             setSuccessMessage(`OTP sent to ${mobileNumber}`);
         } catch (err) {
@@ -47,15 +48,18 @@ const LoginModal = ({ isOpen, onClose }) => {
         setLoading(true);
 
         try {
-            const response = await request('/api/auth/verify-otp', {
-                method: 'POST',
-                data: { mobileNumber, otp }
+            const { data: { session, user }, error: verifyError } = await supabase.auth.verifyOtp({
+                phone: `+91${mobileNumber}`,
+                token: otp,
+                type: 'sms',
             });
+
+            if (verifyError) throw verifyError;
 
             setSuccessMessage('Login successful!');
 
             // Update global state
-            login(response.user);
+            login(user);
 
             setTimeout(() => {
                 handleClose();

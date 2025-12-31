@@ -4,8 +4,8 @@ const StatsOverview = ({ data }) => {
     const stats = [
         {
             title: 'Total Revenue',
-            value: '₹ 12,500', // Mock data
-            change: '+15%',
+            value: `₹ ${(data?.counts?.revenue || 0).toLocaleString()}`,
+            change: '+100%',
             isPositive: true,
             icon: 'fas fa-rupee-sign',
             color: 'primary'
@@ -13,24 +13,24 @@ const StatsOverview = ({ data }) => {
         {
             title: 'Join Requests',
             value: data?.counts?.joinRequests || 0,
-            change: '+5',
+            change: '',
             isPositive: true,
             icon: 'fas fa-user-plus',
             color: 'success'
         },
         {
-            title: 'Active Members',
-            value: '142', // Mock data
-            change: '+12%',
+            title: 'Advisor Apps',
+            value: data?.counts?.advisorApplications || 0,
+            change: '',
             isPositive: true,
-            icon: 'fas fa-users',
+            icon: 'fas fa-briefcase',
             color: 'info'
         },
         {
-            title: 'Pending Tasks',
-            value: '24', // Mock data
-            change: '-2',
-            isPositive: false,
+            title: 'Available Tasks',
+            value: data?.counts?.tasks || 0,
+            change: '',
+            isPositive: true,
             icon: 'fas fa-tasks',
             color: 'warning'
         }

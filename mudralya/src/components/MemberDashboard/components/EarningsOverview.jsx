@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../MemberDashboard.css';
-import { request } from '../../../api/client';
+import { supabase } from '../../../supabaseClient';
 
 const EarningsOverview = () => {
     const [stats, setStats] = useState({
@@ -16,13 +16,25 @@ const EarningsOverview = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [statsRes, txRes] = await Promise.all([
-                    request('/api/client-dashboard/stats', { includeCredentials: true }),
-                    request('/api/client-dashboard/transactions', { includeCredentials: true })
-                ]);
+                const { data: res, error } = await supabase.functions.invoke('dashboard-api', {
+                    body: { action: 'get-dashboard-summary' } // Reusing this to get stats
+                });
 
-                if (statsRes.success) setStats(statsRes.stats);
-                if (txRes.success) setTransactions(txRes.transactions);
+                if (error) throw error;
+
+                if (res.stats) {
+                    setStats({
+                        earnings: res.stats.approved || 0,
+                        pending: res.stats.pending || 0,
+                        tasksCompleted: 0,
+                        referrals: 0,
+                        paid: res.stats.payout || 0
+                    });
+                }
+
+                if (res.transactions) {
+                    setTransactions(res.transactions);
+                }
             } catch (error) {
                 console.error("Failed to fetch dashboard data", error);
             } finally {
@@ -83,16 +95,16 @@ const EarningsOverview = () => {
                             </thead>
                             <tbody>
                                 {transactions.map(tx => (
-                                    <tr key={tx._id}>
-                                        <td>{new Date(tx.createdAt).toLocaleDateString()}</td>
-                                        <td>{tx.description || 'Transaction'}</td>
+                                    <tr key={tx.id}>
+                                        <td>{new Date(tx.created_at).toLocaleDateString()}</td>
+                                        <td>{tx.title || tx.description || 'Transaction'}</td>
                                         <td>
-                                            <span className={`badge bg-${tx.status === 'Confirmed' || tx.status === 'Success' ? 'success' : 'warning'}`}>
+                                            <span className={`badge bg-${tx.status === 'completed' || tx.status === 'Confirmed' || tx.status === 'Success' ? 'success' : 'warning'}`}>
                                                 {tx.status}
                                             </span>
                                         </td>
-                                        <td className={`text-end fw-bold ${tx.type === 'credit' ? 'text-success' : 'text-danger'}`}>
-                                            {tx.type === 'credit' ? '+' : '-'} ₹ {tx.amount}
+                                        <td className={`text-end fw-bold ${tx.amount > 0 ? 'text-success' : 'text-danger'}`}>
+                                            {tx.amount > 0 ? '+' : ''} ₹ {Math.abs(tx.amount)}
                                         </td>
                                     </tr>
                                 ))}

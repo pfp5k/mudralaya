@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { request } from '../../api/client';
+import { supabase } from '../../supabaseClient';
 import AdminLayout from './AdminLayout';
 import StatsOverview from './StatsOverview';
 import DataTable from './DataTable';
@@ -17,7 +17,7 @@ const formatDate = (value) => {
 };
 
 const Dashboard = () => {
-  const defaultUsername = import.meta.env.VITE_DASHBOARD_USER || '';
+  const defaultUsername = import.meta.env.VITE_DASHBOARD_USER || 'admin';
   const [authToken, setAuthToken] = useState('');
   const [loading, setLoading] = useState(false);
   const [syncingPayments, setSyncingPayments] = useState(false);
@@ -30,15 +30,23 @@ const Dashboard = () => {
   const [password, setPassword] = useState('');
 
   const fetchDashboard = async (token = authToken) => {
-    if (!token) return;
+    const adminToken = token || localStorage.getItem('adminToken');
+    if (!adminToken) return;
+
     setLoading(true);
     try {
-      const res = await request('/api/dashboard', { includeCredentials: true });
+      const { data: res, error: funcError } = await supabase.functions.invoke('admin-api', {
+        body: { action: 'get-dashboard' },
+        headers: { 'x-admin-password': adminToken }
+      });
+
+      if (funcError) throw funcError;
       setData(res);
     } catch (err) {
-      if (err.status === 401) {
+      if (err.status === 401 || err.message?.includes('Unauthorized')) {
         setAuthToken('');
         localStorage.removeItem('isAdminLoggedIn');
+        localStorage.removeItem('adminToken');
       }
       console.error(err);
     } finally {
@@ -48,14 +56,12 @@ const Dashboard = () => {
 
   useEffect(() => {
     // Check Session
-    const checkSession = async () => {
-      const wasLoggedIn = localStorage.getItem('isAdminLoggedIn');
-      if (wasLoggedIn) {
-        setAuthToken('active');
-        fetchDashboard('active');
-      }
-    };
-    checkSession();
+    const wasLoggedIn = localStorage.getItem('isAdminLoggedIn');
+    const token = localStorage.getItem('adminToken');
+    if (wasLoggedIn && token) {
+      setAuthToken(token);
+      fetchDashboard(token);
+    }
   }, []);
 
   const handleLogin = async (e) => {
@@ -63,63 +69,43 @@ const Dashboard = () => {
     setLoading(true);
     setError('');
     try {
-      await request('/api/admin/login', {
-        method: 'POST',
-        data: { username, password },
-        includeCredentials: true
+      const { data: res, error: funcError } = await supabase.functions.invoke('admin-api', {
+        body: { action: 'login', data: { username, password } }
       });
-      setAuthToken('active');
+
+      if (funcError) throw funcError;
+
+      setAuthToken(res.token);
       localStorage.setItem('isAdminLoggedIn', 'true');
-      fetchDashboard('active');
+      localStorage.setItem('adminToken', res.token);
+      fetchDashboard(res.token);
     } catch (err) {
-      setError(err.data?.error || 'Login failed');
+      setError(err.message || 'Login failed');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleLogout = async () => {
-    try {
-      await request('/api/admin/logout', { method: 'POST', includeCredentials: true });
-    } catch (err) { /* ignore */ }
+  const handleLogout = () => {
     setAuthToken('');
     localStorage.removeItem('isAdminLoggedIn');
+    localStorage.removeItem('adminToken');
     setData(null);
   };
 
   const handleSyncPayments = async () => {
-    if (syncingPayments) return;
-    setSyncingPayments(true);
-    try {
-      const res = await request('/api/payment/sync', {
-        method: 'POST',
-        includeCredentials: true,
-        data: { limit: 200 }
-      });
-
-      await fetchDashboard('active');
-      alert(`Payment sync complete: ${res.updated || 0} updated (scanned ${res.scanned || 0}). Errors: ${(res.errors || []).length}`);
-    } catch (err) {
-      console.error(err);
-      if (err.status === 401) {
-        alert('Session expired. Please log in again and retry.');
-      } else {
-        const details = [err.data?.error, err.data?.message].filter(Boolean).join(': ');
-        alert(details || err.message || 'Payment sync failed');
-      }
-    } finally {
-      setSyncingPayments(false);
-    }
+    // Payment sync to be implemented or left as legacy
+    alert('Payment sync via Edge Function is coming soon.');
   };
 
   // Columns Definition
   const joinColumns = [
-    { key: 'fullName', label: 'Name' },
-    { key: 'mobileNumber', label: 'Mobile' },
-    { key: 'emailId', label: 'Email' },
+    { key: 'full_name', label: 'Name' },
+    { key: 'mobile_number', label: 'Mobile' },
+    { key: 'email_id', label: 'Email' },
     { key: 'profession', label: 'Profession' },
     {
-      key: 'hasLaptop',
+      key: 'has_laptop',
       label: 'Laptop',
       format: val => val ? 'Yes' : (val === false ? 'No' : '-')
     },
@@ -134,23 +120,22 @@ const Dashboard = () => {
       format: (val) => <span className={`badge ${val === 'Paid' ? 'bg-success' : 'bg-warning text-dark'}`}>{val || 'Pending'}</span>
     },
     { key: 'razorpay_payment_id', label: 'Pay ID' },
-    { key: 'razorpay_order_id', label: 'Order ID' },
-    { key: 'createdAt', label: 'Registered', format: formatDate }
+    { key: 'created_at', label: 'Registered', format: formatDate }
   ];
 
   const contactColumns = [
-    { key: 'fullName', label: 'Name' },
+    { key: 'full_name', label: 'Name' },
     { key: 'email', label: 'Email' },
-    { key: 'phoneNumber', label: 'Phone' },
+    { key: 'phone_number', label: 'Phone' },
     { key: 'subject', label: 'Subject' },
-    { key: 'createdAt', label: 'Date', format: formatDate }
+    { key: 'created_at', label: 'Date', format: formatDate }
   ];
 
   const advisorColumns = [
-    { key: 'fullName', label: 'Name' },
-    { key: 'mobileNumber', label: 'Mobile' },
-    { key: 'irdaLicense', label: 'IRDA License' },
-    { key: 'createdAt', label: 'Date', format: formatDate }
+    { key: 'full_name', label: 'Name' },
+    { key: 'mobile_number', label: 'Mobile' },
+    { key: 'irda_license', label: 'IRDA License' },
+    { key: 'created_at', label: 'Date', format: formatDate }
   ];
 
   // Login View
@@ -195,20 +180,18 @@ const Dashboard = () => {
   }
 
   const handleDelete = async (type, id) => {
+    if (!window.confirm('Are you sure you want to delete this entry?')) return;
     setLoading(true);
     try {
-      let endpoint = '';
-      if (type === 'join') endpoint = `/api/join/${id}`;
-      if (type === 'contact') endpoint = `/api/contact/${id}`;
-      if (type === 'advisor') endpoint = `/api/advisor/${id}`;
-
-      await request(endpoint, {
-        method: 'DELETE',
-        includeCredentials: true
+      const { error: funcError } = await supabase.functions.invoke('admin-api', {
+        body: { action: 'delete-entry', data: { type, id } },
+        headers: { 'x-admin-password': authToken }
       });
 
+      if (funcError) throw funcError;
+
       // Refresh Data
-      fetchDashboard('active');
+      fetchDashboard(authToken);
     } catch (err) {
       console.error('Delete failed', err);
       alert('Failed to delete entry');

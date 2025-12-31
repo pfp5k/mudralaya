@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../MemberDashboard.css';
-import { request } from '../../../api/client';
+import { supabase } from '../../../supabaseClient';
 
 const SettingsSection = () => {
     const [profile, setProfile] = useState({
@@ -17,8 +17,17 @@ const SettingsSection = () => {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const res = await request('/api/client-dashboard/settings', { includeCredentials: true });
-                if (res.success) setProfile(res.profile);
+                const { data: res, error } = await supabase.functions.invoke('user-profile');
+                if (error) throw error;
+
+                const names = (res.full_name || '').split(' ');
+                setProfile({
+                    firstName: names[0] || '',
+                    lastName: names.slice(1).join(' ') || '',
+                    email: res.email_id || '',
+                    mobileNumber: res.mobile_number || '',
+                    paymentMethods: {}
+                });
             } catch (error) {
                 console.error("Failed to fetch profile", error);
             } finally {
@@ -40,16 +49,17 @@ const SettingsSection = () => {
         setMessage({ type: '', text: '' });
 
         try {
-            const res = await request('/api/client-dashboard/settings', {
-                method: 'POST',
-                data: profile,
-                includeCredentials: true
+            const fullName = `${profile.firstName} ${profile.lastName}`.trim();
+            const { error } = await supabase.functions.invoke('user-profile', {
+                method: 'PUT',
+                body: { full_name: fullName }
             });
-            if (res.success) {
-                setMessage({ type: 'success', text: 'Profile updated successfully!' });
-            }
+
+            if (error) throw error;
+
+            setMessage({ type: 'success', text: 'Profile updated successfully!' });
         } catch (error) {
-            setMessage({ type: 'error', text: 'Failed to update profile.' });
+            setMessage({ type: 'error', text: 'Failed to update profile: ' + error.message });
         } finally {
             setSaving(false);
         }

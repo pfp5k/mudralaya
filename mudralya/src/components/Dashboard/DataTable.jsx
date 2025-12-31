@@ -85,7 +85,7 @@ const DataTable = ({ title, columns, data, onSearch, onDelete }) => {
                                                 className="btn btn-sm btn-outline-danger"
                                                 onClick={() => {
                                                     if (window.confirm('Are you sure you want to delete this entry?')) {
-                                                        onDelete(row._id);
+                                                        onDelete(row.id || row._id);
                                                     }
                                                 }}
                                                 title="Delete Entry"

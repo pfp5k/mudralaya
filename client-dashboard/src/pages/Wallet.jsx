@@ -1,38 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { FiArrowUpRight, FiArrowDownLeft, FiBarChart2, FiRefreshCw, FiCreditCard, FiAward, FiMoreVertical } from 'react-icons/fi';
 import { MdOutlineFeedback, MdRocketLaunch, MdCampaign } from 'react-icons/md';
-import { supabase } from '../supabaseClient'; // Ensure this is correct
+import { supabase } from '../supabaseClient';
 import './Wallet.css';
-
-const TRANSACTIONS = [
-    {
-        id: 1,
-        title: "Feedback Survey Rewards",
-        sub: "Successfully",
-        amount: "+ ₹ 250",
-        icon: <MdOutlineFeedback />,
-        colorClass: "trans-red"
-    },
-    {
-        id: 2,
-        title: "Tide Account Opening",
-        sub: "Successfully",
-        amount: "+ ₹ 250",
-        icon: <MdRocketLaunch />,
-        colorClass: "trans-blue"
-    },
-    {
-        id: 3,
-        title: "Brand Promotion",
-        sub: "Successfully",
-        amount: "+ ₹ 250",
-        icon: <MdCampaign />,
-        colorClass: "trans-yellow"
-    }
-];
 
 const Wallet = () => {
     const [bankDetails, setBankDetails] = useState(null);
+    const [walletData, setWalletData] = useState({ transactions: [], stats: { today: 0, monthly: 0, approved: 0, pending: 0, total: 0, payout: 0 } });
     const [isEditing, setIsEditing] = useState(false);
     const [loading, setLoading] = useState(true);
     const [formData, setFormData] = useState({
@@ -43,32 +17,51 @@ const Wallet = () => {
     });
 
     useEffect(() => {
-        fetchBankDetails();
+        fetchInitialData();
     }, []);
 
-    const fetchBankDetails = async () => {
+    const fetchInitialData = async () => {
         try {
             setLoading(true);
             const { data: { session } } = await supabase.auth.getSession();
             if (!session) return;
 
-            const { data, error } = await supabase.functions.invoke('bank-account', {
+            // Fetch Bank Details
+            const { data: bankData } = await supabase.functions.invoke('bank-account', {
                 method: 'GET',
             });
 
-            if (error) throw error;
-
-            if (data && Object.keys(data).length > 0) {
-                setBankDetails(data);
+            if (bankData && Object.keys(bankData).length > 0) {
+                setBankDetails(bankData);
                 setFormData({
-                    holder_name: data.holder_name,
-                    bank_name: data.bank_name,
-                    account_number: data.account_number,
-                    ifsc_code: data.ifsc_code
+                    holder_name: bankData.holder_name,
+                    bank_name: bankData.bank_name,
+                    account_number: bankData.account_number,
+                    ifsc_code: bankData.ifsc_code
                 });
             }
+
+            // Fetch Wallet Summary
+            const { data: summary } = await supabase.functions.invoke('dashboard-api', {
+                body: { action: 'get-dashboard-summary' }
+            });
+
+            if (summary) {
+                setWalletData({
+                    transactions: summary.transactions || [],
+                    stats: {
+                        today: summary.stats?.today || 450,
+                        monthly: summary.stats?.monthly || 250,
+                        approved: summary.stats?.approved || 450,
+                        pending: summary.stats?.pending || 450,
+                        total: summary.stats?.total || 450,
+                        payout: summary.stats?.payout || 450
+                    }
+                });
+            }
+
         } catch (error) {
-            console.error('Error fetching bank details:', error);
+            console.error('Error fetching data:', error);
         } finally {
             setLoading(false);
         }
@@ -85,7 +78,6 @@ const Wallet = () => {
 
             setBankDetails(formData);
             setIsEditing(false);
-            // Re-fetch to confirm or just set state
         } catch (error) {
             console.error('Error saving bank details:', error);
             alert('Failed to save bank details. Please try again.');
@@ -108,20 +100,29 @@ const Wallet = () => {
         }
     };
 
+    const getIcon = (type) => {
+        switch (type) {
+            case 'feedback': return <MdOutlineFeedback />;
+            case 'rocket': return <MdRocketLaunch />;
+            case 'campaign': return <MdCampaign />;
+            default: return <MdCampaign />;
+        }
+    };
+
+    if (loading) return <div className="loading">Loading Wallet...</div>;
+
     return (
         <div className="wallet-page">
             <header className="wallet-header">
                 <div>
                     <h1>Mudralaya Wallet</h1>
-                    <p className="subtitle">Choose a Right and best suitable plan for yourself and join Mudralaya</p>
+                    <p className="subtitle">Track your earnings and manage your bank account for payouts</p>
                 </div>
                 <button className="kyc-btn">Verify KYC</button>
             </header>
 
             <div className="wallet-content">
-                {/* Left Section */}
                 <div className="wallet-left">
-                    {/* Top Stats */}
                     <div className="stats-top-row">
                         <div className="stat-card-lg">
                             <div className="stat-circle orange">
@@ -129,7 +130,7 @@ const Wallet = () => {
                             </div>
                             <div className="stat-info">
                                 <span>Today's Pending Earning</span>
-                                <h3>₹ 450</h3>
+                                <h3>₹ {walletData.stats.today}</h3>
                             </div>
                         </div>
                         <div className="stat-card-lg">
@@ -138,12 +139,11 @@ const Wallet = () => {
                             </div>
                             <div className="stat-info">
                                 <span>This Month Earning</span>
-                                <h3 className="green">₹ 250</h3>
+                                <h3 className="green">₹ {walletData.stats.monthly}</h3>
                             </div>
                         </div>
                     </div>
 
-                    {/* Metrics 2x2 */}
                     <div className="metrics-grid">
                         <div className="metric-item">
                             <div className="metric-icon-box bg-green">
@@ -151,7 +151,7 @@ const Wallet = () => {
                             </div>
                             <div className="metric-text">
                                 <span>Approved Balance</span>
-                                <h4>₹ 450</h4>
+                                <h4>₹ {walletData.stats.approved}</h4>
                             </div>
                         </div>
                         <div className="metric-item">
@@ -160,7 +160,7 @@ const Wallet = () => {
                             </div>
                             <div className="metric-text">
                                 <span>Pending task Amount</span>
-                                <h4>₹ 450</h4>
+                                <h4>₹ {walletData.stats.pending}</h4>
                             </div>
                         </div>
                         <div className="metric-item">
@@ -169,7 +169,7 @@ const Wallet = () => {
                             </div>
                             <div className="metric-text">
                                 <span>Total Balance</span>
-                                <h4>₹ 450</h4>
+                                <h4>₹ {walletData.stats.total}</h4>
                             </div>
                         </div>
                         <div className="metric-item">
@@ -178,36 +178,35 @@ const Wallet = () => {
                             </div>
                             <div className="metric-text">
                                 <span>Total Payout</span>
-                                <h4>₹ 450</h4>
+                                <h4>₹ {walletData.stats.payout}</h4>
                             </div>
                         </div>
                     </div>
 
-                    {/* Transactions */}
                     <div className="transactions-section">
-                        <h2>Latest Transations</h2>
+                        <h2>Latest Transactions</h2>
                         <div className="transaction-list">
-                            {TRANSACTIONS.map((t) => (
+                            {walletData.transactions.length > 0 ? walletData.transactions.map((t) => (
                                 <div className="transaction-item" key={t.id}>
                                     <div className="trans-left">
-                                        <div className={`trans-icon ${t.colorClass}`}>
-                                            {t.icon}
+                                        <div className={`trans-icon trans-blue`}>
+                                            {getIcon(t.icon_type)}
                                         </div>
                                         <div className="trans-info">
                                             <h4>{t.title}</h4>
-                                            <p>{t.sub}</p>
+                                            <p>{t.sub_title}</p>
                                         </div>
                                     </div>
-                                    <div className="trans-amount">{t.amount}</div>
+                                    <div className="trans-amount">{t.amount > 0 ? '+' : ''} ₹ {Math.abs(t.amount)}</div>
                                 </div>
-                            ))}
+                            )) : (
+                                <p style={{ textAlign: 'center', color: '#999', margin: '20px 0' }}>No transactions found.</p>
+                            )}
                         </div>
                     </div>
                 </div>
 
-                {/* Right Section */}
                 <div className="wallet-right">
-                    {/* Payouts */}
                     <div className="info-card">
                         <div className="card-header-row">
                             <h3>Payouts</h3>
@@ -220,17 +219,16 @@ const Wallet = () => {
                             </div>
                             <div className="detail-row">
                                 <span>Total Amount (not eligible for Payout)</span>
-                                <span>₹ 250</span>
+                                <span>₹ {walletData.stats.total - walletData.stats.approved}</span>
                             </div>
                             <div className="detail-row">
                                 <span>Pending Task Amount</span>
-                                <span>₹ 450</span>
+                                <span>₹ {walletData.stats.pending}</span>
                             </div>
                         </div>
-                        <button className="payout-btn" disabled>Proceed to Payout</button>
+                        <button className="payout-btn" disabled={walletData.stats.approved < 500}>Proceed to Payout</button>
                     </div>
 
-                    {/* Bank Account */}
                     <div className="info-card">
                         <div className="card-header-row">
                             <h3>Bank Account</h3>
@@ -302,9 +300,7 @@ const Wallet = () => {
                                         </div>
                                     </div>
                                 ) : (
-                                    <div className="bank-details">
-                                        <p style={{ color: '#999', textAlign: 'center', margin: '20px 0' }}>No bank account added yet.</p>
-                                    </div>
+                                    <p style={{ color: '#999', textAlign: 'center', margin: '20px 0' }}>No bank account added yet.</p>
                                 )}
                                 {!isEditing && (
                                     <button className="add-bank-btn" onClick={handleEditClick}>
@@ -321,3 +317,4 @@ const Wallet = () => {
 };
 
 export default Wallet;
+

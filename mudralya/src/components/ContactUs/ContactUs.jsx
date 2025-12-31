@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './ContactUs.css';
 import { request } from '../../api/client';
+import { supabase } from '../../supabaseClient';
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -183,13 +184,17 @@ const ContactUs = () => {
 
     setSubmitting(true);
     try {
-      await request('/api/contact', {
-        method: 'POST',
-        data: {
-          ...formData,
-          phoneNumber: `+91${formData.phoneNumber}`
+      const { data, error } = await supabase.functions.invoke('forms-api', {
+        body: {
+          action: 'submit-contact-request',
+          data: {
+            ...formData,
+            phoneNumber: `+91${formData.phoneNumber}`
+          }
         }
       });
+
+      if (error) throw error;
 
       setSubmitMessage('Thank you! We will reach you soon.');
       setFormData({

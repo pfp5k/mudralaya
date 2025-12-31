@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../MemberDashboard.css';
-import { request } from '../../../api/client';
+import { supabase } from '../../../supabaseClient';
 
 const ReferralSection = () => {
     const [referralData, setReferralData] = useState({
@@ -12,8 +12,13 @@ const ReferralSection = () => {
     useEffect(() => {
         const fetchReferrals = async () => {
             try {
-                const res = await request('/api/client-dashboard/referrals', { includeCredentials: true });
-                if (res.success) setReferralData(res);
+                const { data: res, error } = await supabase.functions.invoke('user-profile');
+                if (error) throw error;
+
+                setReferralData({
+                    referralCode: res.referral_code || '',
+                    referredUsers: res.referredUsers || []
+                });
             } catch (error) {
                 console.error("Failed to fetch referrals", error);
             } finally {
@@ -69,7 +74,7 @@ const ReferralSection = () => {
                                 {referralData.referredUsers.map((user, idx) => (
                                     <tr key={idx}>
                                         <td>{user.firstName} {user.lastName}</td>
-                                        <td>{new Date(user.createdAt).toLocaleDateString()}</td>
+                                        <td>{new Date(user.created_at).toLocaleDateString()}</td>
                                         <td><span className="badge bg-success">Active</span></td>
                                     </tr>
                                 ))}

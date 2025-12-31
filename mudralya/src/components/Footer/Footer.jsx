@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Footer.css';
 import { request } from '../../api/client';
+import { supabase } from '../../supabaseClient';
 
 const Footer = () => {
   const [email, setEmail] = useState('');
@@ -11,10 +12,11 @@ const Footer = () => {
     e.preventDefault();
     setSubmitting(true);
     try {
-      await request('/api/newsletter', {
-        method: 'POST',
-        data: { email }
+      const { data, error } = await supabase.functions.invoke('forms-api', {
+        body: { action: 'subscribe-newsletter', data: { email } }
       });
+
+      if (error) throw error;
       setEmail('');
       alert('Thank you for subscribing!');
     } catch (err) {

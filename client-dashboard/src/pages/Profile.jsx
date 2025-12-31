@@ -5,7 +5,7 @@ import { FaUser, FaPhoneAlt, FaEnvelope, FaCamera, FaSave, FaTimes, FaEdit, FaBr
 import './Profile.css';
 
 const Profile = () => {
-    const { user } = useUser();
+    const { user, profile: contextProfile } = useUser();
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(true);
     const [isEditing, setIsEditing] = useState(false);
@@ -27,36 +27,25 @@ const Profile = () => {
 
     const fileInputRef = useRef(null);
 
+    // Initialize/Update local profile state from Context
     useEffect(() => {
-        const fetchProfile = async () => {
-            if (!user) return;
-
-            try {
-                const { data, error } = await supabase.functions.invoke('user-profile', {
-                    method: 'GET'
-                });
-
-                if (error) throw error;
-
-                if (data) {
-                    setProfile(data);
-                    setFormData({
-                        full_name: data.full_name || '',
-                        profession: data.profession || '',
-                        email_id: data.email_id || '',
-                        date_of_birth: data.date_of_birth || '',
-                        phone: user.phone || ''
-                    });
-                }
-            } catch (err) {
-                console.error("Error fetching profile from edge function:", err);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchProfile();
-    }, [user]);
+        if (contextProfile) {
+            setProfile(contextProfile);
+            setFormData({
+                full_name: contextProfile.full_name || '',
+                profession: contextProfile.profession || '',
+                email_id: contextProfile.email_id || '',
+                date_of_birth: contextProfile.date_of_birth || '',
+                phone: user?.phone || contextProfile.mobile_number || ''
+            });
+            setLoading(false);
+        } else if (user) {
+            // Context is still loading or failed, but user exists. 
+            // We can wait for context to update (it has its own fetching logic)
+            // or just set loading=true
+            setLoading(true);
+        }
+    }, [contextProfile, user]);
 
     const handleInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -102,7 +91,7 @@ const Profile = () => {
 
             const publicUrl = publicUrlData.publicUrl;
 
-            // Update user profile with new avatar URL
+            // Update user profile with new avatar URL directly
             const { error: updateError } = await supabase
                 .from('users')
                 .update({ avatar_url: publicUrl })
@@ -185,15 +174,17 @@ const Profile = () => {
         try {
             setLoading(true);
 
-            const { data, error } = await supabase.functions.invoke('user-profile', {
-                method: 'PUT',
-                body: {
+            const { data, error } = await supabase
+                .from('users')
+                .update({
                     full_name: formData.full_name,
                     profession: formData.profession,
                     email_id: formData.email_id,
                     date_of_birth: formData.date_of_birth
-                }
-            });
+                })
+                .eq('id', user.id)
+                .select()
+                .single();
 
             if (error) throw error;
 

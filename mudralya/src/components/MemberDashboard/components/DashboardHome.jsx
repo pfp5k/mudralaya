@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './MemberDashboardLayout.css';
-import { request } from '../../../api/client';
+import { supabase } from '../../../supabaseClient';
 
 const DashboardHome = () => {
     const [stats, setStats] = useState([
@@ -15,32 +15,21 @@ const DashboardHome = () => {
     useEffect(() => {
         const fetchDashboardData = async () => {
             try {
-                // Get user email from localStorage
-                let query = '';
-                try {
-                    const storedUser = localStorage.getItem('mudralaya_user');
-                    if (storedUser) {
-                        const user = JSON.parse(storedUser);
-                        if (user.emailId || user.email) {
-                            query = `?email=${user.emailId || user.email}`;
-                        }
-                    }
-                } catch (e) {
-                    console.error('Error parsing user data', e);
-                }
+                const { data: res, error } = await supabase.functions.invoke('dashboard-api', {
+                    body: { action: 'get-dashboard-summary' }
+                });
 
-                const [statsData, tasksData] = await Promise.all([
-                    request('/api/client-dashboard/stats' + query),
-                    request('/api/client-dashboard/tasks' + query)
-                ]);
+                if (error) throw error;
+
+                const { stats: s, tasks: t } = res;
 
                 setStats([
-                    { title: "Today's Earning", amount: `₹ ${statsData.today}`, icon: 'fas fa-hand-holding-usd', color: 'info' },
-                    { title: 'Monthly Earning', amount: `₹ ${statsData.monthly}`, icon: 'fas fa-chart-line', color: 'primary' },
-                    { title: 'Total Earning', amount: `₹ ${statsData.total}`, icon: 'fas fa-wallet', color: 'success' }
+                    { title: "Today's Earning", amount: `₹ ${s.today || 0}`, icon: 'fas fa-hand-holding-usd', color: 'info' },
+                    { title: 'Monthly Earning', amount: `₹ ${s.monthly || 0}`, icon: 'fas fa-chart-line', color: 'primary' },
+                    { title: 'Total Earning', amount: `₹ ${s.total || 0}`, icon: 'fas fa-wallet', color: 'success' }
                 ]);
 
-                setTasks(tasksData);
+                setTasks(t || []);
             } catch (error) {
                 console.error('Failed to fetch dashboard data:', error);
             } finally {

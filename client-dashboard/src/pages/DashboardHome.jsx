@@ -1,12 +1,67 @@
-import React from 'react';
-import { MdPlayArrow, MdTrendingUp, MdAccountBalanceWallet, MdGroup, MdContentCopy } from 'react-icons/md';
-import { FaHandHoldingUsd } from 'react-icons/fa'; // Need to ensure react-icons/fa is available or use alternatives
+import React, { useEffect, useState } from 'react';
+import { MdPlayArrow, MdTrendingUp, MdAccountBalanceWallet, MdGroup, MdContentCopy, MdRocketLaunch, MdOutlineFeedback } from 'react-icons/md';
+import { FaHandHoldingUsd } from 'react-icons/fa';
 import { useUser } from '../context/UserContext';
+import { supabase } from '../supabaseClient';
 import './DashboardHome.css';
 
 const DashboardHome = () => {
-    const { profile } = useUser();
+    const { profile, user } = useUser();
+    const [data, setData] = useState({ tasks: [], stats: { approved: 0, pending: 0, total: 60000 }, transactions: [] });
+    const [loading, setLoading] = useState(true);
+
     const fullName = profile?.full_name || 'User';
+
+    useEffect(() => {
+        const fetchDashboardData = async () => {
+            if (!user) return; // Wait for user to be available
+
+            try {
+                // Parallel fetching for performance
+                const [tasksRes, transactionsRes, statsRes] = await Promise.all([
+                    supabase.from('tasks').select('*').limit(5),
+                    supabase
+                        .from('transactions')
+                        .select('*')
+                        .eq('user_id', user.id)
+                        .order('created_at', { ascending: false })
+                        .limit(5),
+                    supabase.rpc('get_user_wallet_stats', { user_id_param: user.id })
+                ]);
+
+                const tasks = tasksRes.data || [];
+                const transactions = transactionsRes.data || [];
+                // Handle RPC returning null or error gracefully
+                const stats = statsRes.data || { approved: 0, pending: 0, total: 0, payout: 0, today: 0, monthly: 0 };
+
+                setData({
+                    tasks,
+                    transactions,
+                    stats
+                });
+
+                if (tasksRes.error) console.error("Tasks fetch error:", tasksRes.error);
+                if (transactionsRes.error) console.error("Transactions fetch error:", transactionsRes.error);
+                if (statsRes.error) console.error("Stats RPC error:", statsRes.error);
+
+            } catch (err) {
+                console.error("Error fetching dashboard data:", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchDashboardData();
+    }, [user]); // Re-run when user is available
+
+    const getIcon = (type) => {
+        switch (type) {
+            case 'group': return <MdGroup />;
+            case 'rocket': return <MdRocketLaunch />;
+            case 'feedback': return <MdOutlineFeedback />;
+            default: return <MdContentCopy />;
+        }
+    };
 
     return (
         <div className="dashboard-home">
@@ -32,7 +87,7 @@ const DashboardHome = () => {
                         <span>:</span>
                     </div>
                     <div className="stat-content">
-                        <div className="stat-value">₹ 200</div>
+                        <div className="stat-value">₹ {data.stats?.today || 0}</div>
                         <div className="stat-icon-bg icon-money-hand">
                             <FaHandHoldingUsd />
                         </div>
@@ -44,7 +99,7 @@ const DashboardHome = () => {
                         <span>:</span>
                     </div>
                     <div className="stat-content">
-                        <div className="stat-value">₹ 20,000</div>
+                        <div className="stat-value">₹ {data.stats?.monthly || 20000}</div>
                         <div className="stat-icon-bg icon-graph">
                             <MdTrendingUp />
                         </div>
@@ -56,7 +111,7 @@ const DashboardHome = () => {
                         <span>:</span>
                     </div>
                     <div className="stat-content">
-                        <div className="stat-value">₹ 60,000</div>
+                        <div className="stat-value">₹ {data.stats?.total || 60000}</div>
                         <div className="stat-icon-bg icon-wallet">
                             <MdAccountBalanceWallet />
                         </div>
@@ -66,65 +121,50 @@ const DashboardHome = () => {
 
             {/* Main Grid: Ongoing Task & Tasks List */}
             <div className="dashboard-grid">
-
-                {/* Left Column */}
                 <div className="dashboard-column">
-                    {/* Ongoing Task */}
                     <div className="dashboard-card">
                         <div className="card-header">
                             <h3>Ongoing Task</h3>
                             <span>:</span>
                         </div>
-                        <div className="ongoing-task-card">
-                            <div className="task-info-row">
-                                <div className="task-icon-circle blue-gradient">
-                                    <MdGroup />
-                                </div>
-                                <div className="task-details">
-                                    <h4>Join Members for Mudralaya</h4>
-                                    <p>Daily Task</p>
-                                </div>
-                                <span className="expand-icon">^</span>
-                            </div>
-
-                            <div className="task-rewards-row">
-                                <span>Task Reward</span>
-                                <div className="rewards">
-                                    <div className="reward-item member">
-                                        <span className="badge-label member">Members</span>
-                                        <span className="amount">$ 40</span>
+                        {data.tasks && data.tasks[0] ? (
+                            <div className="ongoing-task-card">
+                                <div className="task-info-row">
+                                    <div className="task-icon-circle blue-gradient">
+                                        {getIcon(data.tasks[0].icon_type)}
                                     </div>
-                                    <div className="reward-item free">
-                                        <span className="badge-label free">Free</span>
-                                        <span className="amount">$ 30</span>
+                                    <div className="task-details">
+                                        <h4>{data.tasks[0].title}</h4>
+                                        <p>{data.tasks[0].category}</p>
+                                    </div>
+                                    <span className="expand-icon">^</span>
+                                </div>
+                                <div className="task-rewards-row">
+                                    <span>Task Reward</span>
+                                    <div className="rewards">
+                                        <div className="reward-item member">
+                                            <span className="badge-label member">Members</span>
+                                            <span className="amount">₹ {data.tasks[0].reward_member}</span>
+                                        </div>
+                                        <div className="reward-item free">
+                                            <span className="badge-label free">Free</span>
+                                            <span className="amount">₹ {data.tasks[0].reward_free}</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div className="task-actions-row">
-                                <button className="btn-view-details">View Details</button>
-                                <button className="btn-copy-code">
-                                    <span>MF250E</span>
-                                    <MdContentCopy />
-                                </button>
-                            </div>
-                        </div>
-
-                        <div className="ongoing-task-card minimized">
-                            <div className="task-info-row">
-                                <img src="/mudralaya_logo_only.png" alt="MF" className="task-brand-icon"
-                                    onError={(e) => { e.target.src = 'https://placehold.co/20'; }} />
-                                <div className="task-details">
-                                    <h4>Maximize Download for Mudralaya App</h4>
-                                    <p>Weekly Task</p>
+                                <div className="task-actions-row">
+                                    <button className="btn-view-details">View Details</button>
+                                    <button className="btn-copy-code">
+                                        <span>MF250E</span>
+                                        <MdContentCopy />
+                                    </button>
                                 </div>
-                                <span className="status-text in-progress">In progress..</span>
-                                <span className="expand-icon">v</span>
                             </div>
-                        </div>
+                        ) : (
+                            <div className="empty-state"><p>No ongoing tasks</p></div>
+                        )}
                     </div>
 
-                    {/* Leaderboard */}
                     <div className="dashboard-card full-height">
                         <div className="card-header">
                             <h3>Leaderboard</h3>
@@ -136,49 +176,46 @@ const DashboardHome = () => {
                     </div>
                 </div>
 
-                {/* Right Column */}
                 <div className="dashboard-column">
-                    {/* Tasks List */}
                     <div className="dashboard-card">
                         <div className="card-header">
                             <h3>Tasks</h3>
                             <span>:</span>
                         </div>
                         <div className="tasks-list">
-                            {[1, 2, 3].map((item, index) => (
-                                <div key={index} className="task-list-item">
+                            {data.tasks?.map((task, index) => (
+                                <div key={task.id} className="task-list-item">
                                     <div className="task-item-left">
                                         <div className={`task-icon-circle ${index % 2 === 0 ? 'blue-gradient' : 'purple-gradient'}`}>
-                                            {index % 2 === 0 ? <MdGroup /> : <MdContentCopy />}
+                                            {getIcon(task.icon_type)}
                                         </div>
                                         <div className="task-details">
-                                            <h4>{index % 2 === 0 ? "Join Members for Mudralaya" : "Maximize Download for Mudra..."}</h4>
-                                            <p>{index % 2 === 0 ? "Daily Task" : "Weekly Task"}</p>
+                                            <h4>{task.title}</h4>
+                                            <p>{task.category}</p>
                                         </div>
                                     </div>
                                     <button className="btn-price">
-                                        ₹ 600
+                                        ₹ {task.reward_free}
                                     </button>
                                 </div>
                             ))}
                         </div>
                     </div>
 
-                    {/* Notifications */}
                     <div className="dashboard-card full-height">
                         <div className="card-header">
                             <h3>Notifications</h3>
                             <span>:</span>
                         </div>
                         <div className="empty-state">
-                            {/* Empty content */}
+                            <p>No new notifications</p>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     );
 };
 
 export default DashboardHome;
+

@@ -65,13 +65,13 @@ serve(async (req) => {
     // PUT: Update Profile
     if (method === 'PUT') {
       const body = await req.json()
-      const { first_name, last_name, profession, email } = body
+      const { full_name, profession, email_id, date_of_birth } = body
 
       const updates = {
-          first_name,
-          last_name,
+          full_name,
           profession,
-          email,
+          email_id,
+          date_of_birth,
           updated_at: new Date(),
       }
 

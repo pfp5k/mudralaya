@@ -71,16 +71,19 @@ const Login = () => {
                     {step === 'phone' ? (
                         <form onSubmit={handleSendOtp} className="login-form">
                             <div className="input-group">
-                                <FaPhoneAlt className="input-icon" />
+                                <span className="phone-prefix">+91</span>
                                 <input
                                     type="tel"
-                                    placeholder="Phone Number (e.g., +91...)"
+                                    placeholder="Enter 10-digit number"
                                     value={phone}
-                                    onChange={(e) => setPhone(e.target.value)}
+                                    onChange={(e) => {
+                                        const val = e.target.value.replace(/\D/g, '').slice(0, 10);
+                                        setPhone(val);
+                                    }}
                                     required
                                 />
                             </div>
-                            <button type="submit" disabled={loading} className="btn-primary">
+                            <button type="submit" disabled={loading || phone.length !== 10} className="btn-primary">
                                 {loading ? <FaSpinner className="spinner" /> : <>Send OTP <FaArrowRight /></>}
                             </button>
                         </form>

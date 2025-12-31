@@ -6,7 +6,7 @@ import './Header.css';
 
 const Header = ({ toggleSidebar }) => {
     const { profile } = useUser();
-    const displayName = profile?.first_name ? `${profile.first_name} ${profile.last_name || ''}` : 'User';
+    const displayName = profile?.full_name || 'User';
     const displayRole = profile?.profession || 'Member';
     const displayAvatar = profile?.avatar_url || 'https://placehold.co/40';
 

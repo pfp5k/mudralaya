@@ -44,6 +44,21 @@
 .input-group {
   position: relative;
   margin-bottom: 1.5rem;
+  display: flex;
+  align-items: stretch;
+}
+
+.phone-prefix {
+  background: #f1f5f9;
+  border: 2px solid #eef2f6;
+  border-right: none;
+  border-radius: var(--radius) 0 0 var(--radius);
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  color: var(--text-main);
+  font-weight: 600;
+  font-size: 0.95rem;
 }
 
 .input-icon {
@@ -53,17 +68,27 @@
   transform: translateY(-50%);
   color: var(--text-light);
   font-size: 1rem;
+  pointer-events: none;
 }
 
 .input-group input {
   width: 100%;
-  padding: 1rem 1rem 1rem 3rem;
+  padding: 1rem;
   border: 2px solid #eef2f6;
   border-radius: var(--radius);
   font-size: 1rem;
   background: #f8fafc;
   transition: all 0.2s;
   color: var(--text-main);
+}
+
+.input-group:has(.phone-prefix) input {
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding-left: 0.5rem;
+}
+
+.input-group:has(.input-icon) input {
+  padding-left: 3rem;
 }
 
 .input-group input:focus {

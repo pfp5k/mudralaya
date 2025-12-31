@@ -12,10 +12,10 @@ const Profile = () => {
 
     // Form State
     const [formData, setFormData] = useState({
-        first_name: '',
-        last_name: '',
+        full_name: '',
         profession: '',
-        email: '',
+        email_id: '',
+        date_of_birth: '',
         phone: ''
     });
 
@@ -41,10 +41,10 @@ const Profile = () => {
                 if (data) {
                     setProfile(data);
                     setFormData({
-                        first_name: data.first_name || '',
-                        last_name: data.last_name || '',
+                        full_name: data.full_name || '',
                         profession: data.profession || '',
-                        email: data.email || user.email || '',
+                        email_id: data.email_id || '',
+                        date_of_birth: data.date_of_birth || '',
                         phone: user.phone || ''
                     });
                 }
@@ -188,10 +188,10 @@ const Profile = () => {
             const { data, error } = await supabase.functions.invoke('user-profile', {
                 method: 'PUT',
                 body: {
-                    first_name: formData.first_name,
-                    last_name: formData.last_name,
+                    full_name: formData.full_name,
                     profession: formData.profession,
-                    email: formData.email
+                    email_id: formData.email_id,
+                    date_of_birth: formData.date_of_birth
                 }
             });
 
@@ -252,7 +252,7 @@ const Profile = () => {
 
                         {!isEditing ? (
                             <>
-                                <h2>{profile?.first_name || 'User'} {profile?.last_name || ''}</h2>
+                                <h2>{profile?.full_name || 'User'}</h2>
                                 <p className="profile-role">{profile?.role || 'Member'}</p>
                             </>
                         ) : (
@@ -283,37 +283,18 @@ const Profile = () => {
                         <div className="detail-item">
                             <FaUser className="detail-icon" />
                             <div className="detail-content">
-                                <label>First Name</label>
+                                <label>Full Name</label>
                                 {isEditing ? (
                                     <input
                                         type="text"
-                                        name="first_name"
-                                        value={formData.first_name}
+                                        name="full_name"
+                                        value={formData.full_name}
                                         onChange={handleInputChange}
                                         className="edit-input"
-                                        placeholder="Enter First Name"
+                                        placeholder="Enter Full Name"
                                     />
                                 ) : (
-                                    <p>{profile?.first_name || 'Not set'}</p>
-                                )}
-                            </div>
-                        </div>
-
-                        <div className="detail-item">
-                            <FaUser className="detail-icon" />
-                            <div className="detail-content">
-                                <label>Last Name</label>
-                                {isEditing ? (
-                                    <input
-                                        type="text"
-                                        name="last_name"
-                                        value={formData.last_name}
-                                        onChange={handleInputChange}
-                                        className="edit-input"
-                                        placeholder="Enter Last Name"
-                                    />
-                                ) : (
-                                    <p>{profile?.last_name || 'Not set'}</p>
+                                    <p>{profile?.full_name || 'Not set'}</p>
                                 )}
                             </div>
                         </div>
@@ -359,14 +340,32 @@ const Profile = () => {
                                 {isEditing ? (
                                     <input
                                         type="email"
-                                        name="email"
-                                        value={formData.email}
+                                        name="email_id"
+                                        value={formData.email_id}
                                         onChange={handleInputChange}
                                         className="edit-input"
                                         placeholder="Enter Email"
                                     />
                                 ) : (
-                                    <p>{profile?.email || user?.email || 'No email linked'}</p>
+                                    <p>{profile?.email_id || 'No email'}</p>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="detail-item">
+                            <FaEdit className="detail-icon" />
+                            <div className="detail-content">
+                                <label>Date of Birth</label>
+                                {isEditing ? (
+                                    <input
+                                        type="date"
+                                        name="date_of_birth"
+                                        value={formData.date_of_birth}
+                                        onChange={handleInputChange}
+                                        className="edit-input"
+                                    />
+                                ) : (
+                                    <p>{profile?.date_of_birth || 'Not set'}</p>
                                 )}
                             </div>
                         </div>

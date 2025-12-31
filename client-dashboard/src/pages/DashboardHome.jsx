@@ -5,15 +5,15 @@ import { useUser } from '../context/UserContext';
 import './DashboardHome.css';
 
 const DashboardHome = () => {
-    const { user } = useUser();
-    const firstName = user?.firstName || 'User';
+    const { profile } = useUser();
+    const fullName = profile?.full_name || 'User';
 
     return (
         <div className="dashboard-home">
             {/* Welcome Section */}
             <div className="welcome-section">
                 <div>
-                    <h1 className="welcome-title">Welcome Back {firstName}</h1>
+                    <h1 className="welcome-title">Welcome Back {fullName}</h1>
                     <p className="welcome-subtitle">Start your task to earn!</p>
                 </div>
                 <button className="guidance-btn">

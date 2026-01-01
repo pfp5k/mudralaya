@@ -44,20 +44,37 @@ const WhyJoin = () => {
           <p className="why-join-subtitle">Work Smart. Earn Big. Live Free.</p>
         </div>
 
-        <div className="row gy-4">
-          {features.map((feature, index) => (
-            <div key={index} className="col-12 col-md-6 col-lg-4">
-              <div className="card-feature h-100">
-                <div className="icon-box">
-                  <img src={feature.image} alt={feature.title} />
-                </div>
-                <div className="card-content-wrapper">
-                  <h5 className="mb-1">{feature.title}</h5>
-                  <p className="mb-0 text-muted small">{feature.description}</p>
+        <div className="features-scroll-wrapper">
+          <div className="features-track">
+            {/* Original Items */}
+            {features.map((feature, index) => (
+              <div key={`orig-${index}`} className="feature-item">
+                <div className="card-feature h-100">
+                  <div className="icon-box">
+                    <img src={feature.image} alt={feature.title} />
+                  </div>
+                  <div className="card-content-wrapper">
+                    <h5 className="mb-1">{feature.title}</h5>
+                    <p className="mb-0 text-muted small">{feature.description}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+            {/* Duplicated Items for seamless loop */}
+            {features.map((feature, index) => (
+              <div key={`dup-${index}`} className="feature-item d-md-none">
+                <div className="card-feature h-100">
+                  <div className="icon-box">
+                    <img src={feature.image} alt={feature.title} />
+                  </div>
+                  <div className="card-content-wrapper">
+                    <h5 className="mb-1">{feature.title}</h5>
+                    <p className="mb-0 text-muted small">{feature.description}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

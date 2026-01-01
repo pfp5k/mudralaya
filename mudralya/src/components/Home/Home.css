@@ -85,6 +85,7 @@ a {
   color: #6b7785;
   font-size: 0.9rem;
   line-height: 1.5;
+  text-align: justify;
 }
 
 .icon-box {
@@ -105,6 +106,61 @@ a {
 
 .card-content-wrapper {
   margin-top: 0;
+}
+
+/* Why Join Auto Scroll (Mobile) */
+.features-scroll-wrapper {
+  overflow: hidden;
+  width: 100%;
+}
+
+.features-track {
+  display: flex;
+  gap: 1.25rem;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(calc(-100% / 2 - 0.625rem));
+  }
+
+  /* Half track + half gap */
+}
+
+@media (max-width: 768px) {
+  .features-track {
+    animation: scroll 20s linear infinite;
+    width: max-content;
+  }
+
+  .features-scroll-wrapper:hover .features-track {
+    animation-play-state: paused;
+  }
+
+  .feature-item {
+    width: 280px;
+    flex-shrink: 0;
+  }
+}
+
+@media (min-width: 769px) {
+  .features-track {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  /* Adjust for 2 columns on medium screens if needed, but the original was col-md-6 col-lg-4 */
+  @media (max-width: 991px) {
+    .features-track {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
 }
 
 /* What You'll Do */
@@ -146,12 +202,14 @@ a {
     transform: scale(1);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   }
+
   50% {
     transform: scale(1.05);
-    box-shadow: 
+    box-shadow:
       0 15px 40px rgba(44, 181, 160, 0.4),
       0 10px 25px rgba(0, 0, 0, 0.15);
   }
+
   100% {
     transform: scale(1);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
@@ -193,6 +251,7 @@ a {
 .grow-who-list li {
   margin-bottom: 0.5rem;
   font-size: 1.25rem;
+  text-align: justify;
 }
 
 .grow-callout {
@@ -211,7 +270,6 @@ a {
 /* Empowering Women */
 .women-strip {
   background: #ffffff;
-  padding: 5rem 1rem;
   border-top: 1px solid rgba(0, 0, 0, 0.03);
   border-bottom: 1px solid rgba(0, 0, 0, 0.03);
 }
@@ -220,73 +278,18 @@ a {
 .women-quotes {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  padding: 2rem 0;
+  gap: 1.5rem;
+  padding: 0;
 }
 
 .quote-text {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 600;
   color: #333333;
   margin: 0;
   line-height: 1.4;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-}
-
-.image-card-effect {
-  position: relative;
-  max-width: 400px;
-  width: 100%;
-  background-color: transparent;
-  border-radius: 8px;
-  cursor: pointer;
-  margin: 0 auto;
-  z-index: 1;
-}
-
-.image-card-effect img {
-  display: block;
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  border-radius: 8px;
-  position: relative;
-  z-index: 2;
-}
-
-.image-card-effect::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: calc(100% + 10px);
-  height: calc(100% + 10px);
-  border-radius: 10px;
-  background: linear-gradient(-45deg, #e81cff 0%, #40c9ff 100%);
-  z-index: -10;
-  pointer-events: none;
-  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.image-card-effect::after {
-  content: "";
-  z-index: -1;
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(-45deg, #fc00ff 0%, #00dbde 100%);
-  transform: translate3d(0, 0, 0) scale(0.98);
-  filter: blur(15px);
-  border-radius: 8px;
-  transition: all 0.6s ease;
-}
-
-.image-card-effect:hover::after {
-  filter: blur(25px);
-}
-
-.image-card-effect:hover::before {
-  transform: translate(-50%, -50%) rotate(-90deg) scaleX(1.1) scaleY(0.9);
+  text-align: justify;
 }
 
 /* Responsive */
@@ -294,7 +297,7 @@ a {
   .hero-img {
     width: 100%;
   }
-  
+
   .grow-limits-section .w-75 {
     width: 100% !important;
   }
@@ -312,11 +315,11 @@ a {
   .why-join-subtitle {
     font-size: 1rem;
   }
-  
+
   .do-section {
     padding: 3rem 1rem;
   }
-  
+
   .grow-limits-section {
     padding-top: 3rem;
     padding-bottom: 3rem;
@@ -324,19 +327,6 @@ a {
 
   .women-strip {
     padding: 3rem 1rem;
-  }
-
-  .women-quotes {
-    gap: 1.5rem;
-    padding: 1.5rem 0;
-  }
-
-  .quote-text {
-    font-size: 1.25rem;
-  }
-
-  .image-card-effect {
-    max-width: 300px;
   }
 }
 
@@ -367,4 +357,3 @@ a {
     padding: 1rem 0;
   }
 }
-

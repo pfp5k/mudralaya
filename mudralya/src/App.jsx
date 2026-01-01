@@ -7,6 +7,8 @@ import LoginModal from './components/Auth/LoginModal.jsx';
 import { ModalProvider, useModal } from './context/ModalContext.jsx';
 import './App.css';
 
+import ScrollToTop from './components/Common/ScrollToTop.jsx';
+
 // Lazy load components for code splitting
 const Home = lazy(() => import('./components/Home/Home.jsx'));
 const AboutUs = lazy(() => import('./components/AboutUs/AboutUs.jsx'));
@@ -14,6 +16,9 @@ const ContactUs = lazy(() => import('./components/ContactUs/ContactUs.jsx'));
 const Advisor = lazy(() => import('./components/Advisor/Advisor.jsx'));
 const Plans = lazy(() => import('./components/Home/Home.jsx'));
 
+const Dashboard = lazy(() => import('./components/Dashboard/Dashboard.jsx'));
+const MemberDashboard = lazy(() => import('./components/MemberDashboard/MemberDashboard.jsx'));
+const Career = lazy(() => import('./components/Career/Career.jsx'));
 
 // Loading component
 const Loading = () => (
@@ -29,6 +34,7 @@ const AppContent = () => {
 
   return (
     <div className="App">
+      <ScrollToTop />
       <Header />
       <main style={{ paddingTop: '80px' }}>
         <Suspense fallback={<Loading />}>
@@ -39,6 +45,9 @@ const AppContent = () => {
             <Route path="/contact" element={<ContactUs />} />
             <Route path="/advisor" element={<Advisor />} />
 
+            <Route path="/career" element={<Career />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/member-dashboard" element={<MemberDashboard />} />
           </Routes>
         </Suspense>
       </main>

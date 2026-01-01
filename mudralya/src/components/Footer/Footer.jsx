@@ -49,11 +49,11 @@ const Footer = () => {
             </div>
 
             <div className="d-flex gap-2 mt-3">
-              <a href="#" className="social-icon" aria-label="Instagram">
+              <a href="https://www.instagram.com/mudralaya?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Instagram">
                 <i className="fab fa-instagram"></i>
               </a>
-              <a href="#" className="social-icon" aria-label="Dribbble">
-                <i className="fab fa-dribbble"></i>
+              <a href="https://www.linkedin.com/company/mudralaya/posts/?feedView=all" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="LinkedIn">
+                <i className="fab fa-linkedin-in"></i>
               </a>
               <a href="#" className="social-icon" aria-label="Twitter">
                 <i className="fab fa-twitter"></i>

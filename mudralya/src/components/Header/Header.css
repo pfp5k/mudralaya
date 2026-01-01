@@ -1,6 +1,7 @@
 /* --- Global & Variables --- */
 :root {
-  --primary-blue: #1d90ff; /* Mudralaya Blue */
+  --primary-blue: #1d90ff;
+  /* Mudralaya Blue */
   --dark-text: #212529;
   --light-bg: rgba(255, 255, 255, 0.98);
   --transparent-bg: rgba(255, 255, 255, 0.8);

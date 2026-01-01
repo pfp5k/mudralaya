@@ -39,6 +39,7 @@
 }
 
 .benefits-desc {
+    text-align: justify;
     color: #666;
     font-size: 1rem;
     max-width: 600px;
@@ -89,7 +90,7 @@
 } */
 
 .benefit-number-badge {
-    color: #00a0dc;
+    color: #2d8f9f;
     font-family: cursive, sans-serif;
     /* Fallback for a handwritten style font */
     font-size: 1.5rem;

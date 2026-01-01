@@ -16,8 +16,6 @@ const ContactUs = lazy(() => import('./components/ContactUs/ContactUs.jsx'));
 const Advisor = lazy(() => import('./components/Advisor/Advisor.jsx'));
 const Plans = lazy(() => import('./components/Home/Home.jsx'));
 
-const Dashboard = lazy(() => import('./components/Dashboard/Dashboard.jsx'));
-const MemberDashboard = lazy(() => import('./components/MemberDashboard/MemberDashboard.jsx'));
 const Career = lazy(() => import('./components/Career/Career.jsx'));
 
 // Loading component
@@ -46,8 +44,7 @@ const AppContent = () => {
             <Route path="/advisor" element={<Advisor />} />
 
             <Route path="/career" element={<Career />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/member-dashboard" element={<MemberDashboard />} />
+            <Route path="/career" element={<Career />} />
           </Routes>
         </Suspense>
       </main>

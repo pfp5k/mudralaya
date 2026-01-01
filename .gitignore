@@ -15,4 +15,4 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
-/mudralya
+mudralya/package-lock.json

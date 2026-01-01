@@ -16,6 +16,9 @@ const EmpoweringWomen = () => {
 
 
                 />
+              </div>
+            </div>
+          </div>
           {/* Left Side - Text Quotes */}
           <div className="col-12 col-lg-6">
             <div className="women-content">

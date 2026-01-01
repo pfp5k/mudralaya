@@ -114,3 +114,23 @@
     margin-bottom: 2rem;
   }
 }
+
+@media (max-width: 480px) {
+  .site-footer {
+    text-align: center;
+    padding: 2rem 1rem;
+  }
+
+  .footer-logo-img {
+    height: 80px;
+    margin: 0 auto 1rem;
+  }
+
+  .social-icon {
+    margin: 0 5px;
+  }
+
+  .input-group {
+    justify-content: center;
+  }
+}

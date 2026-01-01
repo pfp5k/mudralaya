@@ -130,3 +130,20 @@
     font-size: 1.1rem;
   }
 }
+
+@media (max-width: 480px) {
+  .header-logo {
+    max-height: 45px;
+    transform: scale(1.2);
+  }
+
+  .btn-join-us {
+    padding: 6px 16px !important;
+    font-size: 0.85rem !important;
+  }
+
+  .navbar-toggler-icon {
+    width: 1.2em;
+    height: 1.2em;
+  }
+}

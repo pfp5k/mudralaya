@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaUsers, FaCopy, FaSearch, FaFilter, FaSort, FaGem, FaBuilding, FaRocket, FaEdit, FaYoutube, FaFilePdf, FaChevronRight, FaPlay } from 'react-icons/fa';
+import { FaUsers, FaCopy, FaSearch, FaFilter, FaSort, FaGem, FaBuilding, FaRocket, FaEdit, FaYoutube, FaFilePdf, FaChevronRight, FaPlay, FaInfoCircle } from 'react-icons/fa';
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';
 import { supabase } from '../supabaseClient';
 import './Task.css';
@@ -61,15 +61,23 @@ const Task = () => {
             const { error } = await supabase.functions.invoke('dashboard-api', {
                 body: { action: 'start-task', taskId: task.id }
             });
-            if (error) console.error('Error starting task:', error);
+
+            if (error) {
+                console.error('Error starting task:', error);
+            } else {
+                // Optimistically update local state
+                setTasks(prevTasks => prevTasks.map(t =>
+                    t.id === task.id ? { ...t, status: 'ongoing' } : t
+                ));
+            }
         } catch (err) {
             console.error('Failed to start task:', err);
         }
     };
 
     const getSmartButtonLabel = (task) => {
-        // Mock status logic - in real app, check task.status or user_task_status
-        if (task.status === 'in_progress') return 'Resume Task';
+        // Backend now returns merged status
+        if (task.status === 'ongoing' || task.status === 'in_progress') return 'Resume Task';
         if (task.status === 'completed') return 'Claim Reward';
         return 'Start Task';
     };
@@ -78,10 +86,10 @@ const Task = () => {
         const label = getSmartButtonLabel(task);
         if (label === 'Resume Task') {
             console.log('Resuming', task.id);
-            // logic to resume
+            if (task.action_link) window.open(task.action_link, '_blank');
         } else if (label === 'Claim Reward') {
             console.log('Claiming', task.id);
-            // logic to claim
+            // Need implementation for claim
         } else {
             handleTakeTask(task);
         }
@@ -162,9 +170,20 @@ const Task = () => {
             <div className="row">
                 {/* Sidebar */}
                 <div className="col-lg-3 mb-4">
-                    <div className="filters-sidebar">
-                        <div className="d-flex justify-content-between align-items-center mb-3">
-                            <h5 className="mb-0"><FaFilter className="me-2" /> Filters</h5>
+                    <div className="filters-sidebar" style={{ position: 'sticky', top: '100px' }}>
+                        <div className="d-flex justify-content-between align-items-center mb-4">
+                            <h5 className="mb-0 fw-bold text-dark">Filters</h5>
+                            <button
+                                className="btn btn-link p-0 text-decoration-none small text-muted"
+                                style={{ fontSize: '12px' }}
+                                onClick={() => {
+                                    // Reset logic
+                                    setSelectedProfessions({ 'All': true });
+                                    setSelectedTypes({ 'All': true });
+                                }}
+                            >
+                                Clear All
+                            </button>
                         </div>
 
                         <div className="filter-group mb-4">
@@ -238,6 +257,10 @@ const Task = () => {
                                         </div>
                                     </div>
                                     <div className="task-right">
+                                        <div className="info-tooltip-container">
+                                            <FaInfoCircle className="info-icon" />
+                                            <span className="info-tooltip-text">{task.performance_info || "You can earn more by your performance"}</span>
+                                        </div>
                                         <button className={`reward-btn`}>
                                             ₹ {task.reward_free || task.reward}
                                         </button>
@@ -250,16 +273,18 @@ const Task = () => {
                                 {expandedTaskId === task.id && (
                                     <div className="task-expanded pt-0">
                                         <div className="expanded-section mt-3">
-                                            <div className="reward-pricing">
-                                                <div className="price-item">
-                                                    <div className="badge-members"><FaGem /> Members</div>
-                                                    <div className="price-value text-blue">₹ {task.reward_member || task.reward_premium || 800}</div>
+                                            {(!task.category?.toLowerCase().includes('dedicated') && !task.title?.toLowerCase().includes('dedicated')) && (
+                                                <div className="reward-pricing">
+                                                    <div className="price-item">
+                                                        <div className="badge-members"><FaGem /> Members</div>
+                                                        <div className="price-value text-blue">₹ {task.reward_member || task.reward_premium || 800}</div>
+                                                    </div>
+                                                    <div className="price-item">
+                                                        <div className="label-free">Free</div>
+                                                        <div className="price-value text-green">₹ {task.reward_free || task.reward || 600}</div>
+                                                    </div>
                                                 </div>
-                                                <div className="price-item">
-                                                    <div className="label-free">Free</div>
-                                                    <div className="price-value text-green">₹ {task.reward_free || task.reward || 600}</div>
-                                                </div>
-                                            </div>
+                                            )}
                                             {task.reward_info && (
                                                 <p className="text-muted small mt-2"><FaGem className="me-1" />{task.reward_info}</p>
                                             )}

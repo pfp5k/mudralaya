@@ -39,7 +39,17 @@ serve(async (req: Request): Promise<Response> => {
 
       case 'get-tasks':
         const { data: allTasks } = await supabaseClient.from('tasks').select('*')
-        result = allTasks
+        // Fetch user's specific status for these tasks
+        const { data: userTasks } = await supabaseClient
+          .from('user_tasks')
+          .select('task_id, status')
+          .eq('user_id', user.id)
+
+        // Merge statuses
+        result = allTasks?.map((t: any) => {
+          const ut = userTasks?.find((u: any) => u.task_id === t.id)
+          return { ...t, status: ut ? ut.status : 'new' }
+        }) || []
         break;
 
       case 'get-wallet':

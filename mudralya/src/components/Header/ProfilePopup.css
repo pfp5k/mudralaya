@@ -1,12 +1,15 @@
 .profile-popup {
   position: absolute;
-  top: 60px; /* Adjust based on header height */
-  right: 20px; /* Adjust alignment */
+  top: 60px;
+  /* Adjust based on header height */
+  right: 20px;
+  /* Adjust alignment */
   width: 300px;
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  z-index: 1050; /* Above navbar content */
+  z-index: 1050;
+  /* Above navbar content */
   padding: 20px;
   font-family: inherit;
   border: 1px solid #e0e0e0;
@@ -28,7 +31,8 @@
   height: 50px;
   border-radius: 50%;
   object-fit: cover;
-  background-color: #333; /* Fallback color matching the icon style */
+  background-color: #333;
+  /* Fallback color matching the icon style */
 }
 
 .profile-popup-details {
@@ -56,7 +60,8 @@
 .profile-popup-upgrade-link {
   display: block;
   font-size: 14px;
-  color: #00bfa6; /* Matches the cyan/teal color in image */
+  color: #00bfa6;
+  /* Matches the cyan/teal color in image */
   text-decoration: none;
   font-weight: 500;
   margin-top: 10px;
@@ -123,4 +128,24 @@
 
 .profile-popup-dashboard-link:hover {
   color: #00bfa6;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .profile-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 320px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    border: 1px solid #ddd;
+    z-index: 1100;
+    /* Ensure it is above everything including the mobile menu */
+  }
+
+  /* Optional: Add a dim background if desired, but for now just centering helps */
+
+  /* Update arrow or removal of directional indicators if any */
 }

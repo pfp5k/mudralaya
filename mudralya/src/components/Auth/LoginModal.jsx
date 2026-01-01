@@ -56,13 +56,19 @@ const LoginModal = ({ isOpen, onClose }) => {
 
             if (verifyError) throw verifyError;
 
-            setSuccessMessage('Login successful!');
+            setSuccessMessage('Login successful! Redirecting to Dashboard...');
 
             // Update global state
             login(user);
 
             setTimeout(() => {
-                handleClose();
+                // Redirecting to User Dashboard
+                // Dev: localhost:5173 | Prod: user.mudralaya.com
+                const dashboardUrl = import.meta.env.DEV
+                    ? 'http://localhost:5173'
+                    : 'https://user.mudralaya.com';
+
+                window.location.href = dashboardUrl;
             }, 1000);
 
         } catch (err) {
@@ -89,7 +95,19 @@ const LoginModal = ({ isOpen, onClose }) => {
 
                 <div className="login-modal-body">
                     {error && <div className="alert alert-danger">{error}</div>}
-                    {successMessage && <div className="alert alert-success">{successMessage}</div>}
+                    {successMessage && (
+                        <div className="alert alert-success">
+                            {successMessage}
+                            <div className="mt-2 small">
+                                <a
+                                    href={import.meta.env.DEV ? 'http://localhost:5173' : 'https://user.mudralaya.com'}
+                                    className="text-success fw-bold"
+                                >
+                                    Click here if not redirected
+                                </a>
+                            </div>
+                        </div>
+                    )}
 
 
 

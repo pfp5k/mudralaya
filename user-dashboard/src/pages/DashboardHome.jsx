@@ -5,7 +5,7 @@ import { useUser } from '../context/UserContext';
 import { supabase } from '../supabaseClient';
 import './DashboardHome.css';
 
-export default DashboardHome;
+
 
 const DashboardHome = () => {
     const { profile, user } = useUser();

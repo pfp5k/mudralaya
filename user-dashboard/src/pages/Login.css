@@ -181,3 +181,56 @@
     transform: translate3d(4px, 0, 0);
   }
 }
+
+/* New OTP UI Styles */
+.otp-sent-info {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.otp-sent-text {
+  color: var(--text-main);
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.otp-delivery-hint {
+  color: var(--text-light);
+  font-size: 0.85rem;
+}
+
+.otp-sent-text strong {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.otp-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  min-height: 24px; /* Prevent layout shift */
+}
+
+.timer-text {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.resend-btn {
+  margin-top: 0;
+  padding: 0;
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.resend-btn:disabled {
+  color: var(--text-light);
+  cursor: not-allowed;
+  text-decoration: none;
+}
+
+.change-phone-btn {
+  width: 100%;
+  margin-top: 1.5rem;
+}

@@ -47,9 +47,9 @@ serve(async (req) => {
     console.log(`Sending OTP ${otp} to ${mobile} via 2Factor.in`);
 
     // 2Factor.in API Endpoint
-    // GET https://2factor.in/API/V1/{api_key}/SMS/{phone_number}/{otp}/{template_name}
-    // usage of specific template name 'MudralayaLogin' to ensure SMS delivery.
-    const url = `https://2factor.in/API/V1/${API_KEY}/SMS/${mobile}/${otp}/MudralayaLogin`;
+    // Try passing template as a query parameter to avoid ambiguity with Sender ID.
+    // URL: https://2factor.in/API/V1/{api_key}/SMS/{phone_number}/{otp}?template={template_name}
+    const url = `https://2factor.in/API/V1/${API_KEY}/SMS/${mobile}/${otp}?template=MudralayaLogin`;
 
     const response = await fetch(url);
     const data = await response.json();

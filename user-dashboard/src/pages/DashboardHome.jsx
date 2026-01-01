@@ -5,64 +5,83 @@ import { useUser } from '../context/UserContext';
 import { supabase } from '../supabaseClient';
 import './DashboardHome.css';
 
+export default DashboardHome;
+
 const DashboardHome = () => {
     const { profile, user } = useUser();
-    const [data, setData] = useState({ tasks: [], ongoingTask: null, stats: { approved: 0, pending: 0, total: 60000 }, transactions: [] });
+    const [data, setData] = useState({ tasks: [], ongoingTask: null, stats: { approved: 0, pending: 0, total: 0 }, transactions: [] });
     const [loading, setLoading] = useState(true);
 
     const fullName = profile?.full_name || 'User';
 
+    const fetchDashboardData = async () => {
+        if (!user) return;
+
+        try {
+            const [tasksRes, transactionsRes, statsRes, userTasksRes] = await Promise.all([
+                supabase.from('tasks').select('*').limit(5),
+                supabase
+                    .from('transactions')
+                    .select('*')
+                    .eq('user_id', user.id)
+                    .order('created_at', { ascending: false })
+                    .limit(5),
+                supabase.rpc('get_user_wallet_stats', { user_id_param: user.id }),
+                supabase
+                    .from('user_tasks')
+                    .select('*, tasks(*)')
+                    .eq('user_id', user.id)
+                    .eq('status', 'ongoing')
+                    .order('created_at', { ascending: false })
+                    .limit(1)
+            ]);
+
+            const tasks = tasksRes.data || [];
+            const transactions = transactionsRes.data || [];
+            const stats = statsRes.data || { approved: 0, pending: 0, total: 0, payout: 0, today: 0, monthly: 0 };
+            const ongoingTask = userTasksRes.data && userTasksRes.data.length > 0 ? userTasksRes.data[0].tasks : null;
+
+            setData({
+                tasks,
+                ongoingTask,
+                transactions,
+                stats
+            });
+        } catch (err) {
+            console.error("Error fetching dashboard data:", err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        const fetchDashboardData = async () => {
-            if (!user) return; // Wait for user to be available
-
-            try {
-                // Parallel fetching for performance
-                const [tasksRes, transactionsRes, statsRes, userTasksRes] = await Promise.all([
-                    supabase.from('tasks').select('*').limit(5),
-                    supabase
-                        .from('transactions')
-                        .select('*')
-                        .eq('user_id', user.id)
-                        .order('created_at', { ascending: false })
-                        .limit(5),
-                    supabase.rpc('get_user_wallet_stats', { user_id_param: user.id }),
-                    supabase
-                        .from('user_tasks')
-                        .select('*, tasks(*)')
-                        .eq('user_id', user.id)
-                        .eq('status', 'ongoing')
-                        .order('created_at', { ascending: false })
-                        .limit(1)
-                ]);
-
-                const tasks = tasksRes.data || [];
-                const transactions = transactionsRes.data || [];
-                // Handle RPC returning null or error gracefully
-                const stats = statsRes.data || { approved: 0, pending: 0, total: 0, payout: 0, today: 0, monthly: 0 };
-                const ongoingTask = userTasksRes.data && userTasksRes.data.length > 0 ? userTasksRes.data[0].tasks : null;
-
-                setData({
-                    tasks,
-                    ongoingTask,
-                    transactions,
-                    stats
-                });
-
-                if (tasksRes.error) console.error("Tasks fetch error:", tasksRes.error);
-                if (transactionsRes.error) console.error("Transactions fetch error:", transactionsRes.error);
-                if (statsRes.error) console.error("Stats RPC error:", statsRes.error);
-                if (userTasksRes.error) console.error("User tasks fetch error:", userTasksRes.error);
-
-            } catch (err) {
-                console.error("Error fetching dashboard data:", err);
-            } finally {
-                setLoading(false);
-            }
-        };
-
         fetchDashboardData();
-    }, [user]); // Re-run when user is available
+    }, [user]);
+
+    const handleStartTask = async (task) => {
+        if (!user) return;
+        try {
+            // 1. Open Link if present
+            if (task.action_link) {
+                window.open(task.action_link, '_blank');
+            }
+
+            // 2. Call API to join task
+            const { error } = await supabase.functions.invoke('dashboard-api', {
+                body: { action: 'start-task', taskId: task.id }
+            });
+
+            if (error) throw error;
+
+            // 3. Refresh Dashboard to show new ongoing task
+            fetchDashboardData();
+            alert('Task Started Successfully!');
+
+        } catch (err) {
+            console.error('Failed to start task:', err);
+            alert('Failed to join task. Please try again.');
+        }
+    };
 
     const getIcon = (type) => {
         switch (type) {
@@ -109,7 +128,7 @@ const DashboardHome = () => {
                         <span>:</span>
                     </div>
                     <div className="stat-content">
-                        <div className="stat-value">₹ {data.stats?.monthly || 20000}</div>
+                        <div className="stat-value">₹ {data.stats?.monthly || 0}</div>
                         <div className="stat-icon-bg icon-graph">
                             <MdTrendingUp />
                         </div>
@@ -121,7 +140,7 @@ const DashboardHome = () => {
                         <span>:</span>
                     </div>
                     <div className="stat-content">
-                        <div className="stat-value">₹ {data.stats?.total || 60000}</div>
+                        <div className="stat-value">₹ {data.stats?.total || 0}</div>
                         <div className="stat-icon-bg icon-wallet">
                             <MdAccountBalanceWallet />
                         </div>
@@ -215,9 +234,14 @@ const DashboardHome = () => {
                                             <p>{task.category}</p>
                                         </div>
                                     </div>
-                                    <button className="btn-price">
-                                        ₹ {task.reward_free}
-                                    </button>
+                                    <div className="task-actions-right">
+                                        <button
+                                            className="btn btn-sm btn-primary"
+                                            onClick={() => handleStartTask(task)}
+                                        >
+                                            Start
+                                        </button>
+                                    </div>
                                 </div>
                             ))}
                         </div>

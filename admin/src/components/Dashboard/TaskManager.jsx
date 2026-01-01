@@ -18,7 +18,8 @@ const TaskManager = () => {
         video_url: '',
         pdf_url: '',
         action_link: '',
-        icon_type: 'group'
+        icon_type: 'group',
+        target_audience: []
     });
 
     // Assign Task State
@@ -147,6 +148,31 @@ const TaskManager = () => {
                                         <option>One-time</option>
                                     </select>
                                 </div>
+                                <div className="col-md-12 mt-3">
+                                    <label className="form-label small">Target Audience</label>
+                                    <div className="d-flex flex-wrap gap-3">
+                                        {['Student', 'House Wife', 'Working Professional', 'Part Time'].map(audience => (
+                                            <div className="form-check" key={audience}>
+                                                <input
+                                                    className="form-check-input"
+                                                    type="checkbox"
+                                                    id={`aud-${audience}`}
+                                                    checked={newTask.target_audience?.includes(audience)}
+                                                    onChange={(e) => {
+                                                        const current = newTask.target_audience || [];
+                                                        if (e.target.checked) {
+                                                            setNewTask({ ...newTask, target_audience: [...current, audience] });
+                                                        } else {
+                                                            setNewTask({ ...newTask, target_audience: current.filter(a => a !== audience) });
+                                                        }
+                                                    }}
+                                                />
+                                                <label className="form-check-label" htmlFor={`aud-${audience}`}>{audience}</label>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
                                 <div className="col-md-4">
                                     <label className="form-label small">Icon Type</label>
                                     <select

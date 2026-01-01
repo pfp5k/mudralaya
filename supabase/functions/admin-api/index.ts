@@ -94,7 +94,7 @@ serve(async (req: Request): Promise<Response> => {
         break;
 
       case 'create-task':
-        const { title, description, reward_free, reward_member, type, video_url, pdf_url, action_link, icon_type } = data
+        const { title, description, reward_free, reward_member, type, video_url, pdf_url, action_link, icon_type, target_audience } = data
         const { data: createdTask, error: createTaskError } = await supabaseClient
           .from('tasks')
           .insert({
@@ -107,6 +107,7 @@ serve(async (req: Request): Promise<Response> => {
             video_url,
             pdf_url,
             action_link,
+            target_audience: target_audience && target_audience.length > 0 ? target_audience : ['All'],
             is_active: true
           })
           .select()

@@ -94,25 +94,39 @@ serve(async (req: Request): Promise<Response> => {
         break;
 
       case 'create-task':
+<<<<<<< Updated upstream
         const { title, description, reward_free, reward_member, reward_premium, type, video_url, video_link, pdf_url, action_link, icon_type, target_audience, steps, reward_min, reward_max, reward_info } = data
+=======
+        const { title, description, reward_free, reward_premium, type, video_link, steps, reward_min, reward_max, reward_info } = data
+>>>>>>> Stashed changes
         const { data: createdTask, error: createTaskError } = await supabaseClient
           .from('tasks')
           .insert({
             title,
             description,
+<<<<<<< Updated upstream
             reward_free: reward_free || 0,
             reward_premium: reward_premium || reward_member || 0,
             video_link: video_link || video_url,
+=======
+            reward_free: reward_free,
+            reward_premium: reward_premium,
+            video_link: video_link,
+>>>>>>> Stashed changes
             steps: steps,
             reward_min: reward_min,
             reward_max: reward_max,
             reward_info: reward_info,
             category: type,
+<<<<<<< Updated upstream
             icon_type: icon_type || 'group',
             pdf_url,
             action_link,
             target_audience: target_audience && target_audience.length > 0 ? target_audience : ['All'],
             is_active: true
+=======
+            icon_type: 'group'
+>>>>>>> Stashed changes
           })
           .select()
           .single()

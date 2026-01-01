@@ -18,7 +18,8 @@ serve(async (req: Request): Promise<Response> => {
     const { data: { user }, error: authError } = await supabaseClient.auth.getUser()
     if (authError || !user) throw new Error('Unauthorized')
 
-    const { action } = await req.json().catch(() => ({}))
+    const requestData = await req.json().catch(() => ({}))
+    const { action } = requestData
     const url = new URL(req.url)
     const queryAction = url.searchParams.get('action') || action
 
@@ -29,7 +30,7 @@ serve(async (req: Request): Promise<Response> => {
         // Get tasks, transactions, and user profile summary
         const { data: tasks } = await supabaseClient.from('tasks').select('*').limit(5)
         const { data: transactions } = await supabaseClient.from('transactions').select('*').eq('user_id', user.id).order('created_at', { ascending: false }).limit(5)
-        
+
         // Use the custom RPC for stats
         const { data: stats } = await supabaseClient.rpc('get_user_wallet_stats', { user_id_param: user.id }).single()
 
@@ -52,7 +53,7 @@ serve(async (req: Request): Promise<Response> => {
         break;
 
       case 'start-task':
-        const { taskId } = await req.json()
+        const { taskId } = requestData
         if (!taskId) throw new Error('Task ID is required')
 
         // Check if already started
@@ -64,21 +65,21 @@ serve(async (req: Request): Promise<Response> => {
           .single()
 
         if (existing) {
-            result = existing
+          result = existing
         } else {
-            const { data: newTask, error: startError } = await supabaseClient
-                .from('user_tasks')
-                .insert({
-                    user_id: user.id,
-                    task_id: taskId,
-                    status: 'ongoing',
-                    reward_earned: 0
-                })
-                .select()
-                .single()
-            
-            if (startError) throw startError
-            result = newTask
+          const { data: newTask, error: startError } = await supabaseClient
+            .from('user_tasks')
+            .insert({
+              user_id: user.id,
+              task_id: taskId,
+              status: 'ongoing',
+              reward_earned: 0
+            })
+            .select()
+            .single()
+
+          if (startError) throw startError
+          result = newTask
         }
         break;
 
